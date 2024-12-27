@@ -13,4 +13,13 @@
 
 .main {
     margin-top: 4rem;
+
+    .verification_form button[disabled] {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+
+    .verification_form input:invalid {
+        border-color: #ff0000;
+    }
 }
