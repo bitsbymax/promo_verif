@@ -1,0 +1,12 @@
+.fav_page#verification
+    section.main_banner 
+        p 
+            | Головний банер
+            | Персональний бонус 'Бонус за верифікацію' 
+
+    main.main
+        a(id="login-button" href="https://www.favbet.ua/login" type="button" style='display: none;') Авторизуватись
+        form#verification_form.verification_form
+            label(htmlFor="username") Телефон:
+            input(type="text" id="username" name="username")
+            button(type="submit") Підтвердити

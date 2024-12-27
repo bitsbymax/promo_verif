@@ -1,0 +1,16 @@
+.main_banner {
+    display: flex;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+    margin-top: 4rem;
+
+    &>p {
+        width: 33vw;
+        border: 2px solid black;
+    }
+}
+
+.main {
+    margin-top: 4rem;
+}
