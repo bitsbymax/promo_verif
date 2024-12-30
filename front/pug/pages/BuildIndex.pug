@@ -7,6 +7,14 @@
     main.main
         a(id="login-button" href="https://www.favbet.ua/login" type="button" style='display: none;') Авторизуватись
         form#verification_form.verification_form
-            label(htmlFor="username") Телефон:
-            input(type="text" id="username" name="username")
+            label(htmlFor="phone") Телефон:
+            input(
+                type="tel"
+                id="phone"
+                name="phone"
+                placeholder="+380 XX XXX XX XX"
+                autocomplete="tel"
+                maxlength="17"
+                required
+            )
             button(type="submit" id="submit-button") Підтвердити

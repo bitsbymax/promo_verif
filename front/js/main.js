@@ -1,8 +1,9 @@
 (function () {
 	//TODO
-	//? prefill input with number if user is logged in
-	//? add phone number mask
-	//? disable submit if phone is not valid
+	//! prefill input with number if user is logged in
+	//! add phone number mask
+	//! disable submit if phone is not valid
+	//! phone validation
 
 	const API_URL = 'http://localhost:3181/verification-api';
 
@@ -80,7 +81,7 @@
 			const res = await window.FE.socket_send({
 				cmd: 'get_user',
 			});
-			console.log('getUser', res);
+			console.log('getUser response', res);
 			return res;
 		} catch (error) {
 			console.error('Error fetching user:', error);
@@ -96,7 +97,7 @@
 					phone: { phone },
 				},
 			});
-			console.log('verifyUserPhone', res);
+			console.log('verifyUserPhone response', res);
 			return res;
 		} catch (error) {
 			console.error('Error verifying user phone:', error);
@@ -104,13 +105,13 @@
 		}
 	};
 
-	const changeUserPhone = async () => {
+	const changeUserPhone = async (phone, userId) => {
 		try {
 			const res = await window.FE.socket_send({
 				cmd: 'accounting/change_user',
-				body: `phone=%2B${phone}&user_id=${userid}`,
+				body: `phone=%2B${phone}&user_id=${userId}`,
 			});
-			console.log('changeUserPhone', res);
+			console.log('changeUserPhone response', res);
 			return res;
 		} catch (error) {
 			console.error('Error changing user phone:', error);
@@ -118,15 +119,18 @@
 		}
 	};
 
-	const confirmUserPhone = async () => {
+	const confirmUserPhone = async (confirmCode, sessionId) => {
 		try {
-			await window.FE.socket_send({
+			const res = await window.FE.socket_send({
 				cmd: 'accounting/user_phone_confirm',
 				data: {
-					confirm_code: `${confirm_code}`,
-					session_id: '${session_id}',
+					confirm_code: `${confirmCode}`,
+					session_id: `${sessionId}`,
 				},
-			});
+            });
+            
+            console.log('confirmUserPhone response', res);
+            return res;
 		} catch (error) {
 			console.error('Error confirming user phone:', error);
 			throw error;
@@ -163,11 +167,10 @@
 
 	async function init() {
 		console.log('init');
-
+		const phoneInput = document.getElementById('phone');
 		const verificationForm = document.getElementById('verification_form');
-		const phoneInput = document.getElementById('username');
 		const loginButton = document.getElementById('login-button');
-		const submitButton = verificationForm.getElementById('submit-button');
+		const submitButton = document.getElementById('submit-button');
 
 		if (window.FE?.user.role === 'guest') {
 			loginButton.style.display = 'block';
@@ -176,9 +179,12 @@
 			return;
 		}
 
-		const user = await getUser();
+        const user = await getUser();
+        let phoneEditing = false;
 		verificationForm.style.display = 'block';
+		phoneInput.value = user.data.account.phone_number;
 
+		// Check if user is already verified
 		if (user.data.account.phone_number && user.data.account.account_status.IS_PHONE_VERIFIED) {
 			const phoneVerifiedMsg = document.createElement('span');
 			phoneVerifiedMsg.textContent = 'Ваш номер телефону підтверджено';
@@ -188,33 +194,13 @@
 			return;
 		}
 
-		// Input handling
-		let typingTimer;
-		const doneTypingInterval = 500; // ms
-
-		phoneInput.addEventListener('input', () => {
-			clearTimeout(typingTimer);
-			submitButton.textContent = 'Змінити номер';
-
-			// Disable button while typing
-			submitButton.disabled = true;
-
-			typingTimer = setTimeout(async () => {
-				const phone = phoneInput.value.trim();
-
-				if (phone.length >= 10) {
-					// Basic validation
-					submitButton.disabled = false;
-					try {
-						await changeUserPhone(phone, user.id);
-					} catch (error) {
-						// Handle error (maybe show error message to user)
-						submitButton.disabled = true;
-					}
-				} else {
-					submitButton.disabled = true;
-				}
-			}, doneTypingInterval);
+		phoneInput.addEventListener('input', (e) => {
+			e.preventDefault();
+            phoneEditing = true;
+			submitButton.textContent = 'Зберегти';
+			const phone = phoneInput.value.trim();
+			// Enable/disable button based on phone length
+			submitButton.disabled = phone.length < 10; //?
 		});
 
 		verificationForm.addEventListener('submit', async (e) => {
@@ -223,12 +209,17 @@
 
 			submitButton.disabled = true;
 
-			const phone = phoneInput.value.trim();
+            const phone = phoneInput.value.trim().slice(1); //? do we need to trim +?
+            const userId = user.id;
 			const verificationRecord = new FormData();
 			verificationRecord.append('phone', phone);
-			verificationRecord.append('userid', user.id);
+			verificationRecord.append('userid', userId);
 
-			try {
+            try {
+                if (phoneEditing) {
+                    const result = await changeUserPhone(phone, userId);
+                    //? Check response and call addVerification
+                }
 				// First verify the phone
 				await verifyUserPhone(phone);
 
@@ -251,7 +242,7 @@
 		});
 	}
 
-	document.addEventListener('DOMContentLoaded', async () => {
+	document.addEventListener('DOMContentLoaded', () => {
 		init();
 	});
 })();
