@@ -96,7 +96,7 @@
 			const res = await window.FE.socket_send({
 				cmd: 'accounting/user_phone_verify',
 				data: {
-					phone: { phone },
+					phone,
 				},
 			});
 			console.log('verifyUserPhone response', res);
