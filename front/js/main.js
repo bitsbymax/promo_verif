@@ -232,6 +232,7 @@
 			}
 
 			const phone = phoneInput.value.trim().slice(1);
+			console.log('phone:', phone);
 			// const userId = user.id;
 			// const verificationRecord = new FormData();
 			// verificationRecord.append('phone', phone);
