@@ -4,6 +4,11 @@
 
 	const API_URL = 'http://localhost:3181/verification-api';
 
+	const phoneInput = document.getElementById('phone');
+	const verificationForm = document.getElementById('verification_form');
+	const loginButton = document.getElementById('login-button');
+	const submitButton = document.getElementById('submit-button');
+
 	// const resultsTable = document.querySelector('.tableResults__body'),
 	// 	unauthMsgs = document.querySelectorAll('.unauth-msg'),
 	// 	youAreInBtns = document.querySelectorAll('.took-part');
@@ -163,6 +168,10 @@
 	};
 
 	const showInputMessage = (message) => {
+		// Remove any existing messages first
+		const existingMessages = document.querySelectorAll('.input-msg');
+		existingMessages.forEach((msg) => msg.remove());
+
 		const successMessage = document.createElement('span');
 		successMessage.textContent = message;
 		successMessage.classList.add('input-msg');
@@ -176,10 +185,6 @@
 
 	async function init() {
 		console.log('init');
-		const phoneInput = document.getElementById('phone');
-		const verificationForm = document.getElementById('verification_form');
-		const loginButton = document.getElementById('login-button');
-		const submitButton = document.getElementById('submit-button');
 
 		if (window.FE?.user.role === 'guest') {
 			loginButton.style.display = 'block';
@@ -188,11 +193,13 @@
 			return;
 		}
 
-        const user = await getUser();
-        console.log(user.data.account.account_status.IS_PHONE_VERIFIED)
+		const user = await getUser();
+		console.log(user.data.account.account_status);
 
 		const userPhoneNumber = user.data.account.phone_number;
-		const userPhoneVerified = user.data.account.account_status.IS_PHONE_VERIFIED;
+		const userPhoneVerified = user.data.account.account_status.find(
+			(status) => status.status === 'IS_PHONE_VERIFIED'
+		);
 
 		verificationForm.style.display = 'block';
 		phoneInput.value = userPhoneNumber;
