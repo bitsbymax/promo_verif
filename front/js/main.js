@@ -1,9 +1,6 @@
 (function () {
 	//TODO
-	//! prefill input with number if user is logged in
-	//! add phone number mask
-	//! disable submit if phone is not valid
-	//! phone validation
+	//! add phone number mask and phone validation
 
 	const API_URL = 'http://localhost:3181/verification-api';
 
@@ -105,19 +102,19 @@
 		}
 	};
 
-	const changeUserPhone = async (phone, userId) => {
-		try {
-			const res = await window.FE.socket_send({
-				cmd: 'accounting/change_user',
-				body: `phone=%2B${phone}&user_id=${userId}`,
-			});
-			console.log('changeUserPhone response', res);
-			return res;
-		} catch (error) {
-			console.error('Error changing user phone:', error);
-			throw error;
-		}
-	};
+	// const changeUserPhone = async (phone, userId) => {
+	// 	try {
+	// 		const res = await window.FE.socket_send({
+	// 			cmd: 'accounting/change_user',
+	// 			body: `phone=%2B${phone}&user_id=${userId}`,
+	// 		});
+	// 		console.log('changeUserPhone response', res);
+	// 		return res;
+	// 	} catch (error) {
+	// 		console.error('Error changing user phone:', error);
+	// 		throw error;
+	// 	}
+	// };
 
 	const confirmUserPhone = async (confirmCode, sessionId) => {
 		try {
@@ -127,10 +124,10 @@
 					confirm_code: `${confirmCode}`,
 					session_id: `${sessionId}`,
 				},
-            });
-            
-            console.log('confirmUserPhone response', res);
-            return res;
+			});
+
+			console.log('confirmUserPhone response', res);
+			return res;
 		} catch (error) {
 			console.error('Error confirming user phone:', error);
 			throw error;
@@ -165,6 +162,18 @@
 		}
 	};
 
+	const showInputMessage = (message) => {
+		const successMessage = document.createElement('span');
+		successMessage.textContent = message;
+		successMessage.classList.add('input-msg');
+		verificationForm.after(successMessage);
+	};
+
+	const isPhoneValid = (phone) => {
+		const phoneRegex = /^\+380\d{9}$/;
+		return phoneRegex.test(phone);
+	};
+
 	async function init() {
 		console.log('init');
 		const phoneInput = document.getElementById('phone');
@@ -172,56 +181,57 @@
 		const loginButton = document.getElementById('login-button');
 		const submitButton = document.getElementById('submit-button');
 
-		if (window.FE?.user.role === 'guest') {
+		if (window.FE?.user.role !== 'guest') {
 			loginButton.style.display = 'block';
 			verificationForm.style.display = 'none';
 
 			return;
 		}
 
-        const user = await getUser();
-        let phoneEditing = false;
+		const user = await getUser();
+
+		const userPhoneNumber = user.data.account.phone_number;
+		const userPhoneVerified = user.data.account.account_status.IS_PHONE_VERIFIED.value;
+
 		verificationForm.style.display = 'block';
-		phoneInput.value = user.data.account.phone_number;
+		phoneInput.value = userPhoneNumber;
 
 		// Check if user is already verified
-		if (user.data.account.phone_number && user.data.account.account_status.IS_PHONE_VERIFIED) {
-			const phoneVerifiedMsg = document.createElement('span');
-			phoneVerifiedMsg.textContent = 'Ваш номер телефону підтверджено';
-			phoneVerifiedMsg.classList.add('verified-msg');
-			verificationForm.after(phoneVerifiedMsg);
+		if (userPhoneNumber && userPhoneVerified) {
+			phoneInput.disabled = true;
+			submitButton.style.display = 'none';
+			const message = 'Ваш номер телефону підтверджено';
+			showInputMessage(message);
 
 			return;
+		} else {
+			const message = 'Будь ласка, підтвердіть Ваш номер телефону';
+			showInputMessage(message);
 		}
 
-		phoneInput.addEventListener('input', (e) => {
-			e.preventDefault();
-            phoneEditing = true;
-			submitButton.textContent = 'Зберегти';
-			const phone = phoneInput.value.trim();
-			// Enable/disable button based on phone length
-			submitButton.disabled = phone.length < 10; //?
-		});
-
+		// User submits verification form with his phone
 		verificationForm.addEventListener('submit', async (e) => {
 			e.preventDefault();
-			console.log('form submitted');
+			console.log(e, 'form submitted');
 
 			submitButton.disabled = true;
 
-            const phone = phoneInput.value.trim().slice(1); //? do we need to trim +?
-            const userId = user.id;
+			if (!isPhoneValid(phoneInput.value.trim())) {
+				const message = 'Введіть коректний номер телефону';
+				showInputMessage(message);
+				submitButton.disabled = false;
+				return;
+			}
+
+			const phone = phoneInput.value.trim().slice(1);
+			const userId = user.id;
 			const verificationRecord = new FormData();
 			verificationRecord.append('phone', phone);
 			verificationRecord.append('userid', userId);
 
-            try {
-                if (phoneEditing) {
-                    const result = await changeUserPhone(phone, userId);
-                    //? Check response and call addVerification
-                }
+			try {
 				// First verify the phone
-				await verifyUserPhone(phone);
+				const result = await verifyUserPhone(phone);
 
 				//? Verification locked?
 				// true - wait timer refresh --> message.reason, message.rest_time
@@ -243,5 +253,4 @@
 	}
 
 	init();
-
 })();
