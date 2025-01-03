@@ -181,7 +181,7 @@
 		const loginButton = document.getElementById('login-button');
 		const submitButton = document.getElementById('submit-button');
 
-		if (window.FE?.user.role !== 'guest') {
+		if (window.FE?.user.role === 'guest') {
 			loginButton.style.display = 'block';
 			verificationForm.style.display = 'none';
 
