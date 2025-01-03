@@ -199,7 +199,7 @@
 		const userPhoneNumber = user.data.account.phone_number;
 		const userPhoneVerified = user.data.account.account_status.find(
 			(status) => status.status === 'IS_PHONE_VERIFIED'
-		);
+		).value;
 
 		verificationForm.style.display = 'block';
 		phoneInput.value = userPhoneNumber;
@@ -232,10 +232,10 @@
 			}
 
 			const phone = phoneInput.value.trim().slice(1);
-			const userId = user.id;
-			const verificationRecord = new FormData();
-			verificationRecord.append('phone', phone);
-			verificationRecord.append('userid', userId);
+			// const userId = user.id;
+			// const verificationRecord = new FormData();
+			// verificationRecord.append('phone', phone);
+			// verificationRecord.append('userid', userId);
 
 			try {
 				// First verify the phone
