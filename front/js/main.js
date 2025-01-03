@@ -199,23 +199,23 @@
 		const userPhoneNumber = user.data.account.phone_number;
 		const userPhoneVerified = user.data.account.account_status.find(
 			(status) => status.status === 'IS_PHONE_VERIFIED'
-        );
-        console.log('userPhoneVerified:', userPhoneVerified);
+		);
+		console.log('userPhoneVerified:', userPhoneVerified);
 
 		verificationForm.style.display = 'block';
 		phoneInput.value = userPhoneNumber;
 
 		// Check if user has a number and is already verified
-        if (userPhoneNumber && userPhoneVerified) {
-            console.log('User has a number and is already verified');
+		if (userPhoneNumber && userPhoneVerified) {
+			console.log('User has a number and is already verified');
 			phoneInput.disabled = true;
 			submitButton.style.display = 'none';
 			const message = 'Ваш номер телефону підтверджено';
 			showInputMessage(message);
 
 			return;
-        } else {
-            console.log('User needs to verify his phone');
+		} else {
+			console.log('User needs to verify his phone');
 			const message = 'Будь ласка, підтвердіть Ваш номер телефону';
 			showInputMessage(message);
 		}
@@ -266,9 +266,3 @@
 
 	init();
 })();
-		console.log('userPhoneVerified:', userPhoneVerified);
-		console.log('userPhoneVerified:', userPhoneVerified);
-		console.log('userPhoneVerified:', userPhoneVerified);
-		console.log('userPhoneVerified:', userPhoneVerified);
-		console.log('userPhoneVerified:', userPhoneVerified);
-		console.log('userPhoneVerified:', userPhoneVerified);
