@@ -188,10 +188,11 @@
 			return;
 		}
 
-		const user = await getUser();
+        const user = await getUser();
+        console.log(user.data.account.account_status.IS_PHONE_VERIFIED)
 
 		const userPhoneNumber = user.data.account.phone_number;
-		const userPhoneVerified = user.data.account.account_status.IS_PHONE_VERIFIED.value;
+		const userPhoneVerified = user.data.account.account_status.IS_PHONE_VERIFIED;
 
 		verificationForm.style.display = 'block';
 		phoneInput.value = userPhoneNumber;
