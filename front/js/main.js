@@ -198,8 +198,8 @@
 
 		const userPhoneNumber = user.data.account.phone_number;
 		const userPhoneVerified = user.data.account.account_status.find(
-			(status) => status.status === 'IS_PHONE_VERIFIED'
-		);
+			(status) => status.alias === 'IS_PHONE_VERIFIED'
+		).value;
 		console.log('userPhoneVerified:', userPhoneVerified);
 
 		verificationForm.style.display = 'block';
