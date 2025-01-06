@@ -202,14 +202,13 @@
             verificationForm.classList.add('visible');
         }
 
-        let user;
+        let user, userPhoneNumber, userPhoneVerified;
 
         try {
             user = await getUser();
-
-            const userPhoneNumber = user.data.account.phone_number;
+            userPhoneNumber = user.data.account.phone_number;
             console.log('userPhoneNumber:', userPhoneNumber);
-            const userPhoneVerified = user.data.account.account_status.find(
+            userPhoneVerified = user.data.account.account_status.find(
                 (status) => status.alias === 'IS_PHONE_VERIFIED'
             ).value;
             console.log('userPhoneVerified:', userPhoneVerified);
