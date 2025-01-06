@@ -114,9 +114,7 @@
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    userData,
-                }),
+                body: userData,
             });
             const data = await response.json();
             console.log('changeUserPhone response:', data);
