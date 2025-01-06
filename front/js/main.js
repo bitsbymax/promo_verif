@@ -202,8 +202,10 @@
             verificationForm.classList.add('visible');
         }
 
+        let user;
+
         try {
-            const user = await getUser();
+            user = await getUser();
 
             const userPhoneNumber = user.data.account.phone_number;
             console.log('userPhoneNumber:', userPhoneNumber);
