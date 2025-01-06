@@ -2,8 +2,8 @@
     //TODO
     //! add phone number mask and phone validation
 
-    const API_URL = 'http://localhost:3181/verification-api';
-
+    const API = 'https://www.favbet.ua';
+    const VERIFICATION_API = 'http://localhost:3181/verification-api';
     const phoneInput = document.getElementById('phone');
     const verificationForm = document.getElementById('verification_form');
     const loginButton = document.getElementById('login-button');
@@ -107,19 +107,25 @@
         }
     };
 
-    // const changeUserPhone = async (phone, userId) => {
-    // 	try {
-    // 		const res = await window.FE.socket_send({
-    // 			cmd: 'accounting/change_user',
-    // 			body: `phone=%2B${phone}&user_id=${userId}`,
-    // 		});
-    // 		console.log('changeUserPhone response', res);
-    // 		return res;
-    // 	} catch (error) {
-    // 		console.error('Error changing user phone:', error);
-    // 		throw error;
-    // 	}
-    // };
+    const changeUserPhone = async (userData) => {
+        try {
+            const response = await fetch(`${API}/accounting/api/change_user`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    userData,
+                }),
+            });
+            const data = await response.json();
+            console.log('changeUserPhone response:', data);
+            return data;
+        } catch (error) {
+            console.error('Error changing user phone:', error);
+            throw error;
+        }
+    };
 
     const confirmUserPhone = async (confirmCode, sessionId) => {
         try {
@@ -141,7 +147,7 @@
 
     const getAllVerifications = async () => {
         try {
-            const response = await fetch(`${API_URL}/verifications`, {
+            const response = await fetch(`${VERIFICATION_API}/verifications`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -156,7 +162,7 @@
 
     const addVerification = async (formData) => {
         try {
-            const response = await fetch(`${API_URL}/verification`, {
+            const response = await fetch(`${VERIFICATION_API}/verification`, {
                 method: 'POST',
                 body: formData,
             });
@@ -184,19 +190,23 @@
     };
 
     const init = async () => {
-        console.log('init');
+        console.log('%c init fired', 'color: #00ff00; font-weight: bold');
+
+        if (window.FE?.user.role === 'guest') {
+            verificationForm.style.display = 'none';
+            loginButton.classList.add('visible');
+
+            return;
+        } else {
+            loginButton.style.display = 'none';
+            verificationForm.classList.add('visible');
+        }
+
         try {
-            if (window.FE?.user.role === 'guest') {
-                loginButton.style.display = 'block';
-                verificationForm.style.display = 'none';
-
-                return;
-            }
-
             const user = await getUser();
-            console.log(user.data.account.account_status);
 
             const userPhoneNumber = user.data.account.phone_number;
+            console.log('userPhoneNumber:', userPhoneNumber);
             const userPhoneVerified = user.data.account.account_status.find(
                 (status) => status.alias === 'IS_PHONE_VERIFIED'
             ).value;
@@ -207,66 +217,77 @@
 
             // Check if user has a number and is already verified
             if (userPhoneNumber && userPhoneVerified) {
-                console.log('User has a number and is already verified');
                 phoneInput.disabled = true;
                 submitButton.style.display = 'none';
                 const message = 'Ваш номер телефону підтверджено';
                 showInputMessage(message);
 
                 return;
-            } else {
-                console.log('User needs to verify his phone');
-                const message = 'Будь ласка, підтвердіть Ваш номер телефону';
-                showInputMessage(message);
             }
 
-            // User submits verification form with his phone
-            verificationForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                console.log(e, 'Form with phone submitted');
-
-                submitButton.disabled = true;
-
-                if (!isPhoneValid(phoneInput.value.trim())) {
-                    const message = 'Введіть коректний номер телефону';
-                    showInputMessage(message);
-                    submitButton.disabled = false;
-                    return;
-                }
-
-                const phone = phoneInput.value.trim().slice(1);
-                console.log('phone:', phone);
-                // const userId = user.id;
-                // const verificationRecord = new FormData();
-                // verificationRecord.append('phone', phone);
-                // verificationRecord.append('userid', userId);
-
-                try {
-                    // First verify the phone
-                    const result = await verifyUserPhone(phone);
-
-                    //? Verification locked?
-                    // true - wait timer refresh --> message.reason, message.rest_time
-                    // false - wait form confirmation code and then confirmUserPhone()
-
-                    //! Edit button path
-                    //! Refresh button path
-                    //! Try click send code again path
-
-                    // Add verification record
-                    // await addVerification(verificationRecord);
-
-                    // Change button text after successful verification
-                    submitButton.textContent = 'Підтвердити';
-                } catch (error) {
-                    console.error('Verification process failed:', error);
-                } finally {
-                    submitButton.disabled = false;
-                }
-            });
+            showInputMessage('Будь ласка, підтвердіть Ваш номер телефону');
         } catch (error) {
-            console.error('Initialization failed:', error);
+            console.error('Failed to get user:', error);
         }
+
+        // User submits verification form
+        verificationForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            console.log(
+                '%c Form submitted',
+                'color: #ff00ff; font-weight: bold',
+                e
+            );
+
+            submitButton.disabled = true;
+            const phone = phoneInput.value.trim();
+            console.log('phone:', phone);
+
+            if (!isPhoneValid(phone)) {
+                const message = 'Введіть коректний номер телефону';
+                showInputMessage(message);
+                submitButton.disabled = false;
+
+                return;
+            }
+
+            try {
+                const phoneWithoutPlus = phone.slice(1);
+                const userId = user.id;
+                const userData = new FormData();
+                userData.append('phoneWithoutPlus', phoneWithoutPlus);
+                userData.append('userid', userId);
+
+                if (phoneWithoutPlus !== userPhoneNumber) {
+                    await changeUserPhone(userData);
+                }
+
+                //First verify the phone
+                const result = await verifyUserPhone(phoneWithoutPlus);
+
+                //? Verification locked?
+                // true - wait timer refresh --> message.reason, message.rest_time
+                // false - wait form confirmation code and then confirmUserPhone()
+
+                //! Edit button path
+                //! Refresh button path
+                //! Try click send code again path
+
+                // Add verification record
+                // const verificationRecord = new FormData();
+
+                // verificationRecord.append('phoneWithoutPlus', phone);
+                // verificationRecord.append('userid', userId);
+                // await addVerification(verificationRecord);
+
+                // Change button text after successful verification
+                submitButton.textContent = 'Підтвердити';
+            } catch (error) {
+                console.error('Verification process failed:', error);
+            } finally {
+                submitButton.disabled = false;
+            }
+        });
     };
 
     init();

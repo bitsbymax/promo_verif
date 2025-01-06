@@ -9,9 +9,8 @@
             id="login-button"
             href="https://www.favbet.ua/login"
             type="button"
-            style='display: none;'
         ) Авторизуватись
-        form#verification_form.verification_form
+        form#verification_form.verification_form.hidden
             label(htmlFor="phone") Телефон:
             input(
                 type="tel"
@@ -22,4 +21,7 @@
                 maxlength="16"
                 required
             )
-            button(type="submit" id="submit-button") Підтвердити
+            button.hidden(
+                type="submit"
+                id="submit-button"
+            ) Підтвердити

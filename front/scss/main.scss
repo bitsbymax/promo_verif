@@ -26,3 +26,12 @@
         border-color: #ff0000;
     }
 }
+
+.hidden {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.visible {
+    opacity: 1;
+}
