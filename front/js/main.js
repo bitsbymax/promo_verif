@@ -251,7 +251,7 @@
                 const phoneWithoutPlus = phone.slice(1);
                 const userId = user.id;
                 const userData = new FormData();
-                userData.append('phoneWithoutPlus', phoneWithoutPlus);
+                userData.append('phone', phoneWithoutPlus);
                 userData.append('userid', userId);
 
                 if (phoneWithoutPlus !== userPhoneNumber) {
