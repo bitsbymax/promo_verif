@@ -1,3 +1,42 @@
+/*
+    Success response from api inside changeUserPhone function
+{
+  "error": "no",
+  "error_code": "",
+  "response": "accounting_success_15",
+  "user_id": 100300268,
+  "phone": "380675669466"
+} 
+  
+*/
+
+/* 
+    Success response from api inside verifyUserPhone function
+{
+  "cid": "2118c8c6-f7dc-4d63-9fe9-78d71fcdbc9b",
+  "data": {
+    "code_confirm_attempt_ttl": 86400,
+    "confirm_code_length": 5,
+    "daily_attempts_count": 3,
+    "daily_attempts_count_rest": 2,
+    "phone_verification_ttl": 300,
+    "session_id": "c298cefa-52ec-4c04-8ab2-65866ffc3afd",
+    "user_id": 100300268
+  },
+  "ok": true
+}
+*/
+
+/* Unsuccess response from api inside verifyUserPhone function
+{
+    code: -24
+    message: {
+        reason: 'verification_locked',
+        rest_time: %some number%
+    }
+}
+*/
+
 (function () {
     //TODO
     //! add phone number mask and phone validation
@@ -197,7 +236,9 @@
             verificationForm.classList.add('visible');
         }
 
-        let user, userPhoneNumber, userPhoneVerified;
+        let user = null;
+        let userPhoneNumber = null;
+        let userPhoneVerified = false;
 
         try {
             user = await getUser();
@@ -234,7 +275,6 @@
                 'color: #ff00ff; font-weight: bold',
                 e
             );
-
             submitButton.disabled = true;
             const phone = phoneInput.value.trim();
             console.log('phone:', phone);
