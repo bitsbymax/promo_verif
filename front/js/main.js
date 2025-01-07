@@ -111,9 +111,6 @@
         try {
             const response = await fetch(`${API}/accounting/api/change_user`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
                 body: userData,
             });
             const data = await response.json();
