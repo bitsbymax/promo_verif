@@ -269,11 +269,11 @@
 
         //User starts to change phone number
         phoneInput.addEventListener('input', (e) => {
-            console.log('input event', e);
             if (e.target.value === userPhoneNumber) {
                 submitButton.innerHTML = 'Підтвердити';
+            } else {
+                submitButton.innerHTML = 'Зберегти';
             }
-            submitButton.innerHTML = 'Зберегти';
         });
 
         // User submits verification form
@@ -285,9 +285,9 @@
                 e
             );
             submitButton.disabled = true;
-            const enteredPhone = e.target[0].value;
+            const submittedPhone = e.target[0].value;
 
-            if (!isPhoneValid(enteredPhone)) {
+            if (!isPhoneValid(submittedPhone)) {
                 const message = 'Введіть коректний номер телефону';
                 showInputMessage(message);
                 submitButton.disabled = false;
@@ -299,22 +299,22 @@
                 const userId = user.id;
                 const userData = new FormData();
 
-                userData.append('phone', enteredPhone);
+                userData.append('phone', submittedPhone);
                 userData.append('userid', userId);
 
                 //Change user phone number
-                if (enteredPhone !== userPhoneNumber) {
+                if (submittedPhone !== userPhoneNumber) {
                     const response = await changeUserPhone(userData);
 
                     if (response.error === 'no' && !response.error_code) {
-                        submitButton.innerHTML = 'Підтвердити';
                         userPhoneNumber = response.phone;
+                        submitButton.innerHTML = 'Підтвердити';
                     }
 
                     return;
                 }
-                //First verify the phone
-                const result = await verifyUserPhone(enteredPhone);
+                //Verify user phone number
+                const result = await verifyUserPhone(submittedPhone);
 
                 //? Verification locked?
                 // true - wait timer refresh --> message.reason, message.rest_time

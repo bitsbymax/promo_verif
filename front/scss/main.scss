@@ -13,8 +13,9 @@
 
 .main_form {
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    margin: auto;
+    align-items: center;
     margin-top: 4rem;
 
     .verification_form button[disabled] {
