@@ -212,14 +212,14 @@
         const existingMessages = document.querySelectorAll('.input-msg');
         existingMessages.forEach((msg) => msg.remove());
 
-        const successMessage = document.createElement('span');
+        const successMessage = document.createElement('div');
         successMessage.textContent = message;
         successMessage.classList.add('input-msg');
         verificationForm.after(successMessage);
     };
 
     const isPhoneValid = (phone) => {
-        const phoneRegex = /^\+380\d{9}$/;
+        const phoneRegex = /^380\d{9}$/;
         return phoneRegex.test(phone);
     };
 
@@ -267,6 +267,15 @@
             console.error('Failed to get user:', error);
         }
 
+        //User starts to change phone number
+        phoneInput.addEventListener('input', (e) => {
+            console.log('input event', e);
+            if (e.target.value === userPhoneNumber) {
+                submitButton.innerHTML = 'Підтвердити';
+            }
+            submitButton.innerHTML = 'Зберегти';
+        });
+
         // User submits verification form
         verificationForm.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -276,10 +285,9 @@
                 e
             );
             submitButton.disabled = true;
-            const phone = phoneInput.value.trim();
-            console.log('phone:', phone);
+            const enteredPhone = e.target[0].value;
 
-            if (!isPhoneValid(phone)) {
+            if (!isPhoneValid(enteredPhone)) {
                 const message = 'Введіть коректний номер телефону';
                 showInputMessage(message);
                 submitButton.disabled = false;
@@ -288,20 +296,25 @@
             }
 
             try {
-                const phoneWithoutPlus = phone.slice(1);
                 const userId = user.id;
                 const userData = new FormData();
-                userData.append('phone', phoneWithoutPlus);
+
+                userData.append('phone', enteredPhone);
                 userData.append('userid', userId);
 
-                if (phoneWithoutPlus !== userPhoneNumber) {
-                    await changeUserPhone(userData);
+                //Change user phone number
+                if (enteredPhone !== userPhoneNumber) {
+                    const response = await changeUserPhone(userData);
+
+                    if (response.error === 'no' && !response.error_code) {
+                        submitButton.innerHTML = 'Підтвердити';
+                        userPhoneNumber = response.phone;
+                    }
 
                     return;
                 }
-
                 //First verify the phone
-                const result = await verifyUserPhone(phoneWithoutPlus);
+                const result = await verifyUserPhone(enteredPhone);
 
                 //? Verification locked?
                 // true - wait timer refresh --> message.reason, message.rest_time
