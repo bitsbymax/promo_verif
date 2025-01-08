@@ -296,6 +296,8 @@
 
                 if (phoneWithoutPlus !== userPhoneNumber) {
                     await changeUserPhone(userData);
+
+                    return;
                 }
 
                 //First verify the phone
