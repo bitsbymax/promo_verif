@@ -130,13 +130,11 @@
         }
     };
 
-    const verifyUserPhone = async (phone) => {
+    const verifyUserPhone = async (cid) => {
         try {
             const res = await window.FE.socket_send({
                 cmd: 'accounting/user_phone_verify',
-                data: {
-                    phone,
-                },
+                cid,
             });
             console.log('verifyUserPhone response', res);
             return res;
@@ -237,11 +235,13 @@
         }
 
         let user = null;
+        let cid = null;
         let userPhoneNumber = null;
         let userPhoneVerified = false;
 
         try {
             user = await getUser();
+            cid = user.cid;
             userPhoneNumber = user.data.account.phone_number;
             console.log('userPhoneNumber:', userPhoneNumber);
             userPhoneVerified = user.data.account.account_status.find(
@@ -314,7 +314,7 @@
                     return;
                 }
                 //Verify user phone number
-                const result = await verifyUserPhone(submittedPhone);
+                const response = await verifyUserPhone(cid);
 
                 //? Verification locked?
                 // true - wait timer refresh --> message.reason, message.rest_time
