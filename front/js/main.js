@@ -32,7 +32,7 @@
     code: -24
     message: {
         reason: 'verification_locked',
-        rest_time: %some number%
+        timeLeft: %some number%
     }
 }
 */
@@ -293,10 +293,28 @@
                 confirmButton.textContent = 'Надіслати';
                 const minutes = Math.floor(timeLeft / 60);
                 const seconds = timeLeft % 60;
-                showInputMessage(
-                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')} час, який залишився, щоб ввести код, після закінчення часу Ви зможете відправити код повторно`,
-                    confirmationForm
-                );
+
+                if (timeLeft > 300) {
+                    showInputMessage(
+                        `${Math.floor(timeLeft / 3600)
+                            .toString()
+                            .padStart(2, '0')}:${Math.floor(
+                            (timeLeft % 3600) / 60
+                        )
+                            .toString()
+                            .padStart(2, '0')}:${(timeLeft % 60)
+                            .toString()
+                            .padStart(
+                                2,
+                                '0'
+                            )} Верифікацію заблоковано. Дочекайтесь оновлення таймера`
+                    );
+                } else {
+                    showInputMessage(
+                        `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')} час, який залишився, щоб ввести код, після закінчення часу Ви зможете відправити код повторно`,
+                        confirmationForm
+                    );
+                }
                 timeLeft--;
             }, 1000);
         };
@@ -315,21 +333,9 @@
                 const ttl = response.data.phone_verification_ttl;
                 startVerificationTimer(ttl);
             } else if (response.code === -24) {
-                const { rest_time } = response.message;
+                const { timeLeft } = response.message;
                 submitButton.disabled = true;
-                startVerificationTimer(rest_time);
-                showInputMessage(
-                    `${Math.floor(rest_time / 3600)
-                        .toString()
-                        .padStart(2, '0')}:${Math.floor((rest_time % 3600) / 60)
-                        .toString()
-                        .padStart(2, '0')}:${(rest_time % 60)
-                        .toString()
-                        .padStart(
-                            2,
-                            '0'
-                        )} Верифікацію заблоковано. Дочекайтесь оновлення таймера`
-                );
+                startVerificationTimer(timeLeft);
             }
         };
 
@@ -423,6 +429,8 @@
                     phoneInput.disabled = true;
                     submitButton.style.display = 'none';
                 } else {
+                    //TODO 
+                    //need to check other possible errors
                     showInputMessage(
                         'Невірний код підтвердження',
                         confirmationForm
