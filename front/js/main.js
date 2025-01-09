@@ -32,7 +32,7 @@
     code: -24
     message: {
         reason: 'verification_locked',
-        timeLeft: %some number%
+        rest_time: %some number%
     }
 }
 */
@@ -233,13 +233,14 @@
         } else {
             loginButton.style.display = 'none';
             verificationForm.classList.add('visible');
+            verificationForm.classList.remove('hidden');
         }
 
         const confirmationForm = document.getElementById('confirmation_form');
         const confirmButton = document.getElementById('confirm-button');
+
         let verificationSession = null;
         let verificationTimer = null;
-
         let user = null;
         let cid = null;
         let userPhoneNumber = null;
@@ -273,7 +274,10 @@
             console.error('Failed to get user:', error);
         }
 
-        const startVerificationTimer = (totalSeconds) => {
+        const startVerificationTimer = (
+            totalSeconds,
+            { confirmation = false, verification = false }
+        ) => {
             if (verificationTimer) {
                 clearInterval(verificationTimer);
             }
@@ -294,7 +298,7 @@
                 const minutes = Math.floor(timeLeft / 60);
                 const seconds = timeLeft % 60;
 
-                if (timeLeft > 300) {
+                if (verification) {
                     showInputMessage(
                         `${Math.floor(timeLeft / 3600)
                             .toString()
@@ -309,7 +313,9 @@
                                 '0'
                             )} Верифікацію заблоковано. Дочекайтесь оновлення таймера`
                     );
-                } else {
+                }
+
+                if (confirmation) {
                     showInputMessage(
                         `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')} час, який залишився, щоб ввести код, після закінчення часу Ви зможете відправити код повторно`,
                         confirmationForm
@@ -324,18 +330,23 @@
                 'response from verifyUserPhone inside handleVerificationResponse',
                 response
             );
+            const step = {
+                confirmation: false,
+                verification: false,
+            };
             if (response.ok) {
                 verificationSession = response.data.session_id;
-                confirmationForm.classList.remove('hidden');
                 confirmationForm.classList.add('visible');
-
+                confirmationForm.classList.remove('hidden');
+                step.confirmation = true;
                 // Start timer for code verification
                 const ttl = response.data.phone_verification_ttl;
-                startVerificationTimer(ttl);
+                startVerificationTimer(ttl, step);
             } else if (response.code === -24) {
-                const { timeLeft } = response.message;
+                const { rest_time } = response.message;
                 submitButton.disabled = true;
-                startVerificationTimer(timeLeft);
+                step.verification = true;
+                startVerificationTimer(rest_time, step);
             }
         };
 
@@ -389,10 +400,10 @@
                 const response = await verifyUserPhone(cid);
 
                 if (response) {
-                    console.log('inside if response', response);
+                    console.log('inside if');
                     handleVerificationResponse(response);
-                } else if (typeof response === Error) {
-                    console.log('else if response', response);
+                } else {
+                    console.log('inside else');
                     throw response;
                 }
 
@@ -429,7 +440,7 @@
                     phoneInput.disabled = true;
                     submitButton.style.display = 'none';
                 } else {
-                    //TODO 
+                    //TODO
                     //need to check other possible errors
                     showInputMessage(
                         'Невірний код підтвердження',
