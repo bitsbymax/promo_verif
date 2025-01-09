@@ -29,11 +29,11 @@
         form#confirmation_form.confirmation_form.hidden
             label(htmlFor="verification-code") Код підтвердження:
             input(
-                type="text"
+                type="number"
                 id="verification-code"
                 name="verification-code"
                 placeholder="Введіть код"
-                maxlength="5"
+                pattern="[0-9]{5}"
                 required
             )
             button(
