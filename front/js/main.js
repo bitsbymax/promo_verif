@@ -140,7 +140,8 @@
             return res;
         } catch (error) {
             console.error('Error verifying user phone:', error);
-            throw error;
+
+            return error;
         }
     };
 
@@ -301,7 +302,10 @@
         };
 
         const handleVerificationResponse = (response) => {
-            console.log('response from verifyUserPhone inside handleVerificationResponse',response)
+            console.log(
+                'response from verifyUserPhone inside handleVerificationResponse',
+                response
+            );
             if (response.ok) {
                 verificationSession = response.data.session_id;
                 confirmationForm.classList.remove('hidden');
@@ -377,7 +381,14 @@
                 }
                 //Verify user phone number
                 const response = await verifyUserPhone(cid);
-                handleVerificationResponse(response);
+
+                if (response) {
+                    console.log('inside if response', response);
+                    handleVerificationResponse(response);
+                } else if (typeof response === Error) {
+                    console.log('else if response', response);
+                    throw response;
+                }
 
                 // Add verification record
                 // const verificationRecord = new FormData();
