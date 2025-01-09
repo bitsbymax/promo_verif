@@ -42,7 +42,7 @@
     //! add phone number mask and phone validation
 
     const API = 'https://www.favbet.ua';
-    const VERIFICATION_API = 'http://localhost:3181/verification-api';
+    // const VERIFICATION_API = 'http://localhost:3181/verification-api';
     const phoneInput = document.getElementById('phone');
     const verificationForm = document.getElementById('verification_form');
     const loginButton = document.getElementById('login-button');
@@ -177,43 +177,43 @@
         }
     };
 
-    const getAllVerifications = async () => {
-        try {
-            const response = await fetch(`${VERIFICATION_API}/verifications`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-            return await response.json();
-        } catch (error) {
-            console.error('Error fetching verifications:', error);
-            throw error;
-        }
-    };
+    // const getAllVerifications = async () => {
+    //     try {
+    //         const response = await fetch(`${VERIFICATION_API}/verifications`, {
+    //             method: 'GET',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //             },
+    //         });
+    //         return await response.json();
+    //     } catch (error) {
+    //         console.error('Error fetching verifications:', error);
+    //         throw error;
+    //     }
+    // };
 
-    const addVerification = async (formData) => {
-        try {
-            const response = await fetch(`${VERIFICATION_API}/verification`, {
-                method: 'POST',
-                body: formData,
-            });
-            return await response.json();
-        } catch (error) {
-            console.error('Error adding verification:', error);
-            throw error;
-        }
-    };
+    // const addVerification = async (formData) => {
+    //     try {
+    //         const response = await fetch(`${VERIFICATION_API}/verification`, {
+    //             method: 'POST',
+    //             body: formData,
+    //         });
+    //         return await response.json();
+    //     } catch (error) {
+    //         console.error('Error adding verification:', error);
+    //         throw error;
+    //     }
+    // };
 
-    const showInputMessage = (message) => {
+    const showInputMessage = (message, targetElement = verificationForm) => {
         // Remove any existing messages first
         const existingMessages = document.querySelectorAll('.input-msg');
         existingMessages.forEach((msg) => msg.remove());
 
-        const successMessage = document.createElement('div');
-        successMessage.textContent = message;
-        successMessage.classList.add('input-msg');
-        verificationForm.after(successMessage);
+        const messageElement = document.createElement('div');
+        messageElement.textContent = message;
+        messageElement.classList.add('input-msg');
+        targetElement.after(messageElement);
     };
 
     const isPhoneValid = (phone) => {
@@ -233,6 +233,11 @@
             loginButton.style.display = 'none';
             verificationForm.classList.add('visible');
         }
+
+        const confirmationForm = document.getElementById('confirmation_form');
+        const confirmButton = document.getElementById('confirm-button');
+        let verificationSession = null;
+        let verificationTimer = null;
 
         let user = null;
         let cid = null;
@@ -266,6 +271,63 @@
         } catch (error) {
             console.error('Failed to get user:', error);
         }
+
+        const startVerificationTimer = (totalSeconds) => {
+            if (verificationTimer) {
+                clearInterval(verificationTimer);
+            }
+
+            let timeLeft = totalSeconds;
+
+            verificationTimer = setInterval(() => {
+                if (timeLeft <= 0) {
+                    clearInterval(verificationTimer);
+                    confirmButton.disabled = false;
+                    confirmButton.textContent = 'Надіслати повторно';
+                    showInputMessage('Час верифікації минув', confirmationForm);
+                    return;
+                }
+
+                confirmButton.disabled = true;
+                confirmButton.textContent = 'Надіслати';
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                showInputMessage(
+                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')} час, який залишився, щоб ввести код, після закінчення часу Ви зможете відправити код повторно`,
+                    confirmationForm
+                );
+                timeLeft--;
+            }, 1000);
+        };
+
+        const handleVerificationResponse = (response) => {
+            if (response.ok) {
+                verificationSession = response.data.session_id;
+                confirmationForm.classList.remove('hidden');
+                confirmationForm.classList.add('visible');
+
+                // Start timer for code verification
+                const ttl = response.data.phone_verification_ttl;
+                startVerificationTimer(ttl);
+            } else if (response.code === -24) {
+                const { rest_time } = response.message;
+                submitButton.disabled = true;
+                startVerificationTimer(rest_time);
+                showInputMessage(
+                    `${Math.floor(rest_time / 3600)
+                        .toString()
+                        .padStart(2, '0')}:${Math.floor((rest_time % 3600) / 60)
+                        .toString()
+                        .padStart(2, '0')}:${(rest_time % 60)
+                        .toString()
+                        .padStart(
+                            2,
+                            '0'
+                        )} Верифікацію заблоковано. Дочекайтесь оновлення таймера`,
+                    confirmationForm
+                );
+            }
+        };
 
         //User starts to change phone number
         phoneInput.addEventListener('input', (e) => {
@@ -315,14 +377,7 @@
                 }
                 //Verify user phone number
                 const response = await verifyUserPhone(cid);
-
-                //? Verification locked?
-                // true - wait timer refresh --> message.reason, message.rest_time
-                // false - wait form confirmation code and then confirmUserPhone()
-
-                //! Edit button path
-                //! Refresh button path
-                //! Try click send code again path
+                handleVerificationResponse(response);
 
                 // Add verification record
                 // const verificationRecord = new FormData();
@@ -331,12 +386,45 @@
                 // verificationRecord.append('userid', userId);
                 // await addVerification(verificationRecord);
 
-                // Change button text after successful verification
-                submitButton.textContent = 'Підтвердити';
+                submitButton.disabled = true;
             } catch (error) {
                 console.error('Verification process failed:', error);
-            } finally {
                 submitButton.disabled = false;
+            }
+        });
+
+        // Add confirmation form handler
+        confirmationForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            confirmButton.disabled = true;
+
+            const code = document.getElementById('verification-code').value;
+
+            try {
+                const response = await confirmUserPhone(
+                    code,
+                    verificationSession
+                );
+
+                if (response.ok) {
+                    showInputMessage('Ваш номер телефону підтверджено');
+                    confirmationForm.style.display = 'none';
+                    phoneInput.disabled = true;
+                    submitButton.style.display = 'none';
+                } else {
+                    showInputMessage(
+                        'Невірний код підтвердження',
+                        confirmationForm
+                    );
+                }
+            } catch (error) {
+                console.error('Error confirming code:', error);
+                showInputMessage(
+                    'Помилка підтвердження коду',
+                    confirmationForm
+                );
+            } finally {
+                confirmButton.disabled = false;
             }
         });
     };
