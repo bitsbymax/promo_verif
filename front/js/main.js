@@ -301,6 +301,7 @@
         };
 
         const handleVerificationResponse = (response) => {
+            console.log('response from verifyUserPhone inside handleVerificationResponse',response)
             if (response.ok) {
                 verificationSession = response.data.session_id;
                 confirmationForm.classList.remove('hidden');
