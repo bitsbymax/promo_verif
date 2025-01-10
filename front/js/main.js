@@ -392,6 +392,7 @@
                     if (response.error === 'no' && !response.error_code) {
                         userPhoneNumber = response.phone;
                         submitButton.innerHTML = 'Підтвердити';
+                        submitButton.disabled = false;
                     }
 
                     return;
