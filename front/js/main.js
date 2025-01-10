@@ -287,9 +287,18 @@
             verificationTimer = setInterval(() => {
                 if (timeLeft <= 0) {
                     clearInterval(verificationTimer);
+
                     confirmButton.disabled = false;
                     confirmButton.textContent = 'Надіслати повторно';
+                    // Reset the form and remove required attribute
+                    const codeInput =
+                        document.getElementById('confirmation-code');
+                    codeInput.value = '';
+                    codeInput.required = false;
+                    // Change form submit behavior to verification
+                    confirmationForm.dataset.confirmationExpired = 'true';
                     showInputMessage('Час верифікації минув', confirmationForm);
+
                     return;
                 }
 
@@ -336,8 +345,12 @@
             };
             if (response.ok) {
                 verificationSession = response.data.session_id;
-                confirmationForm.classList.add('visible');
-                confirmationForm.classList.remove('hidden');
+                // Only handle form visibility if it's hidden
+                if (confirmationForm.classList.contains('hidden')) {
+                    confirmationForm.classList.add('visible');
+                    confirmationForm.classList.remove('hidden');
+                }
+
                 step.confirmation = true;
                 // Start timer for code verification
                 const ttl = response.data.phone_verification_ttl;
@@ -426,8 +439,27 @@
         confirmationForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             confirmButton.disabled = true;
+            // Check if verification has expired
+            if (confirmationForm.dataset.confirmationExpired === 'true') {
+                // Reset the form state
+                confirmationForm.dataset.confirmationExpired = 'false';
+                const codeInput = document.getElementById('confirmation-code');
+                codeInput.required = true;
 
-            const code = document.getElementById('verification-code').value;
+                // Trigger new verification
+                try {
+                    const response = await verifyUserPhone(cid);
+                    if (response) {
+                        handleVerificationResponse(response);
+                    }
+                } catch (error) {
+                    console.error('Error resending verification code:', error);
+                }
+                confirmButton.disabled = false;
+                return;
+            }
+
+            const code = document.getElementById('confirmation-code').value;
 
             try {
                 const response = await confirmUserPhone(
