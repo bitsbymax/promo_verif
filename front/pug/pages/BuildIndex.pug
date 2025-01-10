@@ -26,12 +26,12 @@
                 id="submit-button"
             ) Підтвердити
 
-        form#confirmation_form.confirmation_form.hidden
-            label(htmlFor="verification-code") Код підтвердження:
+        form#confirmation_form.confirmation_form.hidden(data-confirmation-expired="false")
+            label(htmlFor="confirmation-code") Код підтвердження:
             input(
                 type="number"
-                id="verification-code"
-                name="verification-code"
+                id="confirmation-code"
+                name="confirmation-code"
                 placeholder="Введіть код"
                 pattern="[0-9]{5}"
                 required
