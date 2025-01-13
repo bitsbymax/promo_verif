@@ -214,7 +214,13 @@
         const messageElement = document.createElement('div');
         messageElement.textContent = message;
         messageElement.classList.add('input-msg');
-        targetElement.after(messageElement);
+
+        if (targetElement.getAttribute('id') === 'confirmation_form') {
+            const inputElement = targetElement.querySelector('input');
+            inputElement.after(messageElement);
+        } else {
+            targetElement.after(messageElement);
+        }
     };
 
     const isPhoneValid = (phone) => {
@@ -302,7 +308,6 @@
                     return;
                 }
 
-                confirmButton.disabled = true;
                 confirmButton.textContent = 'Надіслати';
                 const minutes = Math.floor(timeLeft / 60);
                 const seconds = timeLeft % 60;

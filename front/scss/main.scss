@@ -52,23 +52,6 @@
             cursor: not-allowed;
         }
     }
-    
-    .resend-button {
-        background: none;
-        border: none;
-        color: #0066cc;
-        text-decoration: underline;
-        cursor: pointer;
-        
-        &:hover {
-            color: #0052a3;
-        }
-        
-        &[disabled] {
-            color: #999;
-            text-decoration: none;
-        }
-    }
 }
 
 .hidden {
