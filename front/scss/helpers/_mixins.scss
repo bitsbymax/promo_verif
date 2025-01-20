@@ -1,0 +1,84 @@
+@use 'sass:map';
+@use 'variables' as *;
+
+// Layout mixins
+@mixin fixed-full {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+@mixin flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+// Background mixins
+@mixin background-cover($url) {
+    background-image: url($url);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+// Banner mixins
+@function font($family, $weight) {
+    @return map.get(map.get($fonts, $family), $weight);
+}
+
+@mixin banner-section {
+    @include flex-center;
+    height: $banner-content-height;
+    flex-shrink: 0;
+}
+
+@mixin banner-text {
+    display: flex;
+    justify-content: center;
+    flex-shrink: 0;
+    color: $white;
+    text-align: center;
+    font-family: font('unbounded', 'semibold');
+    font-size: 25px;
+    letter-spacing: 0.5px;
+}
+
+@mixin colored-section($color, $bg-image) {
+    @include banner-section;
+    background-color: $color;
+    @include background-cover($bg-image);
+}
+
+//Side content mixins
+@mixin emoji-rotations($side) {
+    $rotations: (
+        'left': (1: (disk: 87.533deg, smile: 0deg),
+            2: (disk: -160.771deg, smile: 15deg),
+            3: (disk: -87.517deg, smile: 30deg)),
+        'right': (1: (disk: 117.533deg, smile: 30deg),
+            2: (disk: -160.771deg, smile: 15deg),
+            3: (disk: -117.533deg, smile: 0deg))
+    );
+
+    @for $i from 1 through 3 {
+        &:nth-child(#{$i}) {
+            $rotation: map.get(map.get(map.get($rotations, $side), $i), 'disk');
+            $smile-rotation: map.get(map.get(map.get($rotations, $side), $i), 'smile');
+
+            .emojiGroup__item-disk {
+                transform: rotate($rotation);
+            }
+
+            .emojiGroup__item-ellipse {
+                transform: translate(-50%, -50%) rotate($rotation);
+            }
+
+            .emojiGroup__item-smile {
+                transform: translate(-50%, -50%) rotate($smile-rotation);
+            }
+        }
+    }
+}

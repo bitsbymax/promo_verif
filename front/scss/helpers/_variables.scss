@@ -1,0 +1,18 @@
+$dark_blue: #00003D;
+$pink: #FF267E;
+$white: #fff;
+
+// Dimensions
+$banner-height: 71.2px;
+$banner-content-height: 70.8px;
+$base-width-left: 344px;
+$base-width-right: 355px;
+
+// Fonts
+$fonts: (
+    'unbounded': ('regular': Unbounded-Regular,
+        'medium': Unbounded-Medium,
+        'bold': Unbounded-Bold,
+        'semibold': Unbounded-SemiBold,
+    )
+);

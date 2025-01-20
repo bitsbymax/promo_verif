@@ -1,0 +1,74 @@
+//- Mixins for banners
+mixin takeBonus()
+    .banner__takeBonus
+        .banner__takeBonus-content(data-translate="takeBonus") ЗАБЕРИ СВІЙ БОНУС
+
+mixin currency()
+    .banner__currency
+        .banner__currency-content
+
+mixin bonusHere()
+    .banner__bonusHere
+        .banner__bonusHere-content
+            .banner__bonusHere-content-pic
+            .banner__bonusHere-content-text(data-translate="bonusHere") БОНУС
+            .banner__bonusHere-content-pic
+            .banner__bonusHere-content-text(data-translate="bonusHere") БОНУС
+            .banner__bonusHere-content-pic
+
+mixin freeSpins()
+    .banner__fs
+        .banner__fs-content
+
+mixin banner(position)
+    section(class=`banner banner--${position}`)
+        .banner__content
+            +takeBonus()
+            +currency()
+            +bonusHere()
+            +freeSpins()
+            +takeBonus()
+            +currency()
+            +bonusHere()
+            +freeSpins()
+            +takeBonus()
+
+//- Mixins for side content
+mixin emojiGroup()
+    .emojiGroup
+        each val in [1, 2, 3]
+            .emojiGroup__item
+                .emojiGroup__item-wrapper
+                    img.emojiGroup__item-disk(src="/img/disk.png" alt="disk")
+                    img.emojiGroup__item-ellipse(src="/img/disk_ellipse.svg" alt="ellipse-blur")
+                    img.emojiGroup__item-smile(src="/img/smile.svg" alt="smile")
+
+mixin bonusSpark()
+    .bonusSpark
+        .bonusSpark__content
+            .bonusSpark__text +20FS
+
+mixin prizeInfo(type = 'left')
+    .prizeInfo
+        .prizeInfo__text
+            if type === 'left'
+                span.prizeInfo__text-insurance(data-translate="prizeInfoInsurance") СТРАХОВКА ДО
+                span.prizeInfo__text-value(data-translate="prizeInfoValue") СТАВКИ 100 ₴
+
+mixin pointers()
+    .pointers
+        each val in [1, 2, 3]
+            .pointers__item
+
+mixin sideContainer(position = 'left')
+    aside(class=`sideContainer sideContainer--${position}`)
+        if position === 'left'
+            +emojiGroup
+            +bonusSpark
+            +prizeInfo('left')
+            +pointers
+        else
+            +pointers
+            +prizeInfo('right')
+            +bonusSpark
+            +emojiGroup
