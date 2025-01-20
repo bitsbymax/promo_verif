@@ -19,33 +19,46 @@ include ../mixins.pug
             //- Form
             .formOuterWrapper
                 .formInnerWrapper
-                    form.form
-                        .formHeader
-                            img.formHeader__icon(src="" alt="")
-                            h1.formHeader__title 
-                                | ВЕРИФІКУЙСЯ
-                                br
-                                | ДО БОНУСІВ
+                    a(
+                        id="login-button"
+                        href="https://www.favbet.ua/login"
+                        type="button"
+                        style="color: white"
+                    ) Авторизуватись
+                    form#verification__form.verification__form.hidden
+                        label(htmlFor="phone" style="color: white") Телефон:
+                        input(
+                            type="tel"
+                            id="phone"
+                            name="phone"
+                            placeholder="+380 XX XXX XX XX"
+                            autocomplete="tel"
+                            maxlength="16"
+                            required
+                        )
+                        button(
+                            type="submit"
+                            id="submit-button"
+                            style="color: white"
+                        ) Підтвердити
 
-                        p.formDescription
-                            | Отримай винагороду за кілька кроків.
-                            br
-                            | Верифікуйте номер та забирай
-                            br
-                            | персональний бонус.
+                    form#confirmation__form.confirmation__form.hidden(data-confirmation-expired="false")
+                        label(htmlFor="confirmation-code" style="color: white") Код підтвердження:
+                        input(
+                            type="number"
+                            id="confirmation-code"
+                            name="confirmation-code"
+                            placeholder="Введіть код"
+                            pattern="[0-9]{5}"
+                            required
+                        )
+                        button(
+                            type="submit"
+                            id="confirm-button"
+                            style="color: white"
+                        ) Підтвердити код
 
-                        .formField
-                            label.formField__label(for="phone") Підтвердити свій номер телефону
-                            input.formField__input#phone(
-                                type="tel"
-                                placeholder="+380 (XX) XXX XX XX"
-                                required
-                            )
-
-                        button.form-button(type="submit") ПІДТВЕРДИТИ
-
-                        .form-footer
-                            a.form-footer__link(href="#") Детальніше..
+            //- Rules
                 .rules.drop
                     details.dropdown
                         summary(data-translate="terms")
@@ -58,39 +71,34 @@ include ../mixins.pug
     //- Bottom Banner
     +banner('bottom')
 
-    //-main.main__form
-        a(
-            id="login-button"
-            href="https://www.favbet.ua/login"
-            type="button"
-        ) Авторизуватись
-        form#verification__form.verification__form.hidden
-            label(htmlFor="phone") Телефон:
-            input(
-                type="tel"
-                id="phone"
-                name="phone"
-                placeholder="+380 XX XXX XX XX"
-                autocomplete="tel"
-                maxlength="16"
-                required
-            )
-            button(
-                type="submit"
-                id="submit-button"
-            ) Підтвердити
 
-        form#confirmation__form.confirmation__form.hidden(data-confirmation-expired="false")
-            label(htmlFor="confirmation-code") Код підтвердження:
-            input(
-                type="number"
-                id="confirmation-code"
-                name="confirmation-code"
-                placeholder="Введіть код"
-                pattern="[0-9]{5}"
+
+
+//-
+    form.form
+        .formHeader
+            img.formHeader__icon(src="" alt="")
+            h1.formHeader__title 
+                | ВЕРИФІКУЙСЯ
+                br
+                | ДО БОНУСІВ
+
+        p.formDescription
+            | Отримай винагороду за кілька кроків.
+            br
+            | Верифікуйте номер та забирай
+            br
+            | персональний бонус.
+
+        .formField
+            label.formField__label(for="phone") Підтвердити свій номер телефону
+            input.formField__input#phone(
+                type="tel"
+                placeholder="+380 (XX) XXX XX XX"
                 required
             )
-            button(
-                type="submit"
-                id="confirm-button"
-            ) Підтвердити код
+
+        button.form-button(type="submit") ПІДТВЕРДИТИ
+
+        .form-footer
+            a.form-footer__link(href="#") Детальніше..
