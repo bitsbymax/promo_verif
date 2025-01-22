@@ -243,12 +243,9 @@
 
                     &__text {
                         width: 178px;
-                        color: $pink;
-                        text-align: center;
-                        font-family: font('unbounded', 'semibold');
-                        font-size: 44px;
-                        letter-spacing: 0.88px;
-                        transform: rotate(-15deg);
+                        height: 72px;
+                        @include background-cover('/img/20FS.svg');
+
                     }
                 }
 
@@ -262,7 +259,6 @@
                     &__text {
                         display: flex;
                         flex-direction: column;
-                        align-items: center;
                         color: $white;
                         font-family: font('unbounded', 'semibold');
                     }
@@ -368,12 +364,14 @@
                 }
             }
 
+            .mobileSideContent {
+                display: none;
+            }
+
             .form {
                 &__outerWrapper {
                     display: flex;
                     flex-direction: column;
-                    // min-width: 864px;
-                    // flex-shrink: 1;
                     width: 864px;
                     height: 600px;
                     padding: 43px 32px 30px 32px;
@@ -385,8 +383,6 @@
                 &__innerWrapper {
                     display: flex;
                     flex-direction: column;
-                    // width: 100%;
-                    // max-width: 801px;
                     margin-bottom: 20px;
                 }
 
@@ -396,15 +392,10 @@
                     align-items: center;
                     height: 48px;
                     width: 100%;
-                    // width: 801px;
-                    // width: 100%;
                     margin-bottom: -2px;
                     position: relative;
                     z-index: 2;
-                    //background: url('/img/top_bar.png') no-repeat 0 0/contain;
-                    //background: #005;
-                    //border: 1px solid white;
-                    //background-size: 100% 100%;
+
                     &::before,
                     &::after {
                         content: '';
@@ -415,31 +406,35 @@
                         width: 100%;
                         height: 100%;
                         z-index: 1;
-                        background: #005;
-                        mask-image:  url('/img/top_bar.png');
+                        background: $basic-blue;
+                        mask-image: url('/img/top_bar.png');
                         mask-size: 100% 100%;
                         mask-repeat: no-repeat;
                     }
-                    &::before{
+
+                    &::before {
                         height: calc(100% - 4px);
                         width: calc(100% - 3px);
                     }
-                    &::after{
-                        z-index: 0;
-                        background: #FF267E;
-                    }
-
-
-                    //&::before {
-                    //    top: -10%;
-                    //    width: 66px;
-                    //    height: 3px;
-                    //    @include background-cover('/img/small_bar.svg');
-                    //    z-index: 1;
-                    //}
 
                     &::after {
+                        z-index: 0;
+                        background: $pink;
+                    }
 
+                    &-wrapper {
+                        position: relative;
+
+                        &::before {
+                            content: '';
+                            position: absolute;
+                            top: -4px;
+                            left: 45.9%;
+                            width: 66px;
+                            height: 3px;
+                            @include background-cover('/img/small_bar.svg');
+                            z-index: 1;
+                        }
                     }
 
                     &-logoWrapper {
@@ -518,8 +513,8 @@
                         flex: 1;
 
                         .form__image {
-                            width: 97%;
-                            height: 97%;
+                            width: 92%;
+                            height: 92%;
                             object-fit: fill;
                         }
                     }

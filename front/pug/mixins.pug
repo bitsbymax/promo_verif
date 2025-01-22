@@ -34,9 +34,9 @@ mixin banner(position)
             +takeBonus()
 
 //- Mixins for side content
-mixin emojiGroup()
+mixin emojiGroup(count = 3)
     .emojiGroup
-        each val in [1, 2, 3]
+        - for (var i = 0; i < count; i++)
             .emojiGroup__item
                 .emojiGroup__item-wrapper
                     img.emojiGroup__item-disk(src="/img/disk.png" alt="disk")
@@ -46,7 +46,7 @@ mixin emojiGroup()
 mixin bonusSpark()
     .bonusSpark
         .bonusSpark__content
-            .bonusSpark__text +20FS
+            .bonusSpark__text
 
 mixin prizeInfo(type = 'left')
     .prizeInfo
@@ -55,9 +55,9 @@ mixin prizeInfo(type = 'left')
                 span.prizeInfo__text-insurance(data-translate="prizeInfoInsurance") СТРАХОВКА ДО
                 span.prizeInfo__text-value(data-translate="prizeInfoValue") СТАВКИ 100 ₴
 
-mixin pointers()
+mixin pointers(count = 3)
     .pointers
-        each val in [1, 2, 3]
+        - for (var i = 0; i < count; i++)
             .pointers__item
 
 mixin sideContent(position = 'left')
@@ -72,3 +72,17 @@ mixin sideContent(position = 'left')
             +prizeInfo('right')
             +bonusSpark
             +emojiGroup
+
+//- Mixin for mobile side content
+mixin mobileSideContent(position = 'top')
+    div(class=`mobileSideContent mobileSideContent--${position}`)
+        if position === 'top'
+            +emojiGroup(1)
+            +prizeInfo('left')
+            +bonusSpark
+            +pointers(1)
+        else
+            +pointer(1)
+            +bonusSpark
+            +prizeInfo('left')
+            +emojiGroup(1)

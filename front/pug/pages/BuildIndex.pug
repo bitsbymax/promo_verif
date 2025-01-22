@@ -16,14 +16,18 @@ include ../mixins.pug
             //- Left Side Elements
             +sideContent('left')
 
+            //- Mobile Side Content Top
+            +mobileSideContent('top')
+
             //- Form Wrapper
             .form__outerWrapper
                 .form__innerWrapper
-                    .form__topBar
-                        .form__topBar-logoWrapper
-                            img(src="/img/logo_blue.svg" alt="logo").form__topBar-logoWrapper--logo
-                            img(src="/img/logo_backdrop.svg" alt="backdrop").form__topBar-logoWrapper--backdrop
-                        img(src="/img/esc_button.svg" alt="esc-button").form__topBar-btnImage
+                    .form__topBar-wrapper
+                        .form__topBar
+                            .form__topBar-logoWrapper
+                                img(src="/img/logo_blue.svg" alt="logo").form__topBar-logoWrapper--logo
+                                img(src="/img/logo_backdrop.svg" alt="backdrop").form__topBar-logoWrapper--backdrop
+                            img(src="/img/esc_button.svg" alt="esc-button").form__topBar-btnImage
                     .form__container
                         //- Left Image
                         .form__image-container--left
@@ -88,6 +92,8 @@ include ../mixins.pug
                         .drop-txt
                             .drop-txt-list(data-translate="terms-drop-txt")
 
+            //- Mobile Side Content Bottom
+            +mobileSideContent('bottom')
             //- Right Side Elements
             +sideContent('right')
 
