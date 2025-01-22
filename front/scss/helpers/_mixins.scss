@@ -82,3 +82,78 @@
         }
     }
 }
+
+//Mixins for the form
+@mixin forms-shared {
+    @include flex-center;
+    flex-direction: column;
+
+    label {
+        align-self: flex-start;
+        color: $dark-blue;
+        font-family: font('unbounded', 'regular');
+        font-size: 12px;
+        letter-spacing: 0.24px;
+    }
+
+    input {
+        inline-size: 320px;
+        margin-block-start: 10px;
+        padding: 15px 0 16px 21px;
+        background-color: $light-grey;
+        border: 1px solid $grey;
+        border-radius: 2px;
+        color: $input-dark-blue;
+        font-family: font('unbounded', 'regular');
+        font-size: 14px;
+        letter-spacing: 0.28px;
+
+        &::placeholder {
+            color: $dark-grey;
+            font-family: font('unbounded', 'regular');
+            font-size: 14px;
+            letter-spacing: 0.28px;
+        }
+
+        &::-moz-placeholder {
+            opacity: 1;
+        }
+
+        &:hover {
+            border-color: $basic-green;
+        }
+
+        &:focus,
+        :focus-visible {
+            border-color: $basic-blue;
+            outline: none;
+        }
+
+        &.is-invalid {
+            border-color: $error-red;
+        }
+    }
+
+    button {
+        @include flex-center;
+        width: 320px;
+        height: 50px;
+        margin-top: 10px;
+        padding: 10px 16px;
+        gap: 10px;
+        border: none;
+        outline: none;
+        border-radius: 2px;
+        background: $button-green;
+        color: $dark-blue;
+        text-align: center;
+        font-family: font('unbounded', 'semibold');
+        font-size: 14px;
+        letter-spacing: 0.28px;
+
+        &:focus-visible {
+            outline: 2px solid $button-green;
+            outline-offset: 2px;
+        }
+    }
+}
