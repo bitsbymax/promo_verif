@@ -18,7 +18,7 @@
 //     .fav__page {
 //         .main {
 //             &__contentWrapper {
-//                 .sideContainer {
+//                 .sideContent {
 //                     &--right {
 //                         .bonusSpark {
 //                             width: max-content;
@@ -31,19 +31,19 @@
 // }
 
 @media screen and (max-width: 1550px) {
-    .fav__page {
-        .main {
-            &__contentWrapper {
-                .form {
-                    &__outerWrapper {
-                        width: 705px;
-                        min-width: 705px;
-                        padding: 43px 25px 0;
-                    }
-                }
-            }
-        }
-    }
+    // .fav__page {
+    //     .main {
+    //         &__contentWrapper {
+    //             .form {
+    //                 &__outerWrapper {
+    //                     width: 705px !important;
+    //                     min-width: 705px;
+    //                     // padding: 43px 25px 0;
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
 }
 
 @media screen and (max-width: 1400px) {
@@ -56,23 +56,23 @@
 }
 
 @media screen and (max-width: 1300px) {
-    .fav__page {
-        .main {
-            &__contentWrapper {
-                .form {
+    // .fav__page {
+    //     .main {
+    //         &__contentWrapper {
+    //             .form {
 
-                    &__picture-left,
-                    &__picture-right {
-                        display: none;
-                    }
+    //                 &__picture-left,
+    //                 &__picture-right {
+    //                     display: none;
+    //                 }
 
-                    &__mainContent {
-                        width: 100%;
-                    }
-                }
-            }
-        }
-    }
+    //                 &__mainContent {
+    //                     width: 100%;
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
 
     // .main {
     //     &__video {
@@ -152,27 +152,27 @@
 }
 
 @media screen and (max-width: 1000px) {
-    .fav__page {
-        .main {
-            &__contentWrapper {
-                .sideContainer {
+    // .fav__page {
+    //     .main {
+    //         &__contentWrapper {
+    //             .sideContent {
 
-                    &--left,
-                    &--right {
-                        display: none;
-                    }
-                }
+    //                 &--left,
+    //                 &--right {
+    //                     display: none;
+    //                 }
+    //             }
 
-                .form {
-                    &__outerWrapper {
-                        width: 705px;
-                        min-width: 705px;
-                        margin: 0 auto;
-                    }
-                }
-            }
-        }
-    }
+    //             .form {
+    //                 &__outerWrapper {
+    //                     width: 705px;
+    //                     min-width: 705px;
+    //                     margin: 0 auto;
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
 
     // .main {
     //     &__wrapp {

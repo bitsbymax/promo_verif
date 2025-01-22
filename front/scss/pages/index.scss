@@ -7,7 +7,6 @@
 .fav__page {
     position: relative;
     height: 100vh;
-    // height: 860px;
     width: 100%;
     overflow: hidden;
 
@@ -167,7 +166,7 @@
             overflow: hidden;
 
 
-            .sideContainer {
+            .sideContent {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
@@ -177,7 +176,7 @@
                 }
 
                 &--right {
-                    margin-left: 45px;
+                    margin-left: 24px;
                 }
 
                 %shared-positioning {
@@ -335,7 +334,7 @@
 
                     .bonusSpark {
                         margin-top: -30px;
-                        margin-right: -22px;
+                        margin-left: 24px;
 
                         &__content {
                             width: $base-width-right;
@@ -346,7 +345,7 @@
                         width: 269px;
                         height: 80px;
                         margin-top: 19px;
-                        margin-right: 34px;
+                        align-self: center;
 
                         &__text {
                             width: 205px;
@@ -373,21 +372,21 @@
                 &__outerWrapper {
                     display: flex;
                     flex-direction: column;
-                    width: 864px;
                     // min-width: 864px;
-                    // flex-shrink: 0;
+                    // flex-shrink: 1;
+                    width: 864px;
                     height: 600px;
-                    padding: 43px 32px 0;
+                    padding: 43px 32px 30px 32px;
                     border-radius: 20px;
                     border: 1px solid $pink;
                     background: $dark-blue;
                 }
 
                 &__innerWrapper {
-                    width: 100%;
                     display: flex;
                     flex-direction: column;
-                    align-self: flex-start;
+                    // width: 100%;
+                    // max-width: 801px;
                     margin-bottom: 20px;
                 }
 
@@ -395,12 +394,16 @@
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
-                    height: 50px;
-                    margin-bottom: -6px;
+                    height: 48px;
+                    // width: 801px;
+                    // width: 100%;
+                    margin-bottom: -2px;
                     position: relative;
                     z-index: 2;
-                    @include background-cover('/img/top_bar.svg');
-                    background-size: 100% 100%;
+                    background-image: url('/img/top_bar.svg');
+                    background-size: cover;
+                    background-position: center;
+                    background-repeat: no-repeat;
 
                     &::before,
                     &::after {
@@ -411,7 +414,7 @@
                     }
 
                     &::before {
-                        top: -2px;
+                        top: -10%;
                         width: 66px;
                         height: 3px;
                         @include background-cover('/img/small_bar.svg');
@@ -419,7 +422,7 @@
                     }
 
                     &::after {
-                        top: -1px;
+                        top: -8%;
                         width: 64px;
                         height: 1px;
                         @include background-cover('/img/small_bar_inner.svg');
@@ -427,11 +430,11 @@
                     }
 
                     &-logoWrapper {
-
+                        margin: 8px 0 8px 18px;
                         width: 31px;
                         height: 31px;
                         position: relative;
-                        margin: 8px 0 8px 18px;
+
 
                         &::after {
                             content: '';
@@ -469,30 +472,41 @@
                 &__container {
                     display: flex;
                     justify-content: space-between;
-                    flex-shrink: 0;
+                    align-items: flex-start;
                     height: 400px;
+                    flex-shrink: 1;
                     border-radius: 0 0 14px 14px;
                     border: 2px solid $pink;
+                    border-top: none;
                     background: $white;
                     position: relative;
                     z-index: 1;
                 }
 
-                &__picture {
-                    display: flex;
+                &__image-container {
+                    &--left {
+                        display: flex;
+                        margin-top: 24px;
+                        margin-left: 16px;
+                        flex: 1;
 
-                    &-left {
-                        width: 97px;
-                        height: 97px;
-                        padding: 26px 76px 0 26px;
-                        @include background-cover('/img/pink_smile.svg');
+                        .form__image {
+                            width: 67%;
+                            height: 67%;
+                            object-fit: fill;
+                        }
                     }
 
-                    &-right {
-                        width: 158px;
-                        height: 102px;
-                        padding: 31px 23px 0 15px;
-                        @include background-cover('/img/pink_spark.svg');
+                    &--right {
+                        display: flex;
+                        margin: 10px 16px 0 0;
+                        flex: 1;
+
+                        .form__image {
+                            width: 97%;
+                            height: 97%;
+                            object-fit: fill;
+                        }
                     }
                 }
 
@@ -500,6 +514,8 @@
                     display: flex;
                     flex-direction: column;
                     align-items: center;
+                    width: 340px;
+                    flex: 0 0 auto;
                     margin: 40px 0 44px;
                 }
 
@@ -550,7 +566,7 @@
             }
 
             // .rules {
-            //     // padding-bottom: 70px;
+            //     margin-bottom: 30px;
             // }
 
             .drop {

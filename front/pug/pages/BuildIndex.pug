@@ -14,7 +14,7 @@ include ../mixins.pug
     main.main
         .main__contentWrapper
             //- Left Side Elements
-            +sideContainer('left')
+            +sideContent('left')
 
             //- Form Wrapper
             .form__outerWrapper
@@ -26,7 +26,8 @@ include ../mixins.pug
                         img(src="/img/esc_button.svg" alt="esc-button").form__topBar-btnImage
                     .form__container
                         //- Left Image
-                        .form__picture-left
+                        .form__image-container--left
+                            img(src="/img/pink_smile.svg" alt="smile").form__image
                         //- Form Content
                         .form__mainContent
                             h1.form__header
@@ -77,7 +78,8 @@ include ../mixins.pug
                                             id="confirm-button"
                                         ) ПІДТВЕРДИТИ
                         //- Right Image
-                        .form__picture-right
+                        .form__image-container--right
+                            img(src="/img/pink_spark.svg" alt="spark").form__image
 
                 //- Rules
                 .rules.drop
@@ -87,7 +89,7 @@ include ../mixins.pug
                             .drop-txt-list(data-translate="terms-drop-txt")
 
             //- Right Side Elements
-            +sideContainer('right')
+            +sideContent('right')
 
     //- Bottom Banner
     +banner('bottom')
