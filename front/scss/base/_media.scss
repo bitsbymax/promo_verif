@@ -1,6 +1,10 @@
 @use '../helpers' as *;
 
-@media screen and (min-width: 2200px) {}
+@media screen and (min-width: 2200px) {
+    .main__contentWrapper {
+        scale: 1.2;
+    }
+}
 
 @media screen and (max-width: 1800px) {}
 
@@ -29,154 +33,152 @@
 }
 
 @media screen and (max-width: 1500px) {
-    .fav__page {
-        .main {
-            &__contentWrapper {
-                flex-direction: column;
-                gap: 20px;
+    .main {
+        &__contentWrapper {
+            flex-direction: column;
+            gap: 20px;
 
-                .sideContent {
-                    display: none !important;
-                }
+            .sideContent {
+                display: none !important;
+            }
 
-                .mobileSideContent {
-                    display: flex !important;
-                    align-items: center;
-                    justify-content: space-between;
+            .mobileSideContent {
+                display: flex !important;
+                align-items: center;
+                justify-content: space-between;
 
-                    .emojiGroup {
-                        @include flex-center;
-                        position: relative;
-                        z-index: 3;
+                .emojiGroup {
+                    @include flex-center;
+                    position: relative;
+                    z-index: 3;
 
-                        &__item {
-                            &-wrapper {
-                                position: relative;
-                                width: 91px;
-                                height: 91px;
-                            }
-
-
-                            &-disk,
-                            &-ellipse,
-                            &-smile {
-                                position: absolute;
-                            }
-
-                            &-disk {
-                                inset: 0;
-                                width: 100%;
-                                height: 100%;
-                                z-index: 1;
-                            }
-
-                            &-ellipse {
-                                top: 50%;
-                                left: 50%;
-                                width: 51px;
-                                height: 51px;
-                                z-index: 2;
-                            }
-
-                            &-smile {
-                                top: 50%;
-                                left: 50%;
-                                height: 70px;
-                                z-index: 3;
-                            }
+                    &__item {
+                        &-wrapper {
+                            position: relative;
+                            width: 91px;
+                            height: 91px;
                         }
 
+
+                        &-disk,
+                        &-ellipse,
+                        &-smile {
+                            position: absolute;
+                        }
+
+                        &-disk {
+                            inset: 0;
+                            width: 100%;
+                            height: 100%;
+                            z-index: 1;
+                        }
+
+                        &-ellipse {
+                            top: 50%;
+                            left: 50%;
+                            width: 51px;
+                            height: 51px;
+                            z-index: 2;
+                        }
+
+                        &-smile {
+                            top: 50%;
+                            left: 50%;
+                            height: 70px;
+                            z-index: 3;
+                        }
                     }
 
+                }
+
+                .pointers {
+                    &__item {
+                        width: 72px;
+                        height: 52px;
+                        @include background-cover('/img/thumb_pink_reverse.svg');
+                    }
+                }
+
+                .prizeInfo {
+                    @include flex-center;
+                    width: 299px;
+                    height: 91px;
+                    margin-left: -20px;
+                    @include background-cover('/img/blue_rounded.svg');
+
+                    &__text {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        width: 233px;
+                        height: 40px;
+                        margin: 25px 32px 25px 35px;
+                        color: $white;
+                        font-family: font('unbounded', 'semibold');
+                        font-size: 20px;
+                        line-height: 26px;
+                        letter-spacing: 0.4px;
+
+                        &-insurance {
+                            align-self: flex-start;
+                        }
+
+                        &-value {
+                            align-self: flex-end;
+                        }
+                    }
+                }
+
+                .bonusSpark {
+                    @include flex-center;
+
+                    &__content {
+                        @include flex-center;
+                        width: 226px;
+                        height: 144px;
+                        @include background-cover('/img/top_spark.svg');
+                    }
+
+                    &__text {
+                        width: 122px;
+                        height: 52px;
+                        @include background-cover('/img/20FS_mobile.svg');
+                    }
+                }
+
+                &--top {
+                    .emojiGroup {
+                        &__item {
+                            @include emoji-rotations('left');
+                        }
+                    }
+                }
+
+                &--bottom {
                     .pointers {
                         &__item {
-                            width: 72px;
-                            height: 52px;
-                            @include background-cover('/img/thumb_pink_reverse.svg');
+                            @include background-cover('/img/thumb_pink.svg');
                         }
                     }
 
                     .prizeInfo {
-                        @include flex-center;
-                        width: 299px;
-                        height: 91px;
-                        margin-left: -20px;
-                        @include background-cover('/img/blue_rounded.svg');
-
-                        &__text {
-                            display: flex;
-                            flex-direction: column;
-                            align-items: center;
-                            justify-content: center;
-                            width: 233px;
-                            height: 40px;
-                            margin: 25px 32px 25px 35px;
-                            color: $white;
-                            font-family: font('unbounded', 'semibold');
-                            font-size: 20px;
-                            line-height: 26px;
-                            letter-spacing: 0.4px;
-
-                            &-insurance {
-                                align-self: flex-start;
-                            }
-
-                            &-value {
-                                align-self: flex-end;
-                            }
-                        }
+                        margin-left: 0;
                     }
 
-                    .bonusSpark {
-                        @include flex-center;
-
-                        &__content {
-                            @include flex-center;
-                            width: 226px;
-                            height: 144px;
-                            @include background-cover('/img/top_spark.svg');
-                        }
-
-                        &__text {
-                            width: 122px;
-                            height: 52px;
-                            @include background-cover('/img/20FS_mobile.svg');
-                        }
-                    }
-
-                    &--top {
-                        .emojiGroup {
-                            &__item {
-                                @include emoji-rotations('left');
-                            }
-                        }
-                    }
-
-                    &--bottom {
-                        .pointers {
-                            &__item {
-                                @include background-cover('/img/thumb_pink.svg');
-                            }
-                        }
-
-                        .prizeInfo {
-                            margin-left: 0;
-                        }
-
-                        .emojiGroup {
-                            &__item {
-                                @include emoji-rotations('right');
-                                margin-left: -15px;
-                            }
+                    .emojiGroup {
+                        &__item {
+                            @include emoji-rotations('right');
+                            margin-left: -15px;
                         }
                     }
                 }
+            }
 
-                .form__topBar {
-                    &-wrapper {
-                        &::before {
-                            left: 46.1% !important;
-                        }
+            .form__topBar {
+                &-wrapper {
+                    &::before {
+                        left: 46.1% !important;
                     }
                 }
             }
@@ -184,28 +186,130 @@
     }
 }
 
-@media screen and (max-width: 1400px) {} //important
+@media screen and (max-width: 1400px) {}
 
-@media screen and (max-width: 1300px) {} //important!!
+//important
 
-@media screen and (max-width: 1100px) {} //important
+@media screen and (max-width: 1300px) {}
 
-@media screen and (max-width: 1000px) {} //important!!!
+//important!!
 
-@media screen and (max-width: 900px) {} //important!
+@media screen and (max-width: 1100px) {}
 
-@media screen and (max-width: 750px) {} //important!
+//important
 
-@media screen and (max-width: 700px) {} //important!!!
+@media screen and (max-width: 1000px) {
+    .fav__page {
+        .main {
+            &__contentWrapper {
+                .form {
+                    &__outerWrapper {
+                        width: 705px !important;
+                        padding-top: 41px !important;
+                    }
 
-@media screen and (max-width: 570px) {} //important
+                    &__image-container {
+                        &--left {
+                            display: none !important;
+                        }
 
-@media screen and (max-width: 500px) {} //important
+                        &--right {
+                            display: none !important;
+                        }
+                    }
 
-@media screen and (max-width: 410px) {} //important
+                    &__container {
+                        justify-content: center !important;
+                        align-items: center !important;
+                    }
 
-@media screen and (max-width: 374px) {}  //important!!
+                    &__topBar {
+                        height: 38px !important;
 
-@media screen and (max-width: 920px) and (orientation: landscape) and (max-height: 450px) {} //important!
+                        &::before,
+                        &::after {
+                            mask-image: url('/img/mobile_top_bar.png') !important;
+                        }
 
-@media screen and (max-width: 700px) and (orientation: landscape) and (max-height: 450px) {} //important!
+                        &-wrapper {
+                            &::before {
+                                left: 46% !important;
+                                width: 53px !important;
+                                height: 2.4px !important;
+                            }
+                        }
+
+                        &-logoWrapper {
+                            margin: 6.4px 0 6.4px 14.5px !important;
+                            width: 22px !important;
+                            height: 22px !important;
+
+                            &::after {
+                                left: calc(100% + 8px) !important;
+                                width: 60px !important;
+                                height: 13px !important;
+                            }
+
+                            &--logo {
+                                width: 17px !important;
+                            }
+
+                            &--backdrop {
+                                height: 22px !important;
+                                width: 22px !important;
+                            }
+                        }
+
+                        &-btnImage {
+                            height: 13px !important;
+                            width: 13px !important;
+                            margin: 13px 12px 12px 0 !important;
+                        }
+                    }
+
+                    &__mainContent {
+                        margin: 50px 0 44px !important;
+                    }
+                }
+            }
+        }
+    }
+}
+
+//important!!!
+
+@media screen and (max-width: 900px) {}
+
+//important!
+
+@media screen and (max-width: 750px) {}
+
+//important!
+
+@media screen and (max-width: 700px) {}
+
+//important!!!
+
+@media screen and (max-width: 570px) {}
+
+//important
+
+@media screen and (max-width: 500px) {}
+
+//important
+
+@media screen and (max-width: 410px) {}
+
+//important
+
+@media screen and (max-width: 374px) {}
+
+//important!!
+
+@media screen and (max-width: 920px) and (orientation: landscape) and (max-height: 450px) {}
+
+//important!
+
+@media screen and (max-width: 700px) and (orientation: landscape) and (max-height: 450px) {}
+
+//important!

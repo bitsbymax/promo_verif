@@ -63,15 +63,15 @@ mixin pointers(count = 3)
 mixin sideContent(position = 'left')
     aside(class=`sideContent sideContent--${position}`)
         if position === 'left'
-            +emojiGroup
+            +emojiGroup()
             +bonusSpark
             +prizeInfo('left')
-            +pointers
+            +pointers()
         else
-            +pointers
+            +pointers()
             +prizeInfo('right')
             +bonusSpark
-            +emojiGroup
+            +emojiGroup()
 
 //- Mixin for mobile side content
 mixin mobileSideContent(position = 'top')
@@ -82,7 +82,7 @@ mixin mobileSideContent(position = 'top')
             +bonusSpark
             +pointers(1)
         else
-            +pointer(1)
+            +pointers(1)
             +bonusSpark
             +prizeInfo('left')
             +emojiGroup(1)
