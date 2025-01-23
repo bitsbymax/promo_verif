@@ -29,15 +29,25 @@
     @return map.get(map.get($fonts, $family), $weight);
 }
 
-@mixin banner-section {
+@mixin banner-section($layout) {
     @include flex-center;
-    height: $banner-content-height;
     flex-shrink: 0;
+
+    @if $layout =='desktop' {
+        height: $banner-content-height;
+    }
+
+    @if $layout =='tablet' {
+        height: $tablet-banner-content-height;
+    }
+
+    @if $layout =='mobile' {
+        height: $mobile-banner-height;
+    }
 }
 
 @mixin banner-text {
-    display: flex;
-    justify-content: center;
+    @include flex-center;
     flex-shrink: 0;
     color: $white;
     text-align: center;
@@ -46,8 +56,8 @@
     letter-spacing: 0.5px;
 }
 
-@mixin colored-section($color, $bg-image) {
-    @include banner-section;
+@mixin colored-section($color, $bg-image, $layout) {
+    @include banner-section($layout);
     background-color: $color;
     @include background-cover($bg-image);
 }
@@ -63,24 +73,24 @@
             3: (disk: -117.533deg, smile: 0deg))
     );
 
-    @for $i from 1 through 3 {
-        &:nth-child(#{$i}) {
-            $rotation: map.get(map.get(map.get($rotations, $side), $i), 'disk');
-            $smile-rotation: map.get(map.get(map.get($rotations, $side), $i), 'smile');
+@for $i from 1 through 3 {
+    &:nth-child(#{$i}) {
+        $rotation: map.get(map.get(map.get($rotations, $side), $i), 'disk');
+        $smile-rotation: map.get(map.get(map.get($rotations, $side), $i), 'smile');
 
-            .emojiGroup__item-disk {
-                transform: rotate($rotation);
-            }
+        .emojiGroup__item-disk {
+            transform: rotate($rotation);
+        }
 
-            .emojiGroup__item-ellipse {
-                transform: translate(-50%, -50%) rotate($rotation);
-            }
+        .emojiGroup__item-ellipse {
+            transform: translate(-50%, -50%) rotate($rotation);
+        }
 
-            .emojiGroup__item-smile {
-                transform: translate(-50%, -50%) rotate($smile-rotation);
-            }
+        .emojiGroup__item-smile {
+            transform: translate(-50%, -50%) rotate($smile-rotation);
         }
     }
+}
 }
 
 //Mixins for the form

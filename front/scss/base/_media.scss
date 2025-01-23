@@ -186,20 +186,79 @@
     }
 }
 
+//important
 @media screen and (max-width: 1400px) {}
 
-//important
-
+//important!!
 @media screen and (max-width: 1300px) {}
 
-//important!!
-
+//important
 @media screen and (max-width: 1100px) {}
 
-//important
-
+//important!!!
 @media screen and (max-width: 1000px) {
     .fav__page {
+        .banner {
+            height: $tablet-banner-height !important;
+
+            &__takeBonus {
+                @include colored-section($pink, '/img/pink_rect_vector.svg', 'tablet');
+                width: 319px !important;
+
+                &-content {
+                    @include banner-text;
+                    width: 212px !important;
+                    height: 15px !important;
+                    font-size: 16px !important;
+                    letter-spacing: 0.24px !important;
+                }
+            }
+
+            &__currency {
+                @include colored-section($pink, '/img/blue_rect_vector.svg', 'tablet');
+                width: 173px !important;
+
+                &-content {
+                    width: 106.4px !important;
+                    height: 26px !important;
+                }
+            }
+
+            &__bonusHere {
+                @include colored-section($pink, '/img/pink_rect_vector.svg', 'tablet');
+                width: 321px !important;
+
+                &-content {
+                    gap: 11px !important;
+                    width: 321px !important;
+                    padding: 0 19px !important;
+
+                    &-pic {
+                        width: 27px !important;
+                        height: 19px !important;
+                    }
+
+                    &-text {
+                        @include banner-text;
+                        font-size: 16px !important;
+                        letter-spacing: 0.24px !important;
+                        width: 79px !important;
+                        height: 14px !important;
+                    }
+                }
+            }
+
+            &__fs {
+                @include colored-section($pink, '/img/blue_rect_vector.svg', 'tablet');
+                width: 213.4px !important;
+
+                &-content {
+                    width: 160px !important;
+                    height: 22px !important;
+                }
+            }
+        }
+
         .main {
             &__contentWrapper {
                 .form {
@@ -268,7 +327,7 @@
                     }
 
                     &__mainContent {
-                        margin: 50px 0 44px !important;
+                        padding: 46px 0 0 0 !important;
                     }
                 }
             }
@@ -276,40 +335,29 @@
     }
 }
 
-//important!!!
-
+//important!
 @media screen and (max-width: 900px) {}
 
 //important!
-
 @media screen and (max-width: 750px) {}
 
-//important!
-
+//important!!!
 @media screen and (max-width: 700px) {}
 
-//important!!!
-
+//important
 @media screen and (max-width: 570px) {}
 
 //important
-
 @media screen and (max-width: 500px) {}
 
 //important
-
 @media screen and (max-width: 410px) {}
 
-//important
-
+//important!!
 @media screen and (max-width: 374px) {}
 
-//important!!
-
+//important!
 @media screen and (max-width: 920px) and (orientation: landscape) and (max-height: 450px) {}
 
 //important!
-
 @media screen and (max-width: 700px) and (orientation: landscape) and (max-height: 450px) {}
-
-//important!
