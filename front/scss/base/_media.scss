@@ -169,14 +169,10 @@
     }
 }
 
-@media screen and (1000px <=width <=1366px) and (height <=1050px) {
+@media screen and (width=1366px) and (height <=1050px) {
     .main {
         &__contentWrapper {
             .form {
-
-                // &__outerWrapper {
-                //     scale: 0.9;
-                // }
                 &__image-container {
                     &--right {
                         margin-top: 18px !important;
@@ -188,7 +184,7 @@
 }
 
 //! 1366х950 чи зменшувати висоту банерів?
-@media screen and (1000px <=width <=1366px) and (height <=950px) {
+@media screen and (width=1366px) and (height <=950px) {
     .main {
         &__contentWrapper {
             flex-direction: row !important;
@@ -228,7 +224,7 @@
     }
 }
 
-@media screen and (1000px <=width <=1366px) and (height <=780px) {
+@media screen and (width=1366px) and (height <=800px) {
     .main {
         &__contentWrapper {
             .sideContent {
@@ -261,7 +257,7 @@
     }
 }
 
-@media screen and (1000px <=width <=1366px) and (height <=720px) {
+@media screen and (width=1366px) and (height <=720px) {
     .main {
         &__contentWrapper {
             .sideContent {
@@ -294,7 +290,7 @@
     }
 }
 
-@media screen and (1000px <=width <=1366px) and (618px <=height <=650px) {
+@media screen and (width=1366px) and (618px <=height <=650px) {
     .main {
         &__contentWrapper {
             .sideContent {
@@ -316,66 +312,169 @@
     }
 }
 
-// @media screen and (1100px <=width <=1200px) and (618px <=height <=1050px) {
-//     .main {
-//         &__contentWrapper {
-//             .form {
-//                 &__topBar {
-//                     &-wrapper {
-//                         &::before {
-//                             left: 45.3% !important;
-//                         }
-//                     }
-//                 }
-//             }
-//         }
-//     }
-// }
+@media screen and (1000px <=width <=1365px) {
+    .fav__page {
+        .main {
+            &__contentWrapper {
+                flex-direction: column !important;
+                gap: 10px !important;
 
-// @media screen and (1000px <=width <=1100px) and (618px <=height <=1050px) {
-//     .fav__page {
-//         .main {
-//             &__contentWrapper {
-//                 .sideContent {
-//                     &--left {
-//                         scale: 0.65;
-//                         margin-right: -140px !important;
-//                     }
+                .sideContent {
+                    &--left {
+                        display: none !important;
+                    }
 
-//                     &--right {
-//                         scale: 0.65;
-//                         margin-left: -150px !important;
-//                     }
-//                 }
+                    &--right {
+                        display: none !important;
+                    }
+                }
 
-//                 .form {
-//                     &__topBar {
-//                         &-wrapper {
-//                             &::before {
-//                                 left: 45% !important;
-//                             }
-//                         }
-//                     }
+                .mobileSideContent {
 
-//                     &__image-container {
-//                         &--left {
-//                             display: none !important;
-//                         }
+                    display: flex !important;
+                    align-items: center;
 
-//                         &--right {
-//                             display: none !important;
-//                         }
-//                     }
+                    .emojiGroup {
+                        @include flex-center;
+                        position: relative;
+                        z-index: 3;
 
-//                     &__container {
-//                         justify-content: center !important;
-//                         align-items: center !important;
-//                     }
-//                 }
-//             }
-//         }
-//     }
-// }
+                        &__item {
+                            &-wrapper {
+                                position: relative;
+                                width: 91px;
+                                height: 91px;
+                            }
+
+
+                            &-disk,
+                            &-ellipse,
+                            &-smile {
+                                position: absolute;
+                            }
+
+                            &-disk {
+                                inset: 0;
+                                width: 100%;
+                                height: 100%;
+                                z-index: 1;
+                            }
+
+                            &-ellipse {
+                                top: 50%;
+                                left: 50%;
+                                width: 51px;
+                                height: 51px;
+                                z-index: 2;
+                            }
+
+                            &-smile {
+                                top: 50%;
+                                left: 50%;
+                                height: 70px;
+                                z-index: 3;
+                            }
+                        }
+
+                    }
+
+                    .pointers {
+                        &__item {
+                            width: 72px;
+                            height: 52px;
+                            @include background-cover('/img/thumb_pink_reverse.svg');
+                        }
+                    }
+
+                    .prizeInfo {
+                        @include flex-center;
+                        width: 299px;
+                        height: 91px;
+                        margin-left: -20px;
+                        @include background-cover('/img/blue_rounded.svg');
+
+                        &__text {
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            justify-content: center;
+                            width: 233px;
+                            height: 40px;
+                            margin: 25px 32px 25px 35px;
+                            color: $white;
+                            font-family: font('unbounded', 'semibold');
+                            font-size: 20px;
+                            line-height: 26px;
+                            letter-spacing: 0.4px;
+
+                            &-insurance {
+                                align-self: flex-start;
+                            }
+
+                            &-value {
+                                align-self: flex-end;
+                            }
+                        }
+                    }
+
+                    .bonusSpark {
+                        @include flex-center;
+
+                        &__content {
+                            @include flex-center;
+                            width: 226px;
+                            height: 144px;
+                            @include background-cover('/img/top_spark.svg');
+                        }
+
+                        &__text {
+                            width: 122px;
+                            height: 52px;
+                            @include background-cover('/img/20FS_mobile.svg');
+                        }
+                    }
+
+                    &--top {
+                        .emojiGroup {
+                            &__item {
+                                @include emoji-rotations('left');
+                            }
+                        }
+                    }
+
+                    &--bottom {
+                        .pointers {
+                            &__item {
+                                @include background-cover('/img/thumb_pink.svg');
+                            }
+                        }
+
+                        .prizeInfo {
+                            margin-left: 0;
+                        }
+
+                        .emojiGroup {
+                            &__item {
+                                @include emoji-rotations('right');
+                                margin-left: -15px;
+                            }
+                        }
+                    }
+                }
+
+                .form {
+                    &__topBar {
+                        &-wrapper {
+                            &::before {
+                                left: 45.3% !important;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
 
 //Unused
 @media screen and (max-width: 1300px) {}
@@ -447,149 +546,6 @@
             }
         }
 
-        .sideContent {
-            &--left {
-                display: none !important;
-            }
-
-            &--right {
-                display: none !important;
-            }
-        }
-
-        .mobileSideContent {
-
-            display: flex !important;
-            align-items: center;
-
-            .emojiGroup {
-                @include flex-center;
-                position: relative;
-                z-index: 3;
-
-                &__item {
-                    &-wrapper {
-                        position: relative;
-                        width: 91px;
-                        height: 91px;
-                    }
-
-
-                    &-disk,
-                    &-ellipse,
-                    &-smile {
-                        position: absolute;
-                    }
-
-                    &-disk {
-                        inset: 0;
-                        width: 100%;
-                        height: 100%;
-                        z-index: 1;
-                    }
-
-                    &-ellipse {
-                        top: 50%;
-                        left: 50%;
-                        width: 51px;
-                        height: 51px;
-                        z-index: 2;
-                    }
-
-                    &-smile {
-                        top: 50%;
-                        left: 50%;
-                        height: 70px;
-                        z-index: 3;
-                    }
-                }
-
-            }
-
-            .pointers {
-                &__item {
-                    width: 72px;
-                    height: 52px;
-                    @include background-cover('/img/thumb_pink_reverse.svg');
-                }
-            }
-
-            .prizeInfo {
-                @include flex-center;
-                width: 299px;
-                height: 91px;
-                margin-left: -20px;
-                @include background-cover('/img/blue_rounded.svg');
-
-                &__text {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    justify-content: center;
-                    width: 233px;
-                    height: 40px;
-                    margin: 25px 32px 25px 35px;
-                    color: $white;
-                    font-family: font('unbounded', 'semibold');
-                    font-size: 20px;
-                    line-height: 26px;
-                    letter-spacing: 0.4px;
-
-                    &-insurance {
-                        align-self: flex-start;
-                    }
-
-                    &-value {
-                        align-self: flex-end;
-                    }
-                }
-            }
-
-            .bonusSpark {
-                @include flex-center;
-
-                &__content {
-                    @include flex-center;
-                    width: 226px;
-                    height: 144px;
-                    @include background-cover('/img/top_spark.svg');
-                }
-
-                &__text {
-                    width: 122px;
-                    height: 52px;
-                    @include background-cover('/img/20FS_mobile.svg');
-                }
-            }
-
-            &--top {
-                .emojiGroup {
-                    &__item {
-                        @include emoji-rotations('left');
-                    }
-                }
-            }
-
-            &--bottom {
-                .pointers {
-                    &__item {
-                        @include background-cover('/img/thumb_pink.svg');
-                    }
-                }
-
-                .prizeInfo {
-                    margin-left: 0;
-                }
-
-                .emojiGroup {
-                    &__item {
-                        @include emoji-rotations('right');
-                        margin-left: -15px;
-                    }
-                }
-            }
-        }
-
         .main {
             margin-top: $tablet-banner-height !important;
             height: calc(100vh - $tablet-banner-height * 2) !important;
@@ -597,6 +553,149 @@
             &__contentWrapper {
                 flex-direction: column !important;
                 gap: 10px !important;
+
+                .sideContent {
+                    &--left {
+                        display: none !important;
+                    }
+
+                    &--right {
+                        display: none !important;
+                    }
+                }
+
+                .mobileSideContent {
+
+                    display: flex !important;
+                    align-items: center;
+
+                    .emojiGroup {
+                        @include flex-center;
+                        position: relative;
+                        z-index: 3;
+
+                        &__item {
+                            &-wrapper {
+                                position: relative;
+                                width: 91px;
+                                height: 91px;
+                            }
+
+
+                            &-disk,
+                            &-ellipse,
+                            &-smile {
+                                position: absolute;
+                            }
+
+                            &-disk {
+                                inset: 0;
+                                width: 100%;
+                                height: 100%;
+                                z-index: 1;
+                            }
+
+                            &-ellipse {
+                                top: 50%;
+                                left: 50%;
+                                width: 51px;
+                                height: 51px;
+                                z-index: 2;
+                            }
+
+                            &-smile {
+                                top: 50%;
+                                left: 50%;
+                                height: 70px;
+                                z-index: 3;
+                            }
+                        }
+
+                    }
+
+                    .pointers {
+                        &__item {
+                            width: 72px;
+                            height: 52px;
+                            @include background-cover('/img/thumb_pink_reverse.svg');
+                        }
+                    }
+
+                    .prizeInfo {
+                        @include flex-center;
+                        width: 299px;
+                        height: 91px;
+                        margin-left: -20px;
+                        @include background-cover('/img/blue_rounded.svg');
+
+                        &__text {
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            justify-content: center;
+                            width: 233px;
+                            height: 40px;
+                            margin: 25px 32px 25px 35px;
+                            color: $white;
+                            font-family: font('unbounded', 'semibold');
+                            font-size: 20px;
+                            line-height: 26px;
+                            letter-spacing: 0.4px;
+
+                            &-insurance {
+                                align-self: flex-start;
+                            }
+
+                            &-value {
+                                align-self: flex-end;
+                            }
+                        }
+                    }
+
+                    .bonusSpark {
+                        @include flex-center;
+
+                        &__content {
+                            @include flex-center;
+                            width: 226px;
+                            height: 144px;
+                            @include background-cover('/img/top_spark.svg');
+                        }
+
+                        &__text {
+                            width: 122px;
+                            height: 52px;
+                            @include background-cover('/img/20FS_mobile.svg');
+                        }
+                    }
+
+                    &--top {
+                        .emojiGroup {
+                            &__item {
+                                @include emoji-rotations('left');
+                            }
+                        }
+                    }
+
+                    &--bottom {
+                        .pointers {
+                            &__item {
+                                @include background-cover('/img/thumb_pink.svg');
+                            }
+                        }
+
+                        .prizeInfo {
+                            margin-left: 0;
+                        }
+
+                        .emojiGroup {
+                            &__item {
+                                @include emoji-rotations('right');
+                                margin-left: -15px;
+                            }
+                        }
+                    }
+                }
 
                 .form {
                     &__outerWrapper {

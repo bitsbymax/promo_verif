@@ -20,16 +20,15 @@
 
         &__ellipse {
             position: fixed;
-            width: 1695px;
-            height: 763px;
+            width: 845px;
+            height: 40px;
             z-index: -1;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            border-radius: 1695px;
-            background-color: rgba($pink, 0.22);
-            @include background-cover('/img/Ellipse.svg');
-            filter: blur(100px);
+            border-radius: 100%;
+            box-shadow: 0px 0px 291px 320px rgba(255, 38, 126, 0.35);
+            background: rgba(255, 38, 126, 0.4);
         }
     }
 
