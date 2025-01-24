@@ -160,9 +160,8 @@
 
         &__contentWrapper {
             height: 100%;
-            width: max-content;
+            // width: max-content;
             @include flex-center;
-            border-radius: 20px;
             overflow: hidden;
 
 
@@ -172,11 +171,11 @@
                 align-items: center;
 
                 &--left {
-                    margin-right: 55px;
+                    margin-right: 50px;
                 }
 
                 &--right {
-                    margin-left: 24px;
+                    margin-left: 50px;
                 }
 
                 %shared-positioning {
@@ -320,8 +319,9 @@
 
                 &--right {
                     .emojiGroup {
-                        margin-top: -44px;
-                        margin-left: 48px;
+                        margin-top: -46px;
+                        align-self: flex-end;
+                        margin-right: 28px;
 
                         &__item {
                             @include emoji-rotations('right');
@@ -330,7 +330,6 @@
 
                     .bonusSpark {
                         margin-top: -30px;
-                        margin-left: 24px;
 
                         &__content {
                             width: $base-width-right;
@@ -371,7 +370,9 @@
             .form {
                 &__outerWrapper {
                     display: flex;
+                    justify-content: space-between;
                     flex-direction: column;
+                    gap: 20px;
                     width: 864px;
                     height: 600px;
                     padding: 43px 32px 30px 32px;
@@ -383,7 +384,6 @@
                 &__innerWrapper {
                     display: flex;
                     flex-direction: column;
-                    margin-bottom: 20px;
                 }
 
                 &__topBar {
@@ -496,8 +496,8 @@
                 &__image-container {
                     &--left {
                         display: flex;
-                        margin-top: 24px;
-                        margin-left: 16px;
+                        margin-top: 28px;
+                        padding-left: 20px;
                         flex: 1;
 
                         .form__image {
@@ -509,7 +509,8 @@
 
                     &--right {
                         display: flex;
-                        margin: 10px 16px 0 0;
+                        margin-top: 10px;
+                        padding-right: 20px;
                         flex: 1;
 
                         .form__image {

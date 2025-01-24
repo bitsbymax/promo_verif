@@ -1,13 +1,21 @@
 @use '../helpers' as *;
 
+@media screen and (min-width: 2400px) {
+    .main__contentWrapper {
+        scale: 1.3 !important;
+    }
+}
+
 @media screen and (min-width: 2200px) {
     .main__contentWrapper {
         scale: 1.2;
     }
 }
 
+//Unused
 @media screen and (max-width: 1800px) {}
 
+//Unused
 @media screen and (max-width: 1700px) {}
 
 @media screen and (max-width: 1600px) {
@@ -35,150 +43,108 @@
 @media screen and (max-width: 1500px) {
     .main {
         &__contentWrapper {
-            flex-direction: column;
-            gap: 20px;
+            // flex-direction: column;
+            // gap: 20px;
 
             .sideContent {
-                display: none !important;
-            }
 
-            .mobileSideContent {
-                display: flex !important;
-                align-items: center;
-                justify-content: space-between;
-
-                .emojiGroup {
-                    @include flex-center;
-                    position: relative;
-                    z-index: 3;
-
-                    &__item {
-                        &-wrapper {
-                            position: relative;
-                            width: 91px;
-                            height: 91px;
-                        }
-
-
-                        &-disk,
-                        &-ellipse,
-                        &-smile {
-                            position: absolute;
-                        }
-
-                        &-disk {
-                            inset: 0;
-                            width: 100%;
-                            height: 100%;
-                            z-index: 1;
-                        }
-
-                        &-ellipse {
-                            top: 50%;
-                            left: 50%;
-                            width: 51px;
-                            height: 51px;
-                            z-index: 2;
-                        }
-
-                        &-smile {
-                            top: 50%;
-                            left: 50%;
-                            height: 70px;
-                            z-index: 3;
-                        }
-                    }
-
+                // display: none !important;
+                &--left {
+                    margin-right: -10px !important;
+                    scale: 0.8;
                 }
 
-                .pointers {
-                    &__item {
-                        width: 72px;
-                        height: 52px;
-                        @include background-cover('/img/thumb_pink_reverse.svg');
-                    }
-                }
-
-                .prizeInfo {
-                    @include flex-center;
-                    width: 299px;
-                    height: 91px;
-                    margin-left: -20px;
-                    @include background-cover('/img/blue_rounded.svg');
-
-                    &__text {
-                        display: flex;
-                        flex-direction: column;
-                        align-items: center;
-                        justify-content: center;
-                        width: 233px;
-                        height: 40px;
-                        margin: 25px 32px 25px 35px;
-                        color: $white;
-                        font-family: font('unbounded', 'semibold');
-                        font-size: 20px;
-                        line-height: 26px;
-                        letter-spacing: 0.4px;
-
-                        &-insurance {
-                            align-self: flex-start;
-                        }
-
-                        &-value {
-                            align-self: flex-end;
-                        }
-                    }
-                }
-
-                .bonusSpark {
-                    @include flex-center;
-
-                    &__content {
-                        @include flex-center;
-                        width: 226px;
-                        height: 144px;
-                        @include background-cover('/img/top_spark.svg');
-                    }
-
-                    &__text {
-                        width: 122px;
-                        height: 52px;
-                        @include background-cover('/img/20FS_mobile.svg');
-                    }
-                }
-
-                &--top {
-                    .emojiGroup {
-                        &__item {
-                            @include emoji-rotations('left');
-                        }
-                    }
-                }
-
-                &--bottom {
-                    .pointers {
-                        &__item {
-                            @include background-cover('/img/thumb_pink.svg');
-                        }
-                    }
-
-                    .prizeInfo {
-                        margin-left: 0;
-                    }
-
-                    .emojiGroup {
-                        &__item {
-                            @include emoji-rotations('right');
-                            margin-left: -15px;
-                        }
-                    }
+                &--right {
+                    margin-left: -25px !important;
+                    scale: 0.8;
                 }
             }
 
             .form__topBar {
                 &-wrapper {
                     &::before {
-                        left: 46.1% !important;
+                        // left: 46.1% !important;
+                    }
+                }
+            }
+        }
+    }
+}
+
+//Unused
+@media screen and (width <=1500px) and (height <=1100px) {
+    // .main {
+    //     &__contentWrapper {
+    //         .mobileSideContent {
+    //             &--top {
+    //                 scale: 0.9;
+    //                 margin-bottom: -15px;
+    //             }
+
+    //             &--bottom {
+    //                 scale: 0.9;
+    //                 margin-top: -15px;
+    //             }
+    //         }
+    //     }
+    // }
+}
+
+//Unused
+@media screen and (width <=1470px) and (height <=768px) {
+    //     .main {
+    //         &__contentWrapper {
+    //             .sideContent {
+    //                 &--left {
+    //                     scale: 0.9;
+    //                 }
+
+    //                 &--right {
+    //                     scale: 0.9;
+    //                 }
+    //             }
+
+    //             .form {
+    //                 &__outerWrapper {
+    //                     scale: 0.9;
+    //                 }
+    //             }
+    //         }
+    //     }
+}
+
+//Unused
+@media screen and (1440px <=width <=1500px) and (900px <=height <=1050px) {
+    // .main {
+    //     &__contentWrapper {
+    //         .mobileSideContent {
+    //             &--top {
+    //                 scale: 0.7;
+    //                 margin-bottom: -55px;
+    //             }
+
+    //             &--bottom {
+    //                 scale: 0.7;
+    //                 margin-top: -55px;
+    //             }
+    //         }
+
+    //         .form {
+    //             &__outerWrapper {
+    //                 // scale: 0.9;
+    //             }
+    //         }
+    //     }
+    // }
+}
+
+@media screen and (1440px <=width <1500px) and (715px <=height <=800px) {
+    .fav__page {
+        .main {
+            &__contentWrapper {
+                .form {
+                    &__outerWrapper {
+                        scale: 0.9 !important;
                     }
                 }
             }
@@ -187,16 +153,238 @@
 }
 
 //important
-@media screen and (max-width: 1400px) {}
+@media screen and (max-width: 1400px) {
+    .main {
+        &__contentWrapper {
+            .form {
+                &__topBar {
+                    &-wrapper {
+                        &::before {
+                            left: 45.1% !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
 
-//important!!
+@media screen and (1000px <=width <=1366px) and (height <=1050px) {
+    .main {
+        &__contentWrapper {
+            .form {
+
+                // &__outerWrapper {
+                //     scale: 0.9;
+                // }
+                &__image-container {
+                    &--right {
+                        margin-top: 18px !important;
+                    }
+                }
+            }
+        }
+    }
+}
+
+//! 1366х950 чи зменшувати висоту банерів?
+@media screen and (1000px <=width <=1366px) and (height <=950px) {
+    .main {
+        &__contentWrapper {
+            flex-direction: row !important;
+            gap: 0 !important;
+
+            .sideContent {
+                display: flex !important;
+
+                &--left {
+                    // margin-right: -35px !important;
+                    scale: 0.8;
+                }
+
+                &--right {
+                    // margin-left: -50px !important;
+
+                    scale: 0.8;
+                }
+            }
+
+            .form {
+                &__topBar {
+                    &-wrapper {
+                        &::before {
+                            // left: 45.5% !important;
+                        }
+                    }
+                }
+
+                &__image-container {
+                    &--right {
+                        margin-top: 18px !important;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (1000px <=width <=1366px) and (height <=780px) {
+    .main {
+        &__contentWrapper {
+            .sideContent {
+                &--left {
+                    scale: 0.8;
+                    margin-right: -40px !important;
+                }
+
+                &--right {
+                    scale: 0.8;
+                    margin-left: -60px !important;
+
+                }
+            }
+
+            .form {
+                &__outerWrapper {
+                    scale: 0.9;
+                }
+
+                &__topBar {
+                    &-wrapper {
+                        &::before {
+                            left: 45.2% !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (1000px <=width <=1366px) and (height <=720px) {
+    .main {
+        &__contentWrapper {
+            .sideContent {
+                &--left {
+                    scale: 0.7;
+                    margin-right: -100px !important;
+                }
+
+                &--right {
+                    scale: 0.7;
+                    margin-left: -110px !important;
+
+                }
+            }
+
+            .form {
+                &__outerWrapper {
+                    scale: 0.8;
+                }
+
+                &__topBar {
+                    &-wrapper {
+                        &::before {
+                            left: 46% !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (1000px <=width <=1366px) and (618px <=height <=650px) {
+    .main {
+        &__contentWrapper {
+            .sideContent {
+                &--left {
+                    margin-right: -140px !important;
+                }
+
+                &--right {
+                    margin-left: -150px !important;
+                }
+            }
+
+            .form {
+                &__outerWrapper {
+                    scale: 0.7 !important;
+                }
+            }
+        }
+    }
+}
+
+// @media screen and (1100px <=width <=1200px) and (618px <=height <=1050px) {
+//     .main {
+//         &__contentWrapper {
+//             .form {
+//                 &__topBar {
+//                     &-wrapper {
+//                         &::before {
+//                             left: 45.3% !important;
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// }
+
+// @media screen and (1000px <=width <=1100px) and (618px <=height <=1050px) {
+//     .fav__page {
+//         .main {
+//             &__contentWrapper {
+//                 .sideContent {
+//                     &--left {
+//                         scale: 0.65;
+//                         margin-right: -140px !important;
+//                     }
+
+//                     &--right {
+//                         scale: 0.65;
+//                         margin-left: -150px !important;
+//                     }
+//                 }
+
+//                 .form {
+//                     &__topBar {
+//                         &-wrapper {
+//                             &::before {
+//                                 left: 45% !important;
+//                             }
+//                         }
+//                     }
+
+//                     &__image-container {
+//                         &--left {
+//                             display: none !important;
+//                         }
+
+//                         &--right {
+//                             display: none !important;
+//                         }
+//                     }
+
+//                     &__container {
+//                         justify-content: center !important;
+//                         align-items: center !important;
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// }
+
+//Unused
 @media screen and (max-width: 1300px) {}
 
-//important
+///Unused
 @media screen and (max-width: 1100px) {}
 
 //important!!!
-@media screen and (max-width: 1000px) {
+@media screen and (width <=1000px) {
     .fav__page {
         .banner {
             height: $tablet-banner-height !important;
@@ -259,8 +447,157 @@
             }
         }
 
+        .sideContent {
+            &--left {
+                display: none !important;
+            }
+
+            &--right {
+                display: none !important;
+            }
+        }
+
+        .mobileSideContent {
+
+            display: flex !important;
+            align-items: center;
+
+            .emojiGroup {
+                @include flex-center;
+                position: relative;
+                z-index: 3;
+
+                &__item {
+                    &-wrapper {
+                        position: relative;
+                        width: 91px;
+                        height: 91px;
+                    }
+
+
+                    &-disk,
+                    &-ellipse,
+                    &-smile {
+                        position: absolute;
+                    }
+
+                    &-disk {
+                        inset: 0;
+                        width: 100%;
+                        height: 100%;
+                        z-index: 1;
+                    }
+
+                    &-ellipse {
+                        top: 50%;
+                        left: 50%;
+                        width: 51px;
+                        height: 51px;
+                        z-index: 2;
+                    }
+
+                    &-smile {
+                        top: 50%;
+                        left: 50%;
+                        height: 70px;
+                        z-index: 3;
+                    }
+                }
+
+            }
+
+            .pointers {
+                &__item {
+                    width: 72px;
+                    height: 52px;
+                    @include background-cover('/img/thumb_pink_reverse.svg');
+                }
+            }
+
+            .prizeInfo {
+                @include flex-center;
+                width: 299px;
+                height: 91px;
+                margin-left: -20px;
+                @include background-cover('/img/blue_rounded.svg');
+
+                &__text {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    width: 233px;
+                    height: 40px;
+                    margin: 25px 32px 25px 35px;
+                    color: $white;
+                    font-family: font('unbounded', 'semibold');
+                    font-size: 20px;
+                    line-height: 26px;
+                    letter-spacing: 0.4px;
+
+                    &-insurance {
+                        align-self: flex-start;
+                    }
+
+                    &-value {
+                        align-self: flex-end;
+                    }
+                }
+            }
+
+            .bonusSpark {
+                @include flex-center;
+
+                &__content {
+                    @include flex-center;
+                    width: 226px;
+                    height: 144px;
+                    @include background-cover('/img/top_spark.svg');
+                }
+
+                &__text {
+                    width: 122px;
+                    height: 52px;
+                    @include background-cover('/img/20FS_mobile.svg');
+                }
+            }
+
+            &--top {
+                .emojiGroup {
+                    &__item {
+                        @include emoji-rotations('left');
+                    }
+                }
+            }
+
+            &--bottom {
+                .pointers {
+                    &__item {
+                        @include background-cover('/img/thumb_pink.svg');
+                    }
+                }
+
+                .prizeInfo {
+                    margin-left: 0;
+                }
+
+                .emojiGroup {
+                    &__item {
+                        @include emoji-rotations('right');
+                        margin-left: -15px;
+                    }
+                }
+            }
+        }
+
         .main {
+            margin-top: $tablet-banner-height !important;
+            height: calc(100vh - $tablet-banner-height * 2) !important;
+
             &__contentWrapper {
+                flex-direction: column !important;
+                gap: 10px !important;
+
                 .form {
                     &__outerWrapper {
                         width: 705px !important;
@@ -287,7 +624,7 @@
 
                         &::before,
                         &::after {
-                            mask-image: url('/img/mobile_top_bar.png') !important;
+                            mask-image: url('/img/tablet_top_bar.png') !important;
                         }
 
                         &-wrapper {
@@ -299,9 +636,9 @@
                         }
 
                         &-logoWrapper {
-                            margin: 6.4px 0 6.4px 14.5px !important;
                             width: 22px !important;
                             height: 22px !important;
+                            margin: 6.4px 0 6.4px 14.5px !important;
 
                             &::after {
                                 left: calc(100% + 8px) !important;
@@ -335,8 +672,70 @@
     }
 }
 
-//important!
+//Unused
 @media screen and (max-width: 900px) {}
+
+@media screen and (width <=768px) and (height <=1024px) {
+    .fav__page {
+        .main {
+            &__contentWrapper {
+                gap: 0 !important;
+
+                .mobileSideContent {
+                    &--top {
+                        scale: 0.8;
+                    }
+
+                    &--bottom {
+                        scale: 0.8;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (width <=768px) and (height <=977px) {
+    .fav__page {
+        .main {
+            &__contentWrapper {
+                .mobileSideContent {
+                    &--top {
+                        scale: 0.7;
+                    }
+
+                    &--bottom {
+                        scale: 0.7;
+                    }
+                }
+
+                .form {
+                    &__outerWrapper {
+                        // scale: 0.9;
+                        margin-top: -15px;
+                        margin-bottom: -15px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (width <=768px) and (height <=954px) {
+    .fav__page {
+        .main {
+            &__contentWrapper {
+                .form {
+                    &__outerWrapper {
+                        scale: 0.9;
+                        margin-top: -40px;
+                        margin-bottom: -40px;
+                    }
+                }
+            }
+        }
+    }
+}
 
 //important!
 @media screen and (max-width: 750px) {}
