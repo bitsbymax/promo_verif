@@ -34,10 +34,10 @@ include ../mixins.pug
                             img(src="/img/pink_smile.svg" alt="smile").form__image
                         //- Form Content
                         .form__mainContent
-                            h1.form__header
+                            h1.form__header(data-translate="formHeader")
                                 | ВЕРИФІКУЙСЯ
                                 | ДО БОНУСІВ
-                            p.form__description
+                            p.form__description(data-translate="formDescription")
                                 | Отримай винагороду за кілька кроків.
                                 | Верифікуй номер та забирай
                                 | персональний бонус.
@@ -47,11 +47,12 @@ include ../mixins.pug
                                     id="login-button"
                                     href="https://www.favbet.ua/login"
                                     type="button"
+                                    data-translate="authorize"
                                     ) Авторизуватись
 
                                 //- Verification form
                                 form#verification__form.verification__form.hidden
-                                    label(htmlFor="phone") Підтвердити свій номер телефону
+                                    label(htmlFor="phone" data-translate="confirmPhone") Підтвердити свій номер телефону
                                     input(
                                         type="tel"
                                         id="phone"
@@ -64,11 +65,12 @@ include ../mixins.pug
                                     button(
                                         type="submit"
                                         id="submit-button"
+                                        data-translate="confirm"
                                     ) ПІДТВЕРДИТИ
 
                                 //- Confirmation form
                                     form#confirmation__form.confirmation__form.hidden(data-confirmation-expired="false")
-                                        label(htmlFor="confirmation-code") Введи код підтвердження
+                                        label(htmlFor="confirmation-code" data-translate="provideCode") Введи код підтвердження
                                         input(
                                             type="number"
                                             id="confirmation-code"
@@ -80,6 +82,7 @@ include ../mixins.pug
                                         button(
                                             type="submit"
                                             id="confirm-button"
+                                            data-translate="confirm"
                                         ) ПІДТВЕРДИТИ
                         //- Right Image
                         .form__image-container--right
