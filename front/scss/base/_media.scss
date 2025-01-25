@@ -1,4 +1,5 @@
 @use '../helpers' as *;
+
 //! DESKTOP
 //#region Desktop
 @media screen and (min-width: 2400px) {
@@ -377,6 +378,7 @@
                 width: 380px !important;
                 height: 220px !important;
                 transform: translate(-50%, -50%) rotate(90deg) !important;
+                box-shadow: 0px 0px 290px 240px rgba(255, 38, 126, 0.35) !important;
             }
         }
 
@@ -541,13 +543,15 @@
     }
 }
 
-@media screen and (1000px < width <=1365px) and (940px <height <=1050px) {
+@media screen and (1000px < width <=1365px) and (940px <=height <=1050px) {
     .fav__page {
         .background {
             &__ellipse {
                 width: 380px !important;
                 height: 220px !important;
                 transform: translate(-50%, -50%) rotate(90deg) !important;
+                box-shadow: 0px 0px 290px 210px rgba(255, 38, 126, 0.35) !important;
+
             }
         }
 
@@ -756,6 +760,14 @@
                 }
 
                 .form {
+                    &__topBar {
+                        &-wrapper {
+                            &::before {
+                                left: 46% !important;
+                            }
+                        }
+                    }
+
                     &__outerWrapper {
                         scale: 0.9;
                     }
@@ -806,7 +818,7 @@
                     &__topBar {
                         &-wrapper {
                             &::before {
-                                left: 45.1% !important;
+                                left: 46% !important;
                             }
                         }
                     }
@@ -849,7 +861,7 @@
                     &__topBar {
                         &-wrapper {
                             &::before {
-                                left: 45.1% !important;
+                                left: 46% !important;
                             }
                         }
                     }
@@ -862,8 +874,18 @@
 //#endregion
 //!width: 1280-1001 and height: 834-550 --> TABLET LAYOUT
 //? Do we need LANDSCAPE here inside media queries?
-@media screen and (1000px < width <=1280px) and (680px <=height <=940px) {
+.fav__page {
+    --topbar-left: 46%; // Default value
+
+    .form__topBar-wrapper::before {
+        left: var(--topbar-left) !important;
+    }
+}
+
+@media screen and (1150px <=width <=1280px) and (680px <=height <=940px) {
     .fav__page {
+        --topbar-left: calc(46% - ((1280px - 100vw) * 0.05));
+
         .background {
             &__ellipse {
                 width: 360px !important;
@@ -905,6 +927,7 @@
                 &-content {
                     gap: 11px !important;
                     width: 321px !important;
+                    height: $tablet-banner-content-height;
                     padding: 0 19px !important;
 
                     &-pic {
@@ -984,7 +1007,7 @@
 
                         &-wrapper {
                             &::before {
-                                left: 46% !important;
+                                // left: $topbar-left !important;
                                 width: 53px !important;
                                 height: 2.4px !important;
                             }
@@ -1027,7 +1050,7 @@
     }
 }
 
-@media screen and (1000px < width <=1280px) and (620px <=height <680px) {
+@media screen and (1150px <=width <=1280px) and (620px <=height <680px) {
     .fav__page {
         .background {
             &__ellipse {
@@ -1070,6 +1093,7 @@
                 &-content {
                     gap: 11px !important;
                     width: 321px !important;
+                    height: $tablet-banner-content-height;
                     padding: 0 19px !important;
 
                     &-pic {
@@ -1190,7 +1214,7 @@
     }
 }
 
-@media screen and (1000px < width <=1280px) and (585px <=height <620px) {
+@media screen and (1150px <=width <=1280px) and (585px <=height <620px) {
     .fav__page {
         .background {
             &__ellipse {
@@ -1233,6 +1257,7 @@
                 &-content {
                     gap: 11px !important;
                     width: 321px !important;
+                    height: $tablet-banner-content-height;
                     padding: 0 19px !important;
 
                     &-pic {
@@ -1353,7 +1378,7 @@
     }
 }
 
-@media screen and (1000px < width <=1280px) and (550px <=height <585px) {
+@media screen and (1150px <=width <=1280px) and (550px <=height <585px) {
     .fav__page {
         .background {
             &__ellipse {
@@ -1396,6 +1421,7 @@
                 &-content {
                     gap: 11px !important;
                     width: 321px !important;
+                    height: $tablet-banner-content-height;
                     padding: 0 19px !important;
 
                     &-pic {
@@ -1516,6 +1542,780 @@
     }
 }
 
+@media screen and (1000px < width <1150px) and (860px <=height <940px) {
+    .fav__page {
+        .background {
+            &__ellipse {
+                width: 320px !important;
+                height: 200px !important;
+                transform: translate(-50%, -50%) rotate(90deg) !important;
+                box-shadow: 0px 0px 290px 210px rgba(255, 38, 126, 0.35) !important;
+            }
+        }
+
+        .banner {
+            height: $tablet-banner-height !important;
+
+            &__takeBonus {
+                @include colored-section($pink, '/img/pink_rect_vector.svg', 'tablet');
+                width: 319px !important;
+
+                &-content {
+                    @include banner-text;
+                    width: 212px !important;
+                    height: 15px !important;
+                    font-size: 16px !important;
+                    letter-spacing: 0.24px !important;
+                }
+            }
+
+            &__currency {
+                @include colored-section($pink, '/img/blue_rect_vector.svg', 'tablet');
+                width: 173px !important;
+
+                &-content {
+                    width: 106.4px !important;
+                    height: 26px !important;
+                }
+            }
+
+            &__bonusHere {
+                @include colored-section($pink, '/img/pink_rect_vector.svg', 'tablet');
+                width: 321px !important;
+
+                &-content {
+                    gap: 11px !important;
+                    width: 321px !important;
+                    height: $tablet-banner-content-height;
+                    padding: 0 19px !important;
+
+                    &-pic {
+                        width: 27px !important;
+                        height: 19px !important;
+                    }
+
+                    &-text {
+                        @include banner-text;
+                        font-size: 16px !important;
+                        letter-spacing: 0.24px !important;
+                        width: 79px !important;
+                        height: 14px !important;
+                    }
+                }
+            }
+
+            &__fs {
+                @include colored-section($pink, '/img/blue_rect_vector.svg', 'tablet');
+                width: 213.4px !important;
+
+                &-content {
+                    width: 160px !important;
+                    height: 22px !important;
+                }
+            }
+        }
+
+        .main {
+            margin-top: $tablet-banner-height !important;
+            height: calc(100vh - $tablet-banner-height * 2) !important;
+
+            &__contentWrapper {
+                flex-direction: column !important;
+                gap: 10px !important;
+
+                .sideContent {
+                    &--left {
+                        display: none !important;
+                    }
+
+                    &--right {
+                        display: none !important;
+                    }
+                }
+
+                .mobileSideContent {
+
+                    display: flex !important;
+                    align-items: center;
+
+                    .emojiGroup {
+                        @include flex-center;
+                        position: relative;
+                        z-index: 3;
+
+                        &__item {
+                            &-wrapper {
+                                position: relative;
+                                width: 91px;
+                                height: 91px;
+                            }
+
+
+                            &-disk,
+                            &-ellipse,
+                            &-smile {
+                                position: absolute;
+                            }
+
+                            &-disk {
+                                inset: 0;
+                                width: 100%;
+                                height: 100%;
+                                z-index: 1;
+                            }
+
+                            &-ellipse {
+                                top: 50%;
+                                left: 50%;
+                                width: 51px;
+                                height: 51px;
+                                z-index: 2;
+                            }
+
+                            &-smile {
+                                top: 50%;
+                                left: 50%;
+                                height: 70px;
+                                z-index: 3;
+                            }
+                        }
+
+                    }
+
+                    .pointers {
+                        &__item {
+                            width: 72px;
+                            height: 52px;
+                            @include background-cover('/img/thumb_pink_reverse.svg');
+                        }
+                    }
+
+                    .prizeInfo {
+                        @include flex-center;
+                        width: 299px;
+                        height: 91px;
+                        margin-left: -20px;
+                        @include background-cover('/img/blue_rounded.svg');
+
+                        &__text {
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            justify-content: center;
+                            width: 233px;
+                            height: 40px;
+                            margin: 25px 32px 25px 35px;
+                            color: $white;
+                            font-family: font('unbounded', 'semibold');
+                            font-size: 20px;
+                            line-height: 26px;
+                            letter-spacing: 0.4px;
+
+                            &-insurance {
+                                align-self: flex-start;
+                            }
+
+                            &-value {
+                                align-self: flex-end;
+                            }
+                        }
+                    }
+
+                    .bonusSpark {
+                        @include flex-center;
+
+                        &__content {
+                            @include flex-center;
+                            width: 226px;
+                            height: 144px;
+                            @include background-cover('/img/top_spark.svg');
+                        }
+
+                        &__text {
+                            width: 122px;
+                            height: 52px;
+                            @include background-cover('/img/20FS_mobile.svg');
+                        }
+                    }
+
+                    &--top {
+                        scale: 0.7;
+                        margin-bottom: -55px;
+
+                        .emojiGroup {
+                            &__item {
+                                @include emoji-rotations('left');
+                            }
+                        }
+                    }
+
+                    &--bottom {
+                        scale: 0.7;
+                        margin-top: -55px;
+
+                        .pointers {
+                            &__item {
+                                @include background-cover('/img/thumb_pink.svg');
+                            }
+                        }
+
+                        .prizeInfo {
+                            margin-left: 0;
+                        }
+
+                        .emojiGroup {
+                            &__item {
+                                @include emoji-rotations('right');
+                                margin-left: -15px;
+                            }
+                        }
+                    }
+                }
+
+                .form {
+                    &__outerWrapper {
+                        width: 705px !important;
+                        padding-top: 41px !important;
+                        scale: 0.9;
+                    }
+
+                    &__image-container {
+                        &--left {
+                            display: none !important;
+                        }
+
+                        &--right {
+                            display: none !important;
+                        }
+                    }
+
+                    &__container {
+                        justify-content: center !important;
+                        align-items: center !important;
+                    }
+
+                    &__topBar {
+                        height: 38px !important;
+
+                        &::before,
+                        &::after {
+                            mask-image: url('/img/tablet_top_bar.png') !important;
+                        }
+
+                        &-wrapper {
+                            &::before {
+                                left: 46% !important;
+                                width: 53px !important;
+                                height: 2.4px !important;
+                            }
+                        }
+
+                        &-logoWrapper {
+                            width: 22px !important;
+                            height: 22px !important;
+                            margin: 6.4px 0 6.4px 14.5px !important;
+
+                            &::after {
+                                left: calc(100% + 8px) !important;
+                                width: 60px !important;
+                                height: 13px !important;
+                            }
+
+                            &--logo {
+                                width: 17px !important;
+                            }
+
+                            &--backdrop {
+                                height: 22px !important;
+                                width: 22px !important;
+                            }
+                        }
+
+                        &-btnImage {
+                            height: 13px !important;
+                            width: 13px !important;
+                            margin: 13px 12px 12px 0 !important;
+                        }
+                    }
+
+                    &__mainContent {
+                        padding: 46px 0 0 0 !important;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (1000px < width <1150px) and (770px <=height <860px) {
+    .fav__page {
+        .background {
+            &__ellipse {
+                width: 320px !important;
+                height: 200px !important;
+                transform: translate(-50%, -50%) rotate(90deg) !important;
+                box-shadow: 0px 0px 290px 190px rgba(255, 38, 126, 0.35) !important;
+            }
+        }
+
+        .banner {
+            height: $tablet-banner-height !important;
+
+            &__takeBonus {
+                @include colored-section($pink, '/img/pink_rect_vector.svg', 'tablet');
+                width: 319px !important;
+
+                &-content {
+                    @include banner-text;
+                    width: 212px !important;
+                    height: 15px !important;
+                    font-size: 16px !important;
+                    letter-spacing: 0.24px !important;
+                }
+            }
+
+            &__currency {
+                @include colored-section($pink, '/img/blue_rect_vector.svg', 'tablet');
+                width: 173px !important;
+
+                &-content {
+                    width: 106.4px !important;
+                    height: 26px !important;
+                }
+            }
+
+            &__bonusHere {
+                @include colored-section($pink, '/img/pink_rect_vector.svg', 'tablet');
+                width: 321px !important;
+
+                &-content {
+                    gap: 11px !important;
+                    width: 321px !important;
+                    height: $tablet-banner-content-height;
+                    padding: 0 19px !important;
+
+                    &-pic {
+                        width: 27px !important;
+                        height: 19px !important;
+                    }
+
+                    &-text {
+                        @include banner-text;
+                        font-size: 16px !important;
+                        letter-spacing: 0.24px !important;
+                        width: 79px !important;
+                        height: 14px !important;
+                    }
+                }
+            }
+
+            &__fs {
+                @include colored-section($pink, '/img/blue_rect_vector.svg', 'tablet');
+                width: 213.4px !important;
+
+                &-content {
+                    width: 160px !important;
+                    height: 22px !important;
+                }
+            }
+        }
+
+        .main {
+            margin-top: $tablet-banner-height !important;
+            height: calc(100vh - $tablet-banner-height * 2) !important;
+
+            &__contentWrapper {
+                flex-direction: column !important;
+                gap: 10px !important;
+
+                .sideContent {
+                    &--left {
+                        display: none !important;
+                    }
+
+                    &--right {
+                        display: none !important;
+                    }
+                }
+
+                .mobileSideContent {
+
+                    display: flex !important;
+                    align-items: center;
+
+                    .emojiGroup {
+                        @include flex-center;
+                        position: relative;
+                        z-index: 3;
+
+                        &__item {
+                            &-wrapper {
+                                position: relative;
+                                width: 91px;
+                                height: 91px;
+                            }
+
+
+                            &-disk,
+                            &-ellipse,
+                            &-smile {
+                                position: absolute;
+                            }
+
+                            &-disk {
+                                inset: 0;
+                                width: 100%;
+                                height: 100%;
+                                z-index: 1;
+                            }
+
+                            &-ellipse {
+                                top: 50%;
+                                left: 50%;
+                                width: 51px;
+                                height: 51px;
+                                z-index: 2;
+                            }
+
+                            &-smile {
+                                top: 50%;
+                                left: 50%;
+                                height: 70px;
+                                z-index: 3;
+                            }
+                        }
+
+                    }
+
+                    .pointers {
+                        &__item {
+                            width: 72px;
+                            height: 52px;
+                            @include background-cover('/img/thumb_pink_reverse.svg');
+                        }
+                    }
+
+                    .prizeInfo {
+                        @include flex-center;
+                        width: 299px;
+                        height: 91px;
+                        margin-left: -20px;
+                        @include background-cover('/img/blue_rounded.svg');
+
+                        &__text {
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            justify-content: center;
+                            width: 233px;
+                            height: 40px;
+                            margin: 25px 32px 25px 35px;
+                            color: $white;
+                            font-family: font('unbounded', 'semibold');
+                            font-size: 20px;
+                            line-height: 26px;
+                            letter-spacing: 0.4px;
+
+                            &-insurance {
+                                align-self: flex-start;
+                            }
+
+                            &-value {
+                                align-self: flex-end;
+                            }
+                        }
+                    }
+
+                    .bonusSpark {
+                        @include flex-center;
+
+                        &__content {
+                            @include flex-center;
+                            width: 226px;
+                            height: 144px;
+                            @include background-cover('/img/top_spark.svg');
+                        }
+
+                        &__text {
+                            width: 122px;
+                            height: 52px;
+                            @include background-cover('/img/20FS_mobile.svg');
+                        }
+                    }
+
+                    &--top {
+                        scale: 0.55;
+                        margin-bottom: -90px;
+
+                        .emojiGroup {
+                            &__item {
+                                @include emoji-rotations('left');
+                            }
+                        }
+                    }
+
+                    &--bottom {
+                        scale: 0.55;
+                        margin-top: -90px;
+
+                        .pointers {
+                            &__item {
+                                @include background-cover('/img/thumb_pink.svg');
+                            }
+                        }
+
+                        .prizeInfo {
+                            margin-left: 0;
+                        }
+
+                        .emojiGroup {
+                            &__item {
+                                @include emoji-rotations('right');
+                                margin-left: -15px;
+                            }
+                        }
+                    }
+                }
+
+                .form {
+                    &__outerWrapper {
+                        width: 705px !important;
+                        padding-top: 41px !important;
+                        scale: 0.8;
+                    }
+
+                    &__image-container {
+                        &--left {
+                            display: none !important;
+                        }
+
+                        &--right {
+                            display: none !important;
+                        }
+                    }
+
+                    &__container {
+                        justify-content: center !important;
+                        align-items: center !important;
+                    }
+
+                    &__topBar {
+                        height: 38px !important;
+
+                        &::before,
+                        &::after {
+                            mask-image: url('/img/tablet_top_bar.png') !important;
+                        }
+
+                        &-wrapper {
+                            &::before {
+                                left: 46% !important;
+                                width: 53px !important;
+                                height: 2.4px !important;
+                            }
+                        }
+
+                        &-logoWrapper {
+                            width: 22px !important;
+                            height: 22px !important;
+                            margin: 6.4px 0 6.4px 14.5px !important;
+
+                            &::after {
+                                left: calc(100% + 8px) !important;
+                                width: 60px !important;
+                                height: 13px !important;
+                            }
+
+                            &--logo {
+                                width: 17px !important;
+                            }
+
+                            &--backdrop {
+                                height: 22px !important;
+                                width: 22px !important;
+                            }
+                        }
+
+                        &-btnImage {
+                            height: 13px !important;
+                            width: 13px !important;
+                            margin: 13px 12px 12px 0 !important;
+                        }
+                    }
+
+                    &__mainContent {
+                        padding: 46px 0 0 0 !important;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (1000px < width <1150px) and (540px <=height <770px) {
+    .fav__page {
+        .background {
+            &__ellipse {
+                width: 340px !important;
+                height: 120px !important;
+                box-shadow: 0px 0px 290px 170px rgba(255, 38, 126, 0.35) !important;
+            }
+        }
+
+        .banner {
+            height: $tablet-banner-height !important;
+
+            &__takeBonus {
+                @include colored-section($pink, '/img/pink_rect_vector.svg', 'tablet');
+                width: 319px !important;
+
+                &-content {
+                    @include banner-text;
+                    width: 212px !important;
+                    height: 15px !important;
+                    font-size: 16px !important;
+                    letter-spacing: 0.24px !important;
+                }
+            }
+
+            &__currency {
+                @include colored-section($pink, '/img/blue_rect_vector.svg', 'tablet');
+                width: 173px !important;
+
+                &-content {
+                    width: 106.4px !important;
+                    height: 26px !important;
+                }
+            }
+
+            &__bonusHere {
+                @include colored-section($pink, '/img/pink_rect_vector.svg', 'tablet');
+                width: 321px !important;
+
+                &-content {
+                    gap: 11px !important;
+                    width: 321px !important;
+                    height: $tablet-banner-content-height;
+                    padding: 0 19px !important;
+
+                    &-pic {
+                        width: 27px !important;
+                        height: 19px !important;
+                    }
+
+                    &-text {
+                        @include banner-text;
+                        font-size: 16px !important;
+                        letter-spacing: 0.24px !important;
+                        width: 79px !important;
+                        height: 14px !important;
+                    }
+                }
+            }
+
+            &__fs {
+                @include colored-section($pink, '/img/blue_rect_vector.svg', 'tablet');
+                width: 213.4px !important;
+
+                &-content {
+                    width: 160px !important;
+                    height: 22px !important;
+                }
+            }
+        }
+
+        .main {
+            margin-top: $tablet-banner-height !important;
+            height: calc(100vh - $tablet-banner-height * 2) !important;
+
+            &__contentWrapper {
+                .sideContent {
+                    &--left {
+                        scale: 0.6;
+                        margin-right: -120px !important;
+                    }
+
+                    &--right {
+                        scale: 0.6;
+                        margin-left: -135px !important;
+                    }
+                }
+
+                .form {
+                    &__outerWrapper {
+                        width: 705px !important;
+                        padding-top: 41px !important;
+                        scale: 0.7;
+                    }
+
+                    &__image-container {
+                        &--left {
+                            display: none !important;
+                        }
+
+                        &--right {
+                            display: none !important;
+                        }
+                    }
+
+                    &__container {
+                        justify-content: center !important;
+                        align-items: center !important;
+                    }
+
+                    &__topBar {
+                        height: 38px !important;
+
+                        &::before,
+                        &::after {
+                            mask-image: url('/img/tablet_top_bar.png') !important;
+                        }
+
+                        &-wrapper {
+                            &::before {
+                                left: 45.1% !important;
+                                width: 53px !important;
+                                height: 2.4px !important;
+                            }
+                        }
+
+                        &-logoWrapper {
+                            width: 22px !important;
+                            height: 22px !important;
+                            margin: 6.4px 0 6.4px 14.5px !important;
+
+                            &::after {
+                                left: calc(100% + 8px) !important;
+                                width: 60px !important;
+                                height: 13px !important;
+                            }
+
+                            &--logo {
+                                width: 17px !important;
+                            }
+
+                            &--backdrop {
+                                height: 22px !important;
+                                width: 22px !important;
+                            }
+                        }
+
+                        &-btnImage {
+                            height: 13px !important;
+                            width: 13px !important;
+                            margin: 13px 12px 12px 0 !important;
+                        }
+                    }
+
+                    &__mainContent {
+                        padding: 46px 0 0 0 !important;
+                    }
+                }
+            }
+        }
+    }
+}
+
 //Unused
 @media screen and (max-width: 1300px) {}
 
@@ -1567,6 +2367,7 @@
                 &-content {
                     gap: 11px !important;
                     width: 321px !important;
+                    height: $tablet-banner-content-height;
                     padding: 0 19px !important;
 
                     &-pic {
@@ -1820,7 +2621,7 @@
     }
 }
 
-@media screen and (768px <width <=1000px) and (height <=1024px) {
+@media screen and (750px <=width <=1000px) and (height <=1024px) {
     .fav__page {
         .main {
             &__contentWrapper {
@@ -1840,7 +2641,7 @@
     }
 }
 
-@media screen and (768px <width <=1000px) and (height <=977px) {
+@media screen and (750px <=width <=1000px) and (height <=977px) {
     .fav__page {
         .background {
             &__ellipse {
@@ -1873,7 +2674,7 @@
     }
 }
 
-@media screen and (768px <width <=1000px) and (height <=904px) {
+@media screen and (750px <=width <=1000px) and (height <=904px) {
     .fav__page {
         .background {
             &__ellipse {
@@ -1906,7 +2707,7 @@
     }
 }
 
-@media screen and (768px <width <=1000px) and (height <=856px) {
+@media screen and (750px <=width <=1000px) and (height <=856px) {
     .fav__page {
         .background {
             &__ellipse {
@@ -1943,7 +2744,7 @@
 //Unused
 @media screen and (max-width: 900px) {}
 
-@media screen and (width <=768px) and (height <=1024px) {
+@media screen and (700px <=width <750px) and (height <=1200px) {
     .fav__page {
         .main {
             &__contentWrapper {
@@ -1958,12 +2759,20 @@
                         scale: 0.8;
                     }
                 }
+
+                .form {
+                    &__outerWrapper {
+                        scale: 0.95;
+                        margin-top: -25px;
+                        margin-bottom: -25px;
+                    }
+                }
             }
         }
     }
 }
 
-@media screen and (width <=768px) and (height <=977px) {
+@media screen and (700px <=width <750px) and (height <=977px) {
     .fav__page {
         .main {
             &__contentWrapper {
@@ -1979,9 +2788,9 @@
 
                 .form {
                     &__outerWrapper {
-                        // scale: 0.9;
-                        margin-top: -15px;
-                        margin-bottom: -15px;
+                        scale: 0.95;
+                        margin-top: -25px;
+                        margin-bottom: -25px;
                     }
                 }
             }
@@ -1989,8 +2798,16 @@
     }
 }
 
-@media screen and (width <=768px) and (height <=954px) {
+@media screen and (700px <=width <750px) and (height <=954px) {
     .fav__page {
+        .background {
+            &__ellipse {
+                width: 300px !important;
+                height: 180px !important;
+                box-shadow: 0px 0px 290px 200px rgba(255, 38, 126, 0.35) !important;
+            }
+        }
+
         .main {
             &__contentWrapper {
                 .form {
@@ -1998,6 +2815,102 @@
                         scale: 0.9;
                         margin-top: -40px;
                         margin-bottom: -40px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (700px <=width <750px) and (height <=864px) {
+    .fav__page {
+        .background {
+            &__ellipse {
+                box-shadow: 0px 0px 290px 170px rgba(255, 38, 126, 0.35) !important;
+            }
+        }
+
+        .main {
+            &__contentWrapper {
+                .mobileSideContent {
+                    &--top {
+                        scale: 0.6;
+                    }
+
+                    &--bottom {
+                        scale: 0.6;
+                    }
+                }
+
+                .form {
+                    &__outerWrapper {
+                        scale: 0.8;
+                        margin-top: -80px;
+                        margin-bottom: -80px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (700px <=width <750px) and (height <=770px) {
+    .fav__page {
+        .background {
+            &__ellipse {
+                box-shadow: 0px 0px 290px 140px rgba(255, 38, 126, 0.35) !important;
+            }
+        }
+
+        .main {
+            &__contentWrapper {
+                .mobileSideContent {
+                    &--top {
+                        scale: 0.5;
+                    }
+
+                    &--bottom {
+                        scale: 0.5;
+                    }
+                }
+
+                .form {
+                    &__outerWrapper {
+                        scale: 0.7;
+                        margin-top: -120px;
+                        margin-bottom: -120px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (700px <=width <750px) and (649px <=height <=680px) {
+    .fav__page {
+        .background {
+            &__ellipse {
+                box-shadow: 0px 0px 290px 110px rgba(255, 38, 126, 0.35) !important;
+            }
+        }
+
+        .main {
+            &__contentWrapper {
+                .mobileSideContent {
+                    &--top {
+                        scale: 0.5;
+                    }
+
+                    &--bottom {
+                        scale: 0.5;
+                    }
+                }
+
+                .form {
+                    &__outerWrapper {
+                        scale: 0.65;
+                        margin-top: -135px;
+                        margin-bottom: -135px;
                     }
                 }
             }
