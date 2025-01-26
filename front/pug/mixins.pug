@@ -10,11 +10,18 @@ mixin currency()
 mixin bonusHere()
     .banner__bonusHere
         .banner__bonusHere-content
-            .banner__bonusHere-content-pic
-            .banner__bonusHere-content-text(data-translate="bonusHere") БОНУС
-            .banner__bonusHere-content-pic
-            .banner__bonusHere-content-text(data-translate="bonusHere") БОНУС
-            .banner__bonusHere-content-pic
+            //- Desktop/Tablet elements
+            .banner__bonusHere-content-desktop
+                .banner__bonusHere-content-pic
+                .banner__bonusHere-content-text(data-translate="bonusHere") БОНУС
+                .banner__bonusHere-content-pic
+                .banner__bonusHere-content-text(data-translate="bonusHere") БОНУС
+                .banner__bonusHere-content-pic
+            //- Mobile elements
+            .banner__bonusHere-content-mobile
+                .banner__bonusHere-content-text(data-translate="bonusHere") БОНУС
+                .banner__bonusHere-content-pic
+                .banner__bonusHere-content-text(data-translate="bonusHere") БОНУС
 
 mixin freeSpins()
     .banner__fs

@@ -42,7 +42,7 @@
     }
 
     @if $layout =='mobile' {
-        height: $mobile-banner-height;
+        height: $mobile-banner-height !important;
     }
 }
 
@@ -157,7 +157,7 @@
         background: $button-green;
         color: $dark-blue;
         text-align: center;
-        font-family: font('unbounded', 'semibold');
+        font-family: font('unbounded', 'bold');
         font-size: 14px;
         letter-spacing: 0.28px;
 
