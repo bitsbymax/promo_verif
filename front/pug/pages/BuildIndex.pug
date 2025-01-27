@@ -69,7 +69,8 @@ include ../mixins.pug
                                         id="confirmation-code"
                                         name="confirmation-code"
                                         placeholder="_ _ _ _ _"
-                                        pattern="[0-9]{5}"
+                                        pattern="[0-9]{1,6}"
+                                        maxlength="6"
                                         required
                                     )
                                     button(

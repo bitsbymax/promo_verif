@@ -215,7 +215,7 @@
         messageElement.textContent = message;
         messageElement.classList.add('input-msg');
 
-        if (targetElement.getAttribute('id') === 'confirmation_form') {
+        if (targetElement.getAttribute('id') === 'confirmation__form') {
             const inputElement = targetElement.querySelector('input');
             inputElement.after(messageElement);
         } else {
@@ -262,7 +262,8 @@
             ).value;
             console.log('userPhoneVerified:', userPhoneVerified);
 
-            verificationForm.style.display = 'flex';
+            verificationForm.classList.remove('hidden');
+            verificationForm.classList.add('visible');
             phoneInput.value = userPhoneNumber;
 
             // Check if user has a number and is already verified
@@ -338,7 +339,7 @@
                     return;
                 }
 
-                confirmButton.textContent = 'Надіслати';
+                confirmButton.textContent = 'НАДІСЛАТИ';
                 const minutes = Math.floor(timeLeft / 60);
                 const seconds = timeLeft % 60;
 
@@ -429,7 +430,7 @@
             }
 
             try {
-                const userId = user.id;
+                const userId = user.data.account.id;
                 const userData = new FormData();
 
                 userData.append('phone', submittedPhone);
@@ -506,7 +507,8 @@
 
                 if (response.ok) {
                     // Hide the confirmation form
-                    confirmationForm.style.display = 'none';
+                    confirmationForm.classList.add('hidden');
+                    confirmationForm.classList.remove('visible');
 
                     // Update header text and data-translate
                     const header = document.querySelector('.form__header');
