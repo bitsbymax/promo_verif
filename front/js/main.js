@@ -238,7 +238,7 @@
             return;
         } else {
             loginButton.style.display = 'none';
-            verificationForm.classList.add('visible');
+            // verificationForm.classList.add('visible');
             verificationForm.classList.remove('hidden');
         }
 
@@ -262,7 +262,7 @@
             ).value;
             console.log('userPhoneVerified:', userPhoneVerified);
 
-            verificationForm.style.display = 'block';
+            verificationForm.style.display = 'flex';
             phoneInput.value = userPhoneNumber;
 
             // Check if user has a number and is already verified

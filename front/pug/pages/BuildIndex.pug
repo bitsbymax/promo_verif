@@ -47,8 +47,9 @@ include ../mixins.pug
                                     id="login-button"
                                     href="https://www.favbet.ua/login"
                                     type="button"
+                                    class="visible"
                                     data-translate="authorize"
-                                    ) Авторизуватись
+                                    ) АВТОРИЗУВАТИСЬ
 
                                 //- Verification form
                                 form#verification__form.verification__form.hidden
@@ -69,21 +70,21 @@ include ../mixins.pug
                                     ) ПІДТВЕРДИТИ
 
                                 //- Confirmation form
-                                    form#confirmation__form.confirmation__form.hidden(data-confirmation-expired="false")
-                                        label(htmlFor="confirmation-code" data-translate="provideCode") Введи код підтвердження
-                                        input(
-                                            type="number"
-                                            id="confirmation-code"
-                                            name="confirmation-code"
-                                            placeholder="_ _ _ _ _"
-                                            pattern="[0-9]{5}"
-                                            required
-                                        )
-                                        button(
-                                            type="submit"
-                                            id="confirm-button"
-                                            data-translate="confirm"
-                                        ) ПІДТВЕРДИТИ
+                                form#confirmation__form.confirmation__form.hidden(data-confirmation-expired="false")
+                                    label(htmlFor="confirmation-code" data-translate="provideCode") Введи код підтвердження
+                                    input(
+                                        type="number"
+                                        id="confirmation-code"
+                                        name="confirmation-code"
+                                        placeholder="_ _ _ _ _"
+                                        pattern="[0-9]{5}"
+                                        required
+                                    )
+                                    button(
+                                        type="submit"
+                                        id="confirm-button"
+                                        data-translate="confirm"
+                                    ) ПІДТВЕРДИТИ
                         //- Right Image
                         .form__image-container--right
                             img(src="/img/pink_spark.svg" alt="spark").form__image
