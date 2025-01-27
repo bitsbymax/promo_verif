@@ -52,7 +52,8 @@ include ../mixins.pug
                                         name="phone"
                                         placeholder="+380 (XX) XXX XX XX"
                                         autocomplete="tel"
-                                        maxlength="12"
+                                        maxlength="13"
+                                        pattern="^\\+380\\d{9}$"
                                         required
                                     )
                                     button(
@@ -69,7 +70,7 @@ include ../mixins.pug
                                         id="confirmation-code"
                                         name="confirmation-code"
                                         placeholder="_ _ _ _ _"
-                                        pattern="[0-9]{1,6}"
+                                        pattern="[0-9]{6}"
                                         maxlength="6"
                                         required
                                     )
@@ -78,13 +79,15 @@ include ../mixins.pug
                                         id="confirm-button"
                                         data-translate="confirm"
                                     ) ПІДТВЕРДИТИ
-                            .auth__button-wrapper
+
+                            .successImageWrapper.hidden
+                            .beforeImageWrapper.hidden
+                            .link__button-wrapper
                                 a(
-                                    id="login-button"
+                                    id="link-button"
                                     href="/login"
                                     type="button"
-                                    style="display: none;"
-                                    class="auth__button"
+                                    class="link__button"
                                     data-translate="authorize"
                                 ) АВТОРИЗУВАТИСЬ
                         //- Right Image
@@ -105,3 +108,11 @@ include ../mixins.pug
 
     //- Bottom Banner
     +banner('bottom')
+
+script.
+    const linkWrapper = document.querySelector('.link__button-wrapper')
+    const linkButton = linkWrapper.querySelector('a')
+    linkButton.href = getRedirectUrl()
+    linkButton.target = '_blank'
+    [BLANK]
+        linkButton.target = '_blank'

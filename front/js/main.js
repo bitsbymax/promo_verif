@@ -45,7 +45,7 @@
     // const VERIFICATION_API = 'http://localhost:3181/verification-api';
     const phoneInput = document.getElementById('phone');
     const verificationForm = document.getElementById('verification__form');
-    const loginButton = document.getElementById('login-button');
+    const linkButtonWrapper = document.querySelector('.link__button-wrapper');
     const submitButton = document.getElementById('submit-button');
 
     // const resultsTable = document.querySelector('.tableResults__body'),
@@ -206,20 +206,63 @@
     //     }
     // };
 
-    const showInputMessage = (message, targetElement = verificationForm) => {
+    const showInputMessage = (message, targetElement, state = false) => {
         // Remove any existing messages first
-        const existingMessages = document.querySelectorAll('.input-msg');
+        const existingMessages = document.querySelectorAll('.input-msg:not([data-code-error])');
         existingMessages.forEach((msg) => msg.remove());
 
         const messageElement = document.createElement('div');
-        messageElement.textContent = message;
         messageElement.classList.add('input-msg');
 
-        if (targetElement.getAttribute('id') === 'confirmation__form') {
-            const inputElement = targetElement.querySelector('input');
-            inputElement.after(messageElement);
+        if (Array.isArray(message) && message.length === 2) {
+            const timerWrapper = document.createElement('div');
+            timerWrapper.classList.add('timerWrapper');
+            timerWrapper.style.minWidth = state ? '65px' : '45px';
+
+            const firstSpan = document.createElement('span');
+            firstSpan.textContent = message[0];
+            firstSpan.classList.add('timer');
+
+            timerWrapper.appendChild(firstSpan);
+
+            const secondSpan = document.createElement('span');
+            secondSpan.textContent = message[1];
+            if (state) {
+                secondSpan.classList.add('error');
+            } else {
+                secondSpan.classList.add('warning');
+            }
+
+            messageElement.appendChild(timerWrapper);
+            // Add a space between spans
+            messageElement.appendChild(document.createTextNode(' '));
+            messageElement.appendChild(secondSpan);
         } else {
-            targetElement.after(messageElement);
+            messageElement.textContent = message;
+        }
+
+        if (state) {
+            messageElement.classList.add('error');
+        } else {
+            messageElement.classList.add('warning');
+        }
+
+        const inputElement = targetElement.querySelector('input');
+        const buttonElement = targetElement.querySelector('button');
+
+        // Find the first error message if it exists
+        const existingErrorMsg =
+            targetElement.querySelector('[data-code-error]');
+
+        if (existingErrorMsg) {
+            // Insert after the existing error message
+            existingErrorMsg.parentNode.insertBefore(
+                messageElement,
+                existingErrorMsg.nextSibling
+            );
+        } else {
+            // Insert before the button as before
+            inputElement.parentNode.insertBefore(messageElement, buttonElement);
         }
     };
 
@@ -233,11 +276,10 @@
 
         if (window.FE?.user.role === 'guest') {
             // verificationForm.style.display = 'none';
-            loginButton.style.display = 'flex';
+            linkButtonWrapper.style.display = 'flex';
 
             return;
         } else {
-            loginButton.style.display = 'none';
             verificationForm.classList.add('visible');
             verificationForm.classList.remove('hidden');
         }
@@ -262,14 +304,11 @@
             ).value;
             console.log('userPhoneVerified:', userPhoneVerified);
 
-            verificationForm.classList.remove('hidden');
-            verificationForm.classList.add('visible');
-            phoneInput.value = userPhoneNumber;
-
             // Check if user has a number and is already verified
             if (userPhoneNumber && userPhoneVerified) {
                 // Update header text and data-translate
                 const header = document.querySelector('.form__header');
+                header.classList.add('successBeforeHeader');
                 header.textContent = 'ТИ ВЕРИФІКУВАВ НОМЕР ТЕЛЕФОНУ РАНІШЕ';
                 header.setAttribute('data-translate', 'formHeaderBefore');
 
@@ -282,31 +321,34 @@
                     'data-translate',
                     'formDescriptionBefore'
                 );
-                // Create new container inside form wrapper
-                const formWrapper = document.querySelector('.form__wrapper');
-                const beforeConfirmContainer = document.createElement('div');
-                beforeConfirmContainer.className = 'confirmation__before';
+
+                document.querySelector('.form__wrapper').style.display = 'none';
+
+                const beforeImageWrapper = document.querySelector(
+                    '.beforeImageWrapper'
+                );
+                beforeImageWrapper.classList.add('visible');
+                beforeImageWrapper.classList.remove('hidden');
+                const beforeImage = document.createElement('img');
+                beforeImage.className = 'beforeImage';
 
                 // Add container to form wrapper
-                formWrapper.appendChild(beforeConfirmContainer);
+                beforeImageWrapper.appendChild(beforeImage);
 
-                // Add new button wrapper after form wrapper
-                const beforeButtonWrapper = document.createElement('div');
-                beforeButtonWrapper.className = 'before__button-wrapper';
-
-                const newLink = document.createElement('a');
-                newLink.href = 'sports/';
-                newLink.type = 'button';
-                newLink.textContent = 'ДО ГРИ';
-                newLink.setAttribute('data-translate', 'confirmBefore');
-
-                beforeButtonWrapper.appendChild(newLink);
-                formWrapper.after(beforeButtonWrapper);
+                linkButtonWrapper.style.display = 'flex';
+                const linkButton = document.querySelector(
+                    '.link__button-wrapper a'
+                );
+                linkButton.href = '/sports';
+                linkButton.textContent = 'ДО ГРИ';
+                linkButton.setAttribute('data-translate', 'confirmBefore');
 
                 return;
             }
 
-            // showInputMessage('Будь ласка, підтвердіть Ваш номер телефону');
+            verificationForm.classList.remove('hidden');
+            verificationForm.classList.add('visible');
+            phoneInput.value = `+${userPhoneNumber}`;
         } catch (error) {
             console.error('Failed to get user:', error);
         }
@@ -334,7 +376,13 @@
                     codeInput.required = false;
                     // Change form submit behavior to verification
                     confirmationForm.dataset.confirmationExpired = 'true';
-                    showInputMessage('Час верифікації минув', confirmationForm);
+
+                    //Show message about expired code
+                    showInputMessage(
+                        'Час верифікації минув',
+                        confirmationForm,
+                        'error'
+                    );
 
                     return;
                 }
@@ -345,25 +393,32 @@
 
                 if (verification) {
                     showInputMessage(
-                        `${Math.floor(timeLeft / 3600)
-                            .toString()
-                            .padStart(2, '0')}:${Math.floor(
-                            (timeLeft % 3600) / 60
-                        )
-                            .toString()
-                            .padStart(2, '0')}:${(timeLeft % 60)
-                            .toString()
-                            .padStart(
-                                2,
-                                '0'
-                            )} верифікацію заблоковано. Дочекайтесь оновлення таймера`
+                        [
+                            `${Math.floor(timeLeft / 3600)
+                                .toString()
+                                .padStart(2, '0')}:${Math.floor(
+                                (timeLeft % 3600) / 60
+                            )
+                                .toString()
+                                .padStart(2, '0')}:${(timeLeft % 60)
+                                .toString()
+                                .padStart(2, '0')}`,
+                            'верифікацію заблоковано. Дочекайтесь оновлення таймера',
+                        ],
+                        verificationForm,
+                        'error'
                     );
                 }
 
                 if (confirmation) {
                     showInputMessage(
-                        `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')} час, який залишився, щоб ввести код з SMS-повідомлення. Після закінчення часу можна запросити код повторно`,
-                        confirmationForm
+                        [
+                            `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`,
+                            'час, який залишився, щоб ввести код з SMS-повідомлення. Після закінчення часу можна запросити код повторно',
+                        ],
+                        confirmationForm,
+                        false,
+                        true
                     );
                 }
                 timeLeft--;
@@ -393,9 +448,13 @@
                 // Start timer for code verification
                 const ttl = response.data.phone_verification_ttl;
                 startVerificationTimer(ttl, step);
-            } else if (response.code === -24) {
+            } else if (
+                response.code === -24 &&
+                response.message.reason === 'verification_locked'
+            ) {
                 const { rest_time } = response.message;
                 submitButton.disabled = true;
+                phoneInput.disabled = true;
                 step.verification = true;
                 startVerificationTimer(rest_time, step);
             }
@@ -403,7 +462,7 @@
 
         //User starts to change phone number
         phoneInput.addEventListener('input', (e) => {
-            if (e.target.value === userPhoneNumber) {
+            if (e.target.value.slice(1) === userPhoneNumber) {
                 submitButton.innerHTML = 'ПІДТВЕРДИТИ';
             } else {
                 submitButton.innerHTML = 'ЗБЕРЕГТИ';
@@ -419,11 +478,11 @@
                 e
             );
             submitButton.disabled = true;
-            const submittedPhone = e.target[0].value;
+            const submittedPhone = e.target[0].value.slice(1);
 
             if (!isPhoneValid(submittedPhone)) {
-                const message = 'Введіть коректний номер телефону';
-                showInputMessage(message);
+                const message = 'Формат телефону вказано неправильно';
+                showInputMessage(message, verificationForm, 'error');
                 submitButton.disabled = false;
 
                 return;
@@ -506,9 +565,8 @@
                 );
 
                 if (response.ok) {
-                    // Hide the confirmation form
-                    confirmationForm.classList.add('hidden');
-                    confirmationForm.classList.remove('visible');
+                    document.querySelector('.form__wrapper').style.display =
+                        'none';
 
                     // Update header text and data-translate
                     const header = document.querySelector('.form__header');
@@ -524,17 +582,15 @@
                         'data-translate',
                         'formDescriptionSuccess'
                     );
-
-                    // Create new container inside form wrapper
-                    const formWrapper =
-                        document.querySelector('.form__wrapper');
-                    const successConfirmContainer =
-                        document.createElement('div');
-                    successConfirmContainer.className = 'confirmation__success';
+                    const successImageWrapper = document.querySelector(
+                        '.successImageWrapper'
+                    );
+                    successImageWrapper.classList.add('visible');
+                    successImageWrapper.classList.remove('hidden');
 
                     // Create first div
                     const firstDiv = document.createElement('div');
-                    firstDiv.className = 'confirmation__success-prizeInfo';
+                    firstDiv.className = 'successImageWrapper-prizeInfo';
 
                     const firstSpan = document.createElement('span');
                     firstSpan.textContent = 'СТРАХОВКА ДО';
@@ -553,41 +609,48 @@
 
                     // Create second div
                     const secondDiv = document.createElement('div');
-                    secondDiv.className = 'confirmation__success-bonusSpark';
+                    secondDiv.className = 'successImageWrapper-bonusSpark';
 
                     // Append divs to container
-                    successConfirmContainer.appendChild(firstDiv);
-                    successConfirmContainer.appendChild(secondDiv);
+                    successImageWrapper.appendChild(firstDiv);
+                    successImageWrapper.appendChild(secondDiv);
 
-                    // Add container to form wrapper
-                    formWrapper.appendChild(successConfirmContainer);
-
-                    // Add new button wrapper after form wrapper
-                    const successButtonWrapper = document.createElement('div');
-                    successButtonWrapper.className = 'success__button-wrapper';
-
-                    const newLink = document.createElement('a');
-                    newLink.href = 'personal-office/bonuses/betinsurance/';
-                    newLink.type = 'button';
-                    newLink.textContent = 'ДО БОНУСУ';
-                    newLink.setAttribute('data-translate', 'confirmSuccess');
-
-                    successButtonWrapper.appendChild(newLink);
-                    formWrapper.after(successButtonWrapper);
+                    linkButtonWrapper.style.display = 'flex';
+                    const linkButton = document.querySelector(
+                        '.link__button-wrapper a'
+                    );
+                    linkButton.href = '/personal-office/bonuses/betinsurance';
+                    linkButton.textContent = 'ДО БОНУСУ';
+                    linkButton.setAttribute('data-translate', 'confirmSuccess');
                 } else {
                     //TODO
                     //need to check other possible errors
-                    showInputMessage(
-                        'Невірний код підтвердження',
-                        confirmationForm
-                    );
+                    // showInputMessage(
+                    //     'Невірний код підтвердження',
+                    //     confirmationForm
+                    // );
                 }
             } catch (error) {
                 console.error('Error confirming code:', error);
-                showInputMessage(
-                    'Помилка підтвердження коду',
-                    confirmationForm
-                );
+                if (
+                    error.code === -4 &&
+                    error.message.reason === 'wrong_session_or_confirm_code'
+                ) {
+                    const messageElement = document.createElement('div');
+                    messageElement.classList.add('input-msg', 'error');
+                    messageElement.setAttribute('data-code-error', 'true');
+                    messageElement.textContent =
+                        'Неправильний код підтвердження';
+
+                    const inputElement =
+                        confirmationForm.querySelector('input');
+                    const buttonElement =
+                        confirmationForm.querySelector('button');
+                    inputElement.parentNode.insertBefore(
+                        messageElement,
+                        buttonElement
+                    );
+                }
             } finally {
                 confirmButton.disabled = false;
             }

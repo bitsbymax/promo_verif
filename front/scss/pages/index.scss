@@ -537,7 +537,7 @@
                     align-self: start;
                     width: 340px;
                     flex: 0 0 auto;
-                    padding: 40px 0 0 0;
+                    padding: 30px 0 0 0;
                     // margin: 40px 0 44px;
                 }
 
@@ -568,7 +568,8 @@
                 }
 
                 &__wrapper {
-                    margin-block-start: 34px;
+                    margin-top: 30px;
+                    margin-left: 8px;
 
                     .verification__form {
                         @include forms-shared;
@@ -622,7 +623,7 @@
                     outline: none !important;
                     cursor: pointer;
                     position: relative;
-                    z-index: 1;
+                    z-index: 4;
                     text-align: start;
 
                     summary::-webkit-details-marker {
@@ -777,10 +778,55 @@
     display: flex;
 }
 
-.auth__button-wrapper {
-    margin-top: 30px;
+.input-msg {
+    width: 310px;
+    margin-top: 8px;
+}
 
-    .auth__button {
+.timerWrapper {
+    display: inline-block;
+}
+
+.timer {
+    color: $dark-blue;
+    font-family: font('unbounded', 'medium');
+    font-size: 11px;
+    line-height: 16px;
+    letter-spacing: 0.22px;
+}
+
+.warning {
+    color: #4D4D4D;
+    font-family: font('unbounded', 'regular');
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px;
+    letter-spacing: 0.22px;
+}
+
+.error {
+    color: $error-red;
+    font-family: font('unbounded', 'regular');
+    font-size: 11px;
+    line-height: 16px;
+    letter-spacing: 0.22px;
+}
+
+.successBeforeHeader {
+    // width: 512px !important;
+    font-size: 30px !important;
+    letter-spacing: 0.6px !important;
+}
+.beforeImage {
+
+}
+
+.link__button-wrapper {
+    display: none;
+    margin-top: 20px;
+
+    .link__button {
         @include flex-center;
         width: 320px;
         height: 50px;
