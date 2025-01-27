@@ -44,7 +44,7 @@
     const API = 'https://www.favbet.ua';
     // const VERIFICATION_API = 'http://localhost:3181/verification-api';
     const phoneInput = document.getElementById('phone');
-    const verificationForm = document.getElementById('verification_form');
+    const verificationForm = document.getElementById('verification__form');
     const loginButton = document.getElementById('login-button');
     const submitButton = document.getElementById('submit-button');
 
@@ -232,17 +232,17 @@
         console.log('%c init fired', 'color: #00ff00; font-weight: bold');
 
         if (window.FE?.user.role === 'guest') {
-            verificationForm.style.display = 'none';
-            loginButton.classList.add('visible');
+            // verificationForm.style.display = 'none';
+            loginButton.style.display = 'flex';
 
             return;
         } else {
             loginButton.style.display = 'none';
-            // verificationForm.classList.add('visible');
+            verificationForm.classList.add('visible');
             verificationForm.classList.remove('hidden');
         }
 
-        const confirmationForm = document.getElementById('confirmation_form');
+        const confirmationForm = document.getElementById('confirmation__form');
         const confirmButton = document.getElementById('confirm-button');
 
         let verificationSession = null;
@@ -267,15 +267,45 @@
 
             // Check if user has a number and is already verified
             if (userPhoneNumber && userPhoneVerified) {
-                phoneInput.disabled = true;
-                submitButton.style.display = 'none';
-                const message = 'Ваш номер телефону підтверджено';
-                showInputMessage(message);
+                // Update header text and data-translate
+                const header = document.querySelector('.form__header');
+                header.textContent = 'ТИ ВЕРИФІКУВАВ НОМЕР ТЕЛЕФОНУ РАНІШЕ';
+                header.setAttribute('data-translate', 'formHeaderBefore');
+
+                // Update description text and data-translate
+                const description =
+                    document.querySelector('.form__description');
+                description.textContent =
+                    'Тепер ти не пропустиш головні події FAVBET';
+                description.setAttribute(
+                    'data-translate',
+                    'formDescriptionBefore'
+                );
+                // Create new container inside form wrapper
+                const formWrapper = document.querySelector('.form__wrapper');
+                const beforeConfirmContainer = document.createElement('div');
+                beforeConfirmContainer.className = 'confirmation__before';
+
+                // Add container to form wrapper
+                formWrapper.appendChild(beforeConfirmContainer);
+
+                // Add new button wrapper after form wrapper
+                const beforeButtonWrapper = document.createElement('div');
+                beforeButtonWrapper.className = 'before__button-wrapper';
+
+                const newLink = document.createElement('a');
+                newLink.href = 'sports/';
+                newLink.type = 'button';
+                newLink.textContent = 'ДО ГРИ';
+                newLink.setAttribute('data-translate', 'confirmBefore');
+
+                beforeButtonWrapper.appendChild(newLink);
+                formWrapper.after(beforeButtonWrapper);
 
                 return;
             }
 
-            showInputMessage('Будь ласка, підтвердіть Ваш номер телефону');
+            // showInputMessage('Будь ласка, підтвердіть Ваш номер телефону');
         } catch (error) {
             console.error('Failed to get user:', error);
         }
@@ -295,7 +325,7 @@
                     clearInterval(verificationTimer);
 
                     confirmButton.disabled = false;
-                    confirmButton.textContent = 'Надіслати повторно';
+                    confirmButton.textContent = 'НАДІСЛАТИ ПОВТОРНО';
                     // Reset the form and remove required attribute
                     const codeInput =
                         document.getElementById('confirmation-code');
@@ -325,13 +355,13 @@
                             .padStart(
                                 2,
                                 '0'
-                            )} Верифікацію заблоковано. Дочекайтесь оновлення таймера`
+                            )} верифікацію заблоковано. Дочекайтесь оновлення таймера`
                     );
                 }
 
                 if (confirmation) {
                     showInputMessage(
-                        `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')} час, який залишився, щоб ввести код, після закінчення часу Ви зможете відправити код повторно`,
+                        `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')} час, який залишився, щоб ввести код з SMS-повідомлення. Після закінчення часу можна запросити код повторно`,
                         confirmationForm
                     );
                 }
@@ -352,6 +382,8 @@
                 verificationSession = response.data.session_id;
                 // Only handle form visibility if it's hidden
                 if (confirmationForm.classList.contains('hidden')) {
+                    verificationForm.classList.add('hidden');
+                    verificationForm.classList.remove('visible');
                     confirmationForm.classList.add('visible');
                     confirmationForm.classList.remove('hidden');
                 }
@@ -371,9 +403,9 @@
         //User starts to change phone number
         phoneInput.addEventListener('input', (e) => {
             if (e.target.value === userPhoneNumber) {
-                submitButton.innerHTML = 'Підтвердити';
+                submitButton.innerHTML = 'ПІДТВЕРДИТИ';
             } else {
-                submitButton.innerHTML = 'Зберегти';
+                submitButton.innerHTML = 'ЗБЕРЕГТИ';
             }
         });
 
@@ -473,10 +505,73 @@
                 );
 
                 if (response.ok) {
-                    showInputMessage('Ваш номер телефону підтверджено');
+                    // Hide the confirmation form
                     confirmationForm.style.display = 'none';
-                    phoneInput.disabled = true;
-                    submitButton.style.display = 'none';
+
+                    // Update header text and data-translate
+                    const header = document.querySelector('.form__header');
+                    header.textContent = 'ТВІЙ НОМЕР ВЕРИФІКОВАНО';
+                    header.setAttribute('data-translate', 'formHeaderSuccess');
+
+                    // Update description text and data-translate
+                    const description =
+                        document.querySelector('.form__description');
+                    description.textContent =
+                        'Ваш персональний бонус зараховано в розділ "Бонуси"';
+                    description.setAttribute(
+                        'data-translate',
+                        'formDescriptionSuccess'
+                    );
+
+                    // Create new container inside form wrapper
+                    const formWrapper =
+                        document.querySelector('.form__wrapper');
+                    const successConfirmContainer =
+                        document.createElement('div');
+                    successConfirmContainer.className = 'confirmation__success';
+
+                    // Create first div
+                    const firstDiv = document.createElement('div');
+                    firstDiv.className = 'confirmation__success-prizeInfo';
+
+                    const firstSpan = document.createElement('span');
+                    firstSpan.textContent = 'СТРАХОВКА ДО';
+                    firstSpan.setAttribute(
+                        'data-translate',
+                        'prizeInfoInsurance'
+                    );
+
+                    const secondSpan = document.createElement('span');
+                    secondSpan.textContent = 'СТАВКИ 100 ₴';
+                    secondSpan.setAttribute('data-translate', 'prizeInfoValue');
+
+                    // Append spans to first div
+                    firstDiv.appendChild(firstSpan);
+                    firstDiv.appendChild(secondSpan);
+
+                    // Create second div
+                    const secondDiv = document.createElement('div');
+                    secondDiv.className = 'confirmation__success-bonusSpark';
+
+                    // Append divs to container
+                    successConfirmContainer.appendChild(firstDiv);
+                    successConfirmContainer.appendChild(secondDiv);
+
+                    // Add container to form wrapper
+                    formWrapper.appendChild(successConfirmContainer);
+
+                    // Add new button wrapper after form wrapper
+                    const successButtonWrapper = document.createElement('div');
+                    successButtonWrapper.className = 'success__button-wrapper';
+
+                    const newLink = document.createElement('a');
+                    newLink.href = 'personal-office/bonuses/betinsurance/';
+                    newLink.type = 'button';
+                    newLink.textContent = 'ДО БОНУСУ';
+                    newLink.setAttribute('data-translate', 'confirmSuccess');
+
+                    successButtonWrapper.appendChild(newLink);
+                    formWrapper.after(successButtonWrapper);
                 } else {
                     //TODO
                     //need to check other possible errors

@@ -6,20 +6,24 @@
 
 .fav__page {
     position: relative;
-    height: 100vh;
+    height: 1215px;
     width: 100%;
     overflow: hidden;
+    background-color: $dark-blue;
+    @include background-cover('https://fav-prom.com/html/verification/img/Union.svg');
+    z-index: 0;
+
 
     .background {
-        &__grid {
-            @include fixed-full;
-            z-index: -2;
-            background-color: $dark-blue;
-            @include background-cover('/img/Union.svg');
-        }
+        // &__grid {
+        //     @include fixed-full;
+        //     z-index: -2;
+        //     background-color: $dark-blue;
+        //     @include background-cover('https://fav-prom.com/html/verification/img/Union.svg');
+        // }
 
         &__ellipse {
-            position: fixed;
+            position: absolute;
             width: 850px;
             height: 120px;
             z-index: -1;
@@ -38,7 +42,7 @@
 
         &--top,
         &--bottom {
-            position: fixed;
+            position: absolute;
             left: 0;
             z-index: 10;
         }
@@ -57,7 +61,7 @@
         }
 
         &__takeBonus {
-            @include colored-section($pink, '/img/pink_rect_vector.svg', 'desktop');
+            @include colored-section($pink, 'https://fav-prom.com/html/verification/img/pink_rect_vector.svg', 'desktop');
             width: 456px;
 
             &-content {
@@ -69,7 +73,7 @@
         }
 
         &__currency {
-            @include colored-section($pink, '/img/blue_rect_vector.svg', 'desktop');
+            @include colored-section($pink, 'https://fav-prom.com/html/verification/img/blue_rect_vector.svg', 'desktop');
             width: 247px;
 
             &-content {
@@ -78,12 +82,12 @@
                 height: 37px;
                 flex-shrink: 0;
                 color: $white;
-                @include background-cover('/img/currency.svg');
+                @include background-cover('https://fav-prom.com/html/verification/img/currency.svg');
             }
         }
 
         &__bonusHere {
-            @include colored-section($pink, '/img/pink_rect_vector.svg', 'desktop');
+            @include colored-section($pink, 'https://fav-prom.com/html/verification/img/pink_rect_vector.svg', 'desktop');
             width: 458px;
 
             &-content {
@@ -104,7 +108,7 @@
                     @include flex-center;
                     width: 39px;
                     height: 27px;
-                    @include background-cover('/img/thumb.svg');
+                    @include background-cover('https://fav-prom.com/html/verification/img/thumb.svg');
                 }
 
                 &-text {
@@ -116,7 +120,7 @@
         }
 
         &__fs {
-            @include colored-section($pink, '/img/blue_rect_vector.svg', 'desktop');
+            @include colored-section($pink, 'https://fav-prom.com/html/verification/img/blue_rect_vector.svg', 'desktop');
             width: 304px;
 
             &-content {
@@ -125,34 +129,34 @@
                 height: 31px;
                 flex-shrink: 0;
                 color: $white;
-                @include background-cover('/img/fs.svg');
+                @include background-cover('https://fav-prom.com/html/verification/img/fs.svg');
             }
         }
 
         &--bottom {
             .banner__takeBonus {
-                @include background-cover('/img/blue_rect_vector_bottom.svg');
+                @include background-cover('https://fav-prom.com/html/verification/img/blue_rect_vector_bottom.svg');
             }
 
             .banner__currency {
-                @include background-cover('/img/pink_rect_vector_bottom.svg');
+                @include background-cover('https://fav-prom.com/html/verification/img/pink_rect_vector_bottom.svg');
 
                 &-content {
-                    @include background-cover('/img/currency_dark.svg');
+                    @include background-cover('https://fav-prom.com/html/verification/img/currency_dark.svg');
                 }
 
             }
 
             .banner__bonusHere {
-                @include background-cover('/img/blue_rect_vector_bottom.svg');
+                @include background-cover('https://fav-prom.com/html/verification/img/blue_rect_vector_bottom.svg');
 
             }
 
             .banner__fs {
-                @include background-cover('/img/pink_rect_vector_bottom.svg');
+                @include background-cover('https://fav-prom.com/html/verification/img/pink_rect_vector_bottom.svg');
 
                 &-content {
-                    @include background-cover('/img/fs_dark.svg');
+                    @include background-cover('https://fav-prom.com/html/verification/img/fs_dark.svg');
                 }
             }
         }
@@ -161,7 +165,7 @@
     .main {
         @include flex-center;
         margin-top: $banner-height;
-        height: calc(100vh - $banner-height * 2);
+        height: calc(1215px - $banner-height * 2);
 
         &__contentWrapper {
             height: 100%;
@@ -242,13 +246,13 @@
                     &__content {
                         @include flex-center;
                         height: 222px;
-                        @include background-cover('/img/spark.svg');
+                        @include background-cover('https://fav-prom.com/html/verification/img/spark.svg');
                     }
 
                     &__text {
                         width: 178px;
                         height: 72px;
-                        @include background-cover('/img/20FS.svg');
+                        @include background-cover('https://fav-prom.com/html/verification/img/20FS.svg');
 
                     }
                 }
@@ -258,7 +262,7 @@
                     position: relative;
                     z-index: 1;
                     align-self: flex-end;
-                    @include background-cover('/img/pink_rounded_vector.svg');
+                    @include background-cover('https://fav-prom.com/html/verification/img/pink_rounded_vector.svg');
 
                     &__text {
                         display: flex;
@@ -273,7 +277,7 @@
                     gap: 15px;
 
                     &__item {
-                        @include background-cover('/img/thumb_pink.svg');
+                        @include background-cover('https://fav-prom.com/html/verification/img/thumb_pink.svg');
                     }
                 }
 
@@ -350,7 +354,7 @@
                         &__text {
                             width: 205px;
                             height: 41px;
-                            @include background-cover('/img/currency_right_banner.svg');
+                            @include background-cover('https://fav-prom.com/html/verification/img/currency_right_banner.svg');
                         }
                     }
 
@@ -362,7 +366,7 @@
                         &__item {
                             width: 79px;
                             height: 57px;
-                            @include background-cover('/img/thumb_pink_reverse.svg');
+                            @include background-cover('https://fav-prom.com/html/verification/img/thumb_pink_reverse.svg');
                         }
                     }
                 }
@@ -412,7 +416,7 @@
                         height: 100%;
                         z-index: 1;
                         background: $basic-blue;
-                        mask-image: url('/img/top_bar.png');
+                        mask-image: url('https://fav-prom.com/html/verification/img/top_bar.png');
                         mask-size: 100% 100%;
                         mask-repeat: no-repeat;
                     }
@@ -437,7 +441,7 @@
                             left: 45.9%;
                             width: 66px;
                             height: 3px;
-                            @include background-cover('/img/small_bar.svg');
+                            @include background-cover('https://fav-prom.com/html/verification/img/small_bar.svg');
                             z-index: 1;
                         }
                     }
@@ -458,7 +462,7 @@
                             width: 75px;
                             height: 16px;
                             z-index: 2;
-                            @include background-cover('/img/three_bars.svg');
+                            @include background-cover('https://fav-prom.com/html/verification/img/three_bars.svg');
                         }
 
                         &--logo {
@@ -554,7 +558,7 @@
                     height: 51px;
                     margin-top: 14px;
                     color: $dark-blue;
-                    white-space: pre-wrap;
+                    // white-space: pre-wrap;
                     word-wrap: break-word;
                     max-width: 100%;
                     text-align: center;
@@ -565,10 +569,6 @@
 
                 &__wrapper {
                     margin-block-start: 34px;
-
-                    a.visible {
-                        display: flex;
-                    }
 
                     .verification__form {
                         @include forms-shared;
@@ -584,6 +584,14 @@
 
                     .confirmation__form {
                         @include forms-shared;
+
+                        &:has(input:focus) label[htmlFor="confirmation-code"] {
+                            color: $dark-grey;
+                        }
+
+                        &:has(input.is-invalid) label[htmlFor="confirmation-code"] {
+                            color: $error-red;
+                        }
                     }
 
                     .hidden {
@@ -633,7 +641,7 @@
 
                         &:after {
                             content: '';
-                            @include background-cover('/img/arrow.svg');
+                            @include background-cover('https://fav-prom.com/html/verification/img/arrow.svg');
                             display: inline-block;
                             width: 24px;
                             height: 24px;
@@ -745,6 +753,42 @@
                     }
                 }
             }
+        }
+    }
+}
+
+//dynamic styles
+
+.hidden {
+    display: none;
+}
+
+.visible {
+    display: flex;
+}
+
+.auth__button-wrapper {
+    margin-top: 30px;
+
+    .auth__button {
+        @include flex-center;
+        width: 320px;
+        height: 50px;
+        margin-top: 10px;
+        padding: 10px 16px;
+        border: none;
+        outline: none;
+        border-radius: 2px;
+        background: $button-green;
+        color: $dark-blue;
+        text-align: center;
+        font-family: font('unbounded', 'bold');
+        font-size: 14px;
+        letter-spacing: 0.28px;
+
+        &:focus-visible {
+            outline: 2px solid $button-green;
+            outline-offset: 2px;
         }
     }
 }

@@ -25,13 +25,13 @@ include ../mixins.pug
                     .form__topBar-wrapper
                         .form__topBar
                             .form__topBar-logoWrapper
-                                img(src="/img/logo_blue.svg" alt="logo").form__topBar-logoWrapper--logo
-                                img(src="/img/logo_backdrop.svg" alt="backdrop").form__topBar-logoWrapper--backdrop
-                            img(src="/img/esc_button.svg" alt="esc-button").form__topBar-btnImage
+                                img(src="https://fav-prom.com/html/verification/img/logo_blue.svg" alt="logo").form__topBar-logoWrapper--logo
+                                img(src="https://fav-prom.com/html/verification/img/logo_backdrop.svg" alt="backdrop").form__topBar-logoWrapper--backdrop
+                            img(src="https://fav-prom.com/html/verification/img/esc_button.svg" alt="esc-button").form__topBar-btnImage
                     .form__container
                         //- Left Image
                         .form__image-container--left
-                            img(src="/img/pink_smile.svg" alt="smile").form__image
+                            img(src="https://fav-prom.com/html/verification/img/pink_smile.svg" alt="smile").form__image
                         //- Form Content
                         .form__mainContent
                             h1.form__header(data-translate="formHeader")
@@ -43,14 +43,6 @@ include ../mixins.pug
                                 | персональний бонус.
 
                             .form__wrapper
-                                a(
-                                    id="login-button"
-                                    href="https://www.favbet.ua/login"
-                                    type="button"
-                                    class="visible"
-                                    data-translate="authorize"
-                                    ) АВТОРИЗУВАТИСЬ
-
                                 //- Verification form
                                 form#verification__form.verification__form.hidden
                                     label(htmlFor="phone" data-translate="confirmPhone") Підтвердити свій номер телефону
@@ -85,9 +77,18 @@ include ../mixins.pug
                                         id="confirm-button"
                                         data-translate="confirm"
                                     ) ПІДТВЕРДИТИ
+                            .auth__button-wrapper
+                                a(
+                                    id="login-button"
+                                    href="/login"
+                                    type="button"
+                                    style="display: none;"
+                                    class="auth__button"
+                                    data-translate="authorize"
+                                ) АВТОРИЗУВАТИСЬ
                         //- Right Image
                         .form__image-container--right
-                            img(src="/img/pink_spark.svg" alt="spark").form__image
+                            img(src="https://fav-prom.com/html/verification/img/pink_spark.svg" alt="spark").form__image
 
                 //- Rules
                 .rules.drop

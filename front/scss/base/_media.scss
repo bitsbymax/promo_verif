@@ -422,7 +422,7 @@
                         &__item {
                             width: 72px;
                             height: 52px;
-                            @include background-cover('/img/thumb_pink_reverse.svg');
+                            @include background-cover('https://fav-prom.com/html/verification/img/thumb_pink_reverse.svg');
                         }
                     }
 
@@ -431,7 +431,7 @@
                         width: 299px;
                         height: 91px;
                         margin-left: -20px;
-                        @include background-cover('/img/blue_rounded.svg');
+                        @include background-cover('https://fav-prom.com/html/verification/img/blue_rounded.svg');
 
                         &__text {
                             display: flex;
@@ -464,13 +464,13 @@
                             @include flex-center;
                             width: 226px;
                             height: 144px;
-                            @include background-cover('/img/top_spark.svg');
+                            @include background-cover('https://fav-prom.com/html/verification/img/top_spark.svg');
                         }
 
                         &__text {
                             width: 122px;
                             height: 52px;
-                            @include background-cover('/img/20FS_mobile.svg');
+                            @include background-cover('https://fav-prom.com/html/verification/img/20FS_mobile.svg');
                         }
                     }
 
@@ -485,7 +485,7 @@
                     &--bottom {
                         .pointers {
                             &__item {
-                                @include background-cover('/img/thumb_pink.svg');
+                                @include background-cover('https://fav-prom.com/html/verification/img/thumb_pink.svg');
                             }
                         }
 
@@ -595,7 +595,7 @@
                         &__item {
                             width: 72px;
                             height: 52px;
-                            @include background-cover('/img/thumb_pink_reverse.svg');
+                            @include background-cover('https://fav-prom.com/html/verification/img/thumb_pink_reverse.svg');
                         }
                     }
 
@@ -604,7 +604,7 @@
                         width: 299px;
                         height: 91px;
                         margin-left: -20px;
-                        @include background-cover('/img/blue_rounded.svg');
+                        @include background-cover('https://fav-prom.com/html/verification/img/blue_rounded.svg');
 
                         &__text {
                             display: flex;
@@ -637,13 +637,13 @@
                             @include flex-center;
                             width: 226px;
                             height: 144px;
-                            @include background-cover('/img/top_spark.svg');
+                            @include background-cover('https://fav-prom.com/html/verification/img/top_spark.svg');
                         }
 
                         &__text {
                             width: 122px;
                             height: 52px;
-                            @include background-cover('/img/20FS_mobile.svg');
+                            @include background-cover('https://fav-prom.com/html/verification/img/20FS_mobile.svg');
                         }
                     }
 
@@ -664,7 +664,7 @@
 
                         .pointers {
                             &__item {
-                                @include background-cover('/img/thumb_pink.svg');
+                                @include background-cover('https://fav-prom.com/html/verification/img/thumb_pink.svg');
                             }
                         }
 
@@ -872,7 +872,7 @@
             height: $tablet-banner-height !important;
 
             &__takeBonus {
-                @include colored-section($pink, '/img/pink_rect_vector.svg', 'tablet');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/pink_rect_vector.svg', 'tablet');
                 width: 319px !important;
 
                 &-content {
@@ -885,7 +885,7 @@
             }
 
             &__currency {
-                @include colored-section($pink, '/img/blue_rect_vector.svg', 'tablet');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/blue_rect_vector.svg', 'tablet');
                 width: 173px !important;
 
                 &-content {
@@ -895,7 +895,7 @@
             }
 
             &__bonusHere {
-                @include colored-section($pink, '/img/pink_rect_vector.svg', 'tablet');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/pink_rect_vector.svg', 'tablet');
                 width: 321px !important;
 
                 &-content {
@@ -922,7 +922,7 @@
             }
 
             &__fs {
-                @include colored-section($pink, '/img/blue_rect_vector.svg', 'tablet');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/blue_rect_vector.svg', 'tablet');
                 width: 213.4px !important;
 
                 &-content {
@@ -978,7 +978,7 @@
 
                         &::before,
                         &::after {
-                            mask-image: url('/img/tablet_top_bar.png') !important;
+                            mask-image: url('https://fav-prom.com/html/verification/img/tablet_top_bar.png') !important;
                         }
 
                         &-wrapper {
@@ -1040,7 +1040,7 @@
             height: $tablet-banner-height !important;
 
             &__takeBonus {
-                @include colored-section($pink, '/img/pink_rect_vector.svg', 'tablet');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/pink_rect_vector.svg', 'tablet');
                 width: 319px !important;
 
                 &-content {
@@ -1053,7 +1053,7 @@
             }
 
             &__currency {
-                @include colored-section($pink, '/img/blue_rect_vector.svg', 'tablet');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/blue_rect_vector.svg', 'tablet');
                 width: 173px !important;
 
                 &-content {
@@ -1063,7 +1063,7 @@
             }
 
             &__bonusHere {
-                @include colored-section($pink, '/img/pink_rect_vector.svg', 'tablet');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/pink_rect_vector.svg', 'tablet');
                 width: 321px !important;
 
                 &-content {
@@ -1090,7 +1090,7 @@
             }
 
             &__fs {
-                @include colored-section($pink, '/img/blue_rect_vector.svg', 'tablet');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/blue_rect_vector.svg', 'tablet');
                 width: 213.4px !important;
 
                 &-content {
@@ -1144,7 +1144,7 @@
 
                         &::before,
                         &::after {
-                            mask-image: url('/img/tablet_top_bar.png') !important;
+                            mask-image: url('https://fav-prom.com/html/verification/img/tablet_top_bar.png') !important;
                         }
 
                         &-wrapper {
@@ -1206,7 +1206,7 @@
             height: $tablet-banner-height !important;
 
             &__takeBonus {
-                @include colored-section($pink, '/img/pink_rect_vector.svg', 'tablet');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/pink_rect_vector.svg', 'tablet');
                 width: 319px !important;
 
                 &-content {
@@ -1219,7 +1219,7 @@
             }
 
             &__currency {
-                @include colored-section($pink, '/img/blue_rect_vector.svg', 'tablet');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/blue_rect_vector.svg', 'tablet');
                 width: 173px !important;
 
                 &-content {
@@ -1229,7 +1229,7 @@
             }
 
             &__bonusHere {
-                @include colored-section($pink, '/img/pink_rect_vector.svg', 'tablet');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/pink_rect_vector.svg', 'tablet');
                 width: 321px !important;
 
                 &-content {
@@ -1256,7 +1256,7 @@
             }
 
             &__fs {
-                @include colored-section($pink, '/img/blue_rect_vector.svg', 'tablet');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/blue_rect_vector.svg', 'tablet');
                 width: 213.4px !important;
 
                 &-content {
@@ -1310,7 +1310,7 @@
 
                         &::before,
                         &::after {
-                            mask-image: url('/img/tablet_top_bar.png') !important;
+                            mask-image: url('https://fav-prom.com/html/verification/img/tablet_top_bar.png') !important;
                         }
 
                         &-wrapper {
@@ -1372,7 +1372,7 @@
             height: $tablet-banner-height !important;
 
             &__takeBonus {
-                @include colored-section($pink, '/img/pink_rect_vector.svg', 'tablet');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/pink_rect_vector.svg', 'tablet');
                 width: 319px !important;
 
                 &-content {
@@ -1385,7 +1385,7 @@
             }
 
             &__currency {
-                @include colored-section($pink, '/img/blue_rect_vector.svg', 'tablet');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/blue_rect_vector.svg', 'tablet');
                 width: 173px !important;
 
                 &-content {
@@ -1395,7 +1395,7 @@
             }
 
             &__bonusHere {
-                @include colored-section($pink, '/img/pink_rect_vector.svg', 'tablet');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/pink_rect_vector.svg', 'tablet');
                 width: 321px !important;
 
                 &-content {
@@ -1422,7 +1422,7 @@
             }
 
             &__fs {
-                @include colored-section($pink, '/img/blue_rect_vector.svg', 'tablet');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/blue_rect_vector.svg', 'tablet');
                 width: 213.4px !important;
 
                 &-content {
@@ -1476,7 +1476,7 @@
 
                         &::before,
                         &::after {
-                            mask-image: url('/img/tablet_top_bar.png') !important;
+                            mask-image: url('https://fav-prom.com/html/verification/img/tablet_top_bar.png') !important;
                         }
 
                         &-wrapper {
@@ -1539,7 +1539,7 @@
             height: $tablet-banner-height !important;
 
             &__takeBonus {
-                @include colored-section($pink, '/img/pink_rect_vector.svg', 'tablet');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/pink_rect_vector.svg', 'tablet');
                 width: 319px !important;
 
                 &-content {
@@ -1552,7 +1552,7 @@
             }
 
             &__currency {
-                @include colored-section($pink, '/img/blue_rect_vector.svg', 'tablet');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/blue_rect_vector.svg', 'tablet');
                 width: 173px !important;
 
                 &-content {
@@ -1562,7 +1562,7 @@
             }
 
             &__bonusHere {
-                @include colored-section($pink, '/img/pink_rect_vector.svg', 'tablet');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/pink_rect_vector.svg', 'tablet');
                 width: 321px !important;
 
                 &-content {
@@ -1589,7 +1589,7 @@
             }
 
             &__fs {
-                @include colored-section($pink, '/img/blue_rect_vector.svg', 'tablet');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/blue_rect_vector.svg', 'tablet');
                 width: 213.4px !important;
 
                 &-content {
@@ -1670,7 +1670,7 @@
                         &__item {
                             width: 72px;
                             height: 52px;
-                            @include background-cover('/img/thumb_pink_reverse.svg');
+                            @include background-cover('https://fav-prom.com/html/verification/img/thumb_pink_reverse.svg');
                         }
                     }
 
@@ -1679,7 +1679,7 @@
                         width: 299px;
                         height: 91px;
                         margin-left: -20px;
-                        @include background-cover('/img/blue_rounded.svg');
+                        @include background-cover('https://fav-prom.com/html/verification/img/blue_rounded.svg');
 
                         &__text {
                             display: flex;
@@ -1712,13 +1712,13 @@
                             @include flex-center;
                             width: 226px;
                             height: 144px;
-                            @include background-cover('/img/top_spark.svg');
+                            @include background-cover('https://fav-prom.com/html/verification/img/top_spark.svg');
                         }
 
                         &__text {
                             width: 122px;
                             height: 52px;
-                            @include background-cover('/img/20FS_mobile.svg');
+                            @include background-cover('https://fav-prom.com/html/verification/img/20FS_mobile.svg');
                         }
                     }
 
@@ -1739,7 +1739,7 @@
 
                         .pointers {
                             &__item {
-                                @include background-cover('/img/thumb_pink.svg');
+                                @include background-cover('https://fav-prom.com/html/verification/img/thumb_pink.svg');
                             }
                         }
 
@@ -1783,7 +1783,7 @@
 
                         &::before,
                         &::after {
-                            mask-image: url('/img/tablet_top_bar.png') !important;
+                            mask-image: url('https://fav-prom.com/html/verification/img/tablet_top_bar.png') !important;
                         }
 
                         &-wrapper {
@@ -1846,7 +1846,7 @@
             height: $tablet-banner-height !important;
 
             &__takeBonus {
-                @include colored-section($pink, '/img/pink_rect_vector.svg', 'tablet');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/pink_rect_vector.svg', 'tablet');
                 width: 319px !important;
 
                 &-content {
@@ -1859,7 +1859,7 @@
             }
 
             &__currency {
-                @include colored-section($pink, '/img/blue_rect_vector.svg', 'tablet');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/blue_rect_vector.svg', 'tablet');
                 width: 173px !important;
 
                 &-content {
@@ -1869,7 +1869,7 @@
             }
 
             &__bonusHere {
-                @include colored-section($pink, '/img/pink_rect_vector.svg', 'tablet');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/pink_rect_vector.svg', 'tablet');
                 width: 321px !important;
 
                 &-content {
@@ -1896,7 +1896,7 @@
             }
 
             &__fs {
-                @include colored-section($pink, '/img/blue_rect_vector.svg', 'tablet');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/blue_rect_vector.svg', 'tablet');
                 width: 213.4px !important;
 
                 &-content {
@@ -1977,7 +1977,7 @@
                         &__item {
                             width: 72px;
                             height: 52px;
-                            @include background-cover('/img/thumb_pink_reverse.svg');
+                            @include background-cover('https://fav-prom.com/html/verification/img/thumb_pink_reverse.svg');
                         }
                     }
 
@@ -1986,7 +1986,7 @@
                         width: 299px;
                         height: 91px;
                         margin-left: -20px;
-                        @include background-cover('/img/blue_rounded.svg');
+                        @include background-cover('https://fav-prom.com/html/verification/img/blue_rounded.svg');
 
                         &__text {
                             display: flex;
@@ -2019,13 +2019,13 @@
                             @include flex-center;
                             width: 226px;
                             height: 144px;
-                            @include background-cover('/img/top_spark.svg');
+                            @include background-cover('https://fav-prom.com/html/verification/img/top_spark.svg');
                         }
 
                         &__text {
                             width: 122px;
                             height: 52px;
-                            @include background-cover('/img/20FS_mobile.svg');
+                            @include background-cover('https://fav-prom.com/html/verification/img/20FS_mobile.svg');
                         }
                     }
 
@@ -2046,7 +2046,7 @@
 
                         .pointers {
                             &__item {
-                                @include background-cover('/img/thumb_pink.svg');
+                                @include background-cover('https://fav-prom.com/html/verification/img/thumb_pink.svg');
                             }
                         }
 
@@ -2090,7 +2090,7 @@
 
                         &::before,
                         &::after {
-                            mask-image: url('/img/tablet_top_bar.png') !important;
+                            mask-image: url('https://fav-prom.com/html/verification/img/tablet_top_bar.png') !important;
                         }
 
                         &-wrapper {
@@ -2152,7 +2152,7 @@
             height: $tablet-banner-height !important;
 
             &__takeBonus {
-                @include colored-section($pink, '/img/pink_rect_vector.svg', 'tablet');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/pink_rect_vector.svg', 'tablet');
                 width: 319px !important;
 
                 &-content {
@@ -2165,7 +2165,7 @@
             }
 
             &__currency {
-                @include colored-section($pink, '/img/blue_rect_vector.svg', 'tablet');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/blue_rect_vector.svg', 'tablet');
                 width: 173px !important;
 
                 &-content {
@@ -2175,7 +2175,7 @@
             }
 
             &__bonusHere {
-                @include colored-section($pink, '/img/pink_rect_vector.svg', 'tablet');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/pink_rect_vector.svg', 'tablet');
                 width: 321px !important;
 
                 &-content {
@@ -2202,7 +2202,7 @@
             }
 
             &__fs {
-                @include colored-section($pink, '/img/blue_rect_vector.svg', 'tablet');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/blue_rect_vector.svg', 'tablet');
                 width: 213.4px !important;
 
                 &-content {
@@ -2256,7 +2256,7 @@
 
                         &::before,
                         &::after {
-                            mask-image: url('/img/tablet_top_bar.png') !important;
+                            mask-image: url('https://fav-prom.com/html/verification/img/tablet_top_bar.png') !important;
                         }
 
                         &-wrapper {
@@ -2320,7 +2320,7 @@
             height: $tablet-banner-height !important;
 
             &__takeBonus {
-                @include colored-section($pink, '/img/pink_rect_vector.svg', 'tablet');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/pink_rect_vector.svg', 'tablet');
                 width: 319px !important;
 
                 &-content {
@@ -2333,7 +2333,7 @@
             }
 
             &__currency {
-                @include colored-section($pink, '/img/blue_rect_vector.svg', 'tablet');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/blue_rect_vector.svg', 'tablet');
                 width: 173px !important;
 
                 &-content {
@@ -2343,7 +2343,7 @@
             }
 
             &__bonusHere {
-                @include colored-section($pink, '/img/pink_rect_vector.svg', 'tablet');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/pink_rect_vector.svg', 'tablet');
                 width: 321px !important;
 
                 &-content {
@@ -2370,7 +2370,7 @@
             }
 
             &__fs {
-                @include colored-section($pink, '/img/blue_rect_vector.svg', 'tablet');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/blue_rect_vector.svg', 'tablet');
                 width: 213.4px !important;
 
                 &-content {
@@ -2451,7 +2451,7 @@
                         &__item {
                             width: 72px;
                             height: 52px;
-                            @include background-cover('/img/thumb_pink_reverse.svg');
+                            @include background-cover('https://fav-prom.com/html/verification/img/thumb_pink_reverse.svg');
                         }
                     }
 
@@ -2460,7 +2460,7 @@
                         width: 299px;
                         height: 91px;
                         margin-left: -20px;
-                        @include background-cover('/img/blue_rounded.svg');
+                        @include background-cover('https://fav-prom.com/html/verification/img/blue_rounded.svg');
 
                         &__text {
                             display: flex;
@@ -2493,13 +2493,13 @@
                             @include flex-center;
                             width: 226px;
                             height: 144px;
-                            @include background-cover('/img/top_spark.svg');
+                            @include background-cover('https://fav-prom.com/html/verification/img/top_spark.svg');
                         }
 
                         &__text {
                             width: 122px;
                             height: 52px;
-                            @include background-cover('/img/20FS_mobile.svg');
+                            @include background-cover('https://fav-prom.com/html/verification/img/20FS_mobile.svg');
                         }
                     }
 
@@ -2514,7 +2514,7 @@
                     &--bottom {
                         .pointers {
                             &__item {
-                                @include background-cover('/img/thumb_pink.svg');
+                                @include background-cover('https://fav-prom.com/html/verification/img/thumb_pink.svg');
                             }
                         }
 
@@ -2557,7 +2557,7 @@
 
                         &::before,
                         &::after {
-                            mask-image: url('/img/tablet_top_bar.png') !important;
+                            mask-image: url('https://fav-prom.com/html/verification/img/tablet_top_bar.png') !important;
                         }
 
                         &-wrapper {
@@ -2877,7 +2877,7 @@
             height: $mobile-banner-height !important;
 
             &__takeBonus {
-                @include colored-section($pink, '/img/pink_rect_vector.svg', 'mobile');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/pink_rect_vector.svg', 'mobile');
                 width: 200px !important;
 
                 &-content {
@@ -2890,7 +2890,7 @@
             }
 
             &__currency {
-                @include colored-section($pink, '/img/currency_mobile.png', 'mobile');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/currency_mobile.png', 'mobile');
                 width: 120px !important;
 
                 &-content {
@@ -2900,7 +2900,7 @@
             }
 
             &__bonusHere {
-                @include colored-section($pink, '/img/pink_rect_vector.svg', 'mobile');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/pink_rect_vector.svg', 'mobile');
                 width: 180px !important;
 
                 &-content {
@@ -2922,7 +2922,7 @@
                     &-pic {
                         width: 22px !important;
                         height: 16px !important;
-                        @include background-cover('/img/thumb.svg');
+                        @include background-cover('https://fav-prom.com/html/verification/img/thumb.svg');
                     }
 
                     &-text {
@@ -2934,7 +2934,7 @@
             }
 
             &__fs {
-                @include colored-section($pink, '/img/blue_rect_vector.svg', 'mobile');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/blue_rect_vector.svg', 'mobile');
                 width: 120px !important;
 
                 &-content {
@@ -3006,7 +3006,7 @@
 
                         &::before,
                         &::after {
-                            mask-image: url('/img/mobile_top_bar.png') !important;
+                            mask-image: url('https://fav-prom.com/html/verification/img/mobile_top_bar.png') !important;
                         }
 
                         &::before {
@@ -3231,7 +3231,7 @@
             height: $mobile-banner-height !important;
 
             &__takeBonus {
-                @include colored-section($pink, '/img/pink_rect_vector.svg', 'mobile');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/pink_rect_vector.svg', 'mobile');
                 width: 200px !important;
 
                 &-content {
@@ -3244,7 +3244,7 @@
             }
 
             &__currency {
-                @include colored-section($pink, '/img/currency_mobile.png', 'mobile');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/currency_mobile.png', 'mobile');
                 width: 120px !important;
 
                 &-content {
@@ -3254,7 +3254,7 @@
             }
 
             &__bonusHere {
-                @include colored-section($pink, '/img/pink_rect_vector.svg', 'mobile');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/pink_rect_vector.svg', 'mobile');
                 width: 180px !important;
 
                 &-content {
@@ -3276,7 +3276,7 @@
                     &-pic {
                         width: 22px !important;
                         height: 16px !important;
-                        @include background-cover('/img/thumb.svg');
+                        @include background-cover('https://fav-prom.com/html/verification/img/thumb.svg');
                     }
 
                     &-text {
@@ -3288,7 +3288,7 @@
             }
 
             &__fs {
-                @include colored-section($pink, '/img/blue_rect_vector.svg', 'mobile');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/blue_rect_vector.svg', 'mobile');
                 width: 120px !important;
 
                 &-content {
@@ -3360,7 +3360,7 @@
 
                         &::before,
                         &::after {
-                            mask-image: url('/img/mobile_top_bar.png') !important;
+                            mask-image: url('https://fav-prom.com/html/verification/img/mobile_top_bar.png') !important;
                         }
 
                         &::before {
@@ -3585,7 +3585,7 @@
             height: $mobile-banner-height !important;
 
             &__takeBonus {
-                @include colored-section($pink, '/img/pink_rect_vector.svg', 'mobile');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/pink_rect_vector.svg', 'mobile');
                 width: 200px !important;
 
                 &-content {
@@ -3598,7 +3598,7 @@
             }
 
             &__currency {
-                @include colored-section($pink, '/img/currency_mobile.png', 'mobile');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/currency_mobile.png', 'mobile');
                 width: 120px !important;
 
                 &-content {
@@ -3608,7 +3608,7 @@
             }
 
             &__bonusHere {
-                @include colored-section($pink, '/img/pink_rect_vector.svg', 'mobile');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/pink_rect_vector.svg', 'mobile');
                 width: 180px !important;
 
                 &-content {
@@ -3630,7 +3630,7 @@
                     &-pic {
                         width: 22px !important;
                         height: 16px !important;
-                        @include background-cover('/img/thumb.svg');
+                        @include background-cover('https://fav-prom.com/html/verification/img/thumb.svg');
                     }
 
                     &-text {
@@ -3642,7 +3642,7 @@
             }
 
             &__fs {
-                @include colored-section($pink, '/img/blue_rect_vector.svg', 'mobile');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/blue_rect_vector.svg', 'mobile');
                 width: 120px !important;
 
                 &-content {
@@ -3714,7 +3714,7 @@
 
                         &::before,
                         &::after {
-                            mask-image: url('/img/mobile_top_bar.png') !important;
+                            mask-image: url('https://fav-prom.com/html/verification/img/mobile_top_bar.png') !important;
                         }
 
                         &::before {
@@ -4113,7 +4113,7 @@
             height: $mobile-banner-height !important;
 
             &__takeBonus {
-                @include colored-section($pink, '/img/pink_rect_vector.svg', 'mobile');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/pink_rect_vector.svg', 'mobile');
                 width: 200px !important;
 
                 &-content {
@@ -4126,7 +4126,7 @@
             }
 
             &__currency {
-                @include colored-section($pink, '/img/currency_mobile.png', 'mobile');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/currency_mobile.png', 'mobile');
                 width: 120px !important;
 
                 &-content {
@@ -4136,7 +4136,7 @@
             }
 
             &__bonusHere {
-                @include colored-section($pink, '/img/pink_rect_vector.svg', 'mobile');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/pink_rect_vector.svg', 'mobile');
                 width: 180px !important;
 
                 &-content {
@@ -4158,7 +4158,7 @@
                     &-pic {
                         width: 22px !important;
                         height: 16px !important;
-                        @include background-cover('/img/thumb.svg');
+                        @include background-cover('https://fav-prom.com/html/verification/img/thumb.svg');
                     }
 
                     &-text {
@@ -4170,7 +4170,7 @@
             }
 
             &__fs {
-                @include colored-section($pink, '/img/blue_rect_vector.svg', 'mobile');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/blue_rect_vector.svg', 'mobile');
                 width: 120px !important;
 
                 &-content {
@@ -4235,7 +4235,7 @@
                         width: 157px;
                         height: 46px;
                         margin-left: -15px;
-                        @include background-cover('/img/blue_rounded.svg');
+                        @include background-cover('https://fav-prom.com/html/verification/img/blue_rounded.svg');
 
                         &__text {
                             width: 124px;
@@ -4274,7 +4274,7 @@
 
                         .pointers {
                             &__item {
-                                @include background-cover('/img/thumb_pink.svg');
+                                @include background-cover('https://fav-prom.com/html/verification/img/thumb_pink.svg');
                             }
                         }
 
@@ -4326,7 +4326,7 @@
 
                         &::before,
                         &::after {
-                            mask-image: url('/img/mobile_top_bar.png') !important;
+                            mask-image: url('https://fav-prom.com/html/verification/img/mobile_top_bar.png') !important;
                         }
 
                         &::before {
@@ -4568,7 +4568,7 @@
             height: $mobile-banner-height !important;
 
             &__takeBonus {
-                @include colored-section($pink, '/img/pink_rect_vector.svg', 'mobile');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/pink_rect_vector.svg', 'mobile');
                 width: 200px !important;
 
                 &-content {
@@ -4581,7 +4581,7 @@
             }
 
             &__currency {
-                @include colored-section($pink, '/img/currency_mobile.png', 'mobile');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/currency_mobile.png', 'mobile');
                 width: 120px !important;
 
                 &-content {
@@ -4591,7 +4591,7 @@
             }
 
             &__bonusHere {
-                @include colored-section($pink, '/img/pink_rect_vector.svg', 'mobile');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/pink_rect_vector.svg', 'mobile');
                 width: 180px !important;
 
                 &-content {
@@ -4613,7 +4613,7 @@
                     &-pic {
                         width: 22px !important;
                         height: 16px !important;
-                        @include background-cover('/img/thumb.svg');
+                        @include background-cover('https://fav-prom.com/html/verification/img/thumb.svg');
                     }
 
                     &-text {
@@ -4625,7 +4625,7 @@
             }
 
             &__fs {
-                @include colored-section($pink, '/img/blue_rect_vector.svg', 'mobile');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/blue_rect_vector.svg', 'mobile');
                 width: 120px !important;
 
                 &-content {
@@ -4690,7 +4690,7 @@
                         width: 157px;
                         height: 46px;
                         margin-left: -15px;
-                        @include background-cover('/img/blue_rounded.svg');
+                        @include background-cover('https://fav-prom.com/html/verification/img/blue_rounded.svg');
 
                         &__text {
                             width: 124px;
@@ -4725,7 +4725,7 @@
                     &--bottom {
                         .pointers {
                             &__item {
-                                @include background-cover('/img/thumb_pink.svg');
+                                @include background-cover('https://fav-prom.com/html/verification/img/thumb_pink.svg');
                             }
                         }
 
@@ -4774,7 +4774,7 @@
 
                         &::before,
                         &::after {
-                            mask-image: url('/img/mobile_top_bar.png') !important;
+                            mask-image: url('https://fav-prom.com/html/verification/img/mobile_top_bar.png') !important;
                         }
 
                         &::before {
