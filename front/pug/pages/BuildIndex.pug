@@ -53,7 +53,6 @@ include ../mixins.pug
                                         placeholder="+380 (XX) XXX XX XX"
                                         autocomplete="tel"
                                         maxlength="13"
-                                        pattern="^\\+380\\d{9}$"
                                         required
                                     )
                                     button(
@@ -69,8 +68,6 @@ include ../mixins.pug
                                         type="text"
                                         id="confirmation-code"
                                         name="confirmation-code"
-                                        placeholder="_ _ _ _ _"
-                                        pattern="[0-9]{5}"
                                         maxlength="5"
                                         inputmode="numeric"
                                         required
@@ -109,11 +106,3 @@ include ../mixins.pug
 
     //- Bottom Banner
     +banner('bottom')
-
-script.
-    const linkWrapper = document.querySelector('.link__button-wrapper')
-    const linkButton = linkWrapper.querySelector('a')
-    linkButton.href = getRedirectUrl()
-    linkButton.target = '_blank'
-    [BLANK]
-        linkButton.target = '_blank'

@@ -38,12 +38,9 @@
 */
 
 (function () {
-    //TODO
-    //! add phone number mask and phone validation
-
-    const API = 'https://www.favbet.ua';
-    // const VERIFICATION_API = 'http://localhost:3181/verification-api';
+    const API = 'https://fav-prom.com';
     const phoneInput = document.getElementById('phone');
+    const confirmationCodeInput = document.getElementById('confirmation-code');
     const verificationForm = document.getElementById('verification__form');
     const linkButtonWrapper = document.querySelector('.link__button-wrapper');
     const submitButton = document.getElementById('submit-button');
@@ -147,7 +144,7 @@
 
     const changeUserPhone = async (userData) => {
         try {
-            const response = await fetch(`${API}/accounting/api/change_user`, {
+            const response = await fetch('/accounting/api/change_user', {
                 method: 'POST',
                 body: userData,
             });
@@ -178,33 +175,20 @@
         }
     };
 
-    // const getAllVerifications = async () => {
-    //     try {
-    //         const response = await fetch(`${VERIFICATION_API}/verifications`, {
-    //             method: 'GET',
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //             },
-    //         });
-    //         return await response.json();
-    //     } catch (error) {
-    //         console.error('Error fetching verifications:', error);
-    //         throw error;
-    //     }
-    // };
-
-    // const addVerification = async (formData) => {
-    //     try {
-    //         const response = await fetch(`${VERIFICATION_API}/verification`, {
-    //             method: 'POST',
-    //             body: formData,
-    //         });
-    //         return await response.json();
-    //     } catch (error) {
-    //         console.error('Error adding verification:', error);
-    //         throw error;
-    //     }
-    // };
+    const addVerification = async (data) => {
+        try {
+            await fetch(`${API}/api_verification`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+        } catch (error) {
+            console.error('Error adding verification:', error);
+            throw error;
+        }
+    };
 
     const showInputMessage = (message, targetElement, state = false) => {
         const inputElement = targetElement.querySelector('input');
@@ -299,8 +283,13 @@
     };
 
     const isPhoneValid = (phone) => {
-        const phoneRegex = /^380\d{9}$/;
+        const phoneRegex = /^\+380\d{9}$/;
         return phoneRegex.test(phone);
+    };
+
+    const removeExistingMessages = (targetElement) => {
+        const existingMessages = targetElement.querySelectorAll('.input-msg');
+        existingMessages.forEach((msg) => msg.remove());
     };
 
     const init = async () => {
@@ -325,6 +314,7 @@
         let cid = null;
         let userPhoneNumber = null;
         let userPhoneVerified = false;
+        let submittedPhone = null;
 
         try {
             user = await getUser();
@@ -398,9 +388,11 @@
             verificationTimer = setInterval(() => {
                 if (timeLeft <= 0) {
                     clearInterval(verificationTimer);
-                    
+
                     confirmButton.disabled = false;
                     confirmButton.textContent = 'НАДІСЛАТИ ПОВТОРНО';
+
+                    removeExistingMessages(verificationForm);
 
                     // Reset the form and remove required attribute
                     const codeInput =
@@ -491,15 +483,47 @@
                 phoneInput.disabled = true;
                 step.verification = true;
                 startVerificationTimer(rest_time, step);
+            } else if (
+                response.code === -24 &&
+                response.message.reason ===
+                    'phone_number_has_been_confirmed_by_another_user'
+            ) {
+                submitButton.disabled = false;
+                showInputMessage(
+                    'Цей номер телефону було підтверджено іншим користувачем',
+                    verificationForm,
+                    'error'
+                );
             }
         };
 
         //User starts to change phone number
         phoneInput.addEventListener('input', (e) => {
+            const value = e.target.value;
+            // Remove is-invalid class initially
+            phoneInput.classList.remove('is-invalid');
+            // Validate phone number
+            if (!isPhoneValid(value)) {
+                phoneInput.classList.add('is-invalid');
+            } else {
+                removeExistingMessages(verificationForm);
+            }
             if (e.target.value.slice(1) === userPhoneNumber) {
                 submitButton.innerHTML = 'ПІДТВЕРДИТИ';
             } else {
                 submitButton.innerHTML = 'ЗБЕРЕГТИ';
+            }
+        });
+
+        confirmationCodeInput.addEventListener('input', (e) => {
+            // Remove non-numeric characters
+            e.target.value = e.target.value.replace(/[^0-9]/g, '');
+
+            // Add/remove .is-invalid class based on validation
+            if (e.target.value.length !== 5) {
+                e.target.classList.add('is-invalid');
+            } else {
+                e.target.classList.remove('is-invalid');
             }
         });
 
@@ -512,7 +536,8 @@
                 e
             );
             submitButton.disabled = true;
-            const submittedPhone = e.target[0].value.slice(1);
+            submittedPhone = e.target[0].value;
+            console.log('isPhoneValid', isPhoneValid(submittedPhone));
 
             if (!isPhoneValid(submittedPhone)) {
                 const message = 'Формат телефону вказано неправильно';
@@ -520,23 +545,48 @@
                 submitButton.disabled = false;
 
                 return;
+            } else {
+                console.log('inside else of isPhoneValid');
+                removeExistingMessages(verificationForm);
             }
 
             try {
+                console.log('ENTER TRY BLOCK ON verificationForm submit');
                 const userId = user.data.account.id;
                 const userData = new FormData();
 
                 userData.append('phone', submittedPhone);
                 userData.append('userid', userId);
 
+                console.log('submittedPhone:', submittedPhone);
+                console.log(
+                    'phone comparison',
+                    submittedPhone !== `+${userPhoneNumber}`
+                );
                 //Change user phone number
-                if (submittedPhone !== userPhoneNumber) {
+                if (submittedPhone !== `+${userPhoneNumber}`) {
+                    console.log(
+                        'INSIDE IF submittedPhone !== `+${userPhoneNumber}`'
+                    );
+                    console.log('MAKING changeUserPhone()');
                     const response = await changeUserPhone(userData);
 
                     if (response.error === 'no' && !response.error_code) {
-                        userPhoneNumber = response.phone;
-                        submitButton.innerHTML = 'Підтвердити';
+                        removeExistingMessages(verificationForm);
+
+                        userPhoneNumber = response.phone.slice(1);
+                        submitButton.innerHTML = 'ПІДТВЕРДИТИ';
                         submitButton.disabled = false;
+                    } else if (
+                        response.error === 'yes' &&
+                        response.error_code === 'accounting_error_02'
+                    ) {
+                        submitButton.disabled = false;
+                        showInputMessage(
+                            'Цей номер телефону вже використовується',
+                            verificationForm,
+                            'error'
+                        );
                     }
 
                     return;
@@ -551,15 +601,6 @@
                     console.log('inside else');
                     throw response;
                 }
-
-                // Add verification record
-                // const verificationRecord = new FormData();
-
-                // verificationRecord.append('phoneWithoutPlus', phone);
-                // verificationRecord.append('userid', userId);
-                // await addVerification(verificationRecord);
-
-                submitButton.disabled = true;
             } catch (error) {
                 console.error('Verification process failed:', error);
                 submitButton.disabled = false;
@@ -570,6 +611,15 @@
         confirmationForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             confirmButton.disabled = true;
+
+            const code = confirmationCodeInput.value;
+
+            // Validate length and numeric
+            if (!/^\d{5}$/.test(code)) {
+                confirmationCodeInput.classList.add('is-invalid');
+                e.preventDefault();
+                return;
+            }
             // Check if verification has expired
             if (confirmationForm.dataset.confirmationExpired === 'true') {
                 // Reset the form state
@@ -589,8 +639,6 @@
                 confirmButton.disabled = false;
                 return;
             }
-
-            const code = document.getElementById('confirmation-code').value;
 
             try {
                 const response = await confirmUserPhone(
@@ -656,6 +704,14 @@
                     linkButton.href = '/personal-office/bonuses/betinsurance';
                     linkButton.textContent = 'ДО БОНУСУ';
                     linkButton.setAttribute('data-translate', 'confirmSuccess');
+
+                    //! Add verification record
+                    const userId = user.data.account.id;
+
+                    await addVerification({
+                        userid: userId,
+                        phone: submittedPhone,
+                    });
                 } else {
                     //TODO
                     //need to check other possible errors
