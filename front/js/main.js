@@ -207,10 +207,40 @@
     // };
 
     const showInputMessage = (message, targetElement, state = false) => {
-        // Remove any existing messages first
-        const existingMessages = document.querySelectorAll('.input-msg:not([data-code-error])');
-        existingMessages.forEach((msg) => msg.remove());
+        const inputElement = targetElement.querySelector('input');
+        const buttonElement = targetElement.querySelector('button');
 
+        // Remove all messages if called from timer expiration
+        if (
+            targetElement.id === 'confirmation__form' &&
+            targetElement.dataset.confirmationExpired === 'true'
+        ) {
+            const allMessages = targetElement.querySelectorAll('.input-msg');
+            allMessages.forEach((msg) => msg.remove());
+        }
+
+        // Check for existing messages with the same content
+        const existingMessages = targetElement.querySelectorAll('.input-msg');
+        for (const msg of existingMessages) {
+            if (msg.hasAttribute('data-code-error')) continue;
+
+            if (Array.isArray(message) && message.length === 2) {
+                const timerWrapper = msg.querySelector('.timerWrapper');
+                if (timerWrapper) {
+                    const timer = timerWrapper.querySelector('.timer');
+                    if (timer) {
+                        timer.textContent = message[0];
+                        return;
+                    }
+                }
+            } else if (msg.textContent === message) {
+                return;
+            }
+
+            msg.remove();
+        }
+
+        // Create new message element
         const messageElement = document.createElement('div');
         messageElement.classList.add('input-msg');
 
@@ -227,42 +257,44 @@
 
             const secondSpan = document.createElement('span');
             secondSpan.textContent = message[1];
-            if (state) {
-                secondSpan.classList.add('error');
-            } else {
-                secondSpan.classList.add('warning');
-            }
+            secondSpan.classList.add(state ? 'error' : 'warning');
 
             messageElement.appendChild(timerWrapper);
-            // Add a space between spans
             messageElement.appendChild(document.createTextNode(' '));
             messageElement.appendChild(secondSpan);
         } else {
             messageElement.textContent = message;
         }
 
-        if (state) {
-            messageElement.classList.add('error');
-        } else {
-            messageElement.classList.add('warning');
-        }
+        messageElement.classList.add(state ? 'error' : 'warning');
 
-        const inputElement = targetElement.querySelector('input');
-        const buttonElement = targetElement.querySelector('button');
-
-        // Find the first error message if it exists
-        const existingErrorMsg =
-            targetElement.querySelector('[data-code-error]');
-
-        if (existingErrorMsg) {
-            // Insert after the existing error message
-            existingErrorMsg.parentNode.insertBefore(
+        // Handle message positioning
+        if (message === 'Неправильний код підтвердження') {
+            messageElement.setAttribute('data-code-error', 'true');
+            // Always insert error messages at the top
+            inputElement.parentNode.insertBefore(
                 messageElement,
-                existingErrorMsg.nextSibling
+                inputElement.nextSibling
             );
+
+            // Move any existing non-error messages below this one
+            const otherMessages = targetElement.querySelectorAll(
+                '.input-msg:not([data-code-error])'
+            );
+            otherMessages.forEach((msg) => {
+                messageElement.parentNode.insertBefore(
+                    msg,
+                    messageElement.nextSibling
+                );
+            });
         } else {
-            // Insert before the button as before
-            inputElement.parentNode.insertBefore(messageElement, buttonElement);
+            // For non-error messages, insert after any existing error message, or before the button
+            const existingErrorMsg =
+                targetElement.querySelector('[data-code-error]');
+            const insertBefore = existingErrorMsg
+                ? existingErrorMsg.nextSibling
+                : buttonElement;
+            inputElement.parentNode.insertBefore(messageElement, insertBefore);
         }
     };
 
@@ -366,22 +398,24 @@
             verificationTimer = setInterval(() => {
                 if (timeLeft <= 0) {
                     clearInterval(verificationTimer);
-
+                    
                     confirmButton.disabled = false;
                     confirmButton.textContent = 'НАДІСЛАТИ ПОВТОРНО';
+
                     // Reset the form and remove required attribute
                     const codeInput =
                         document.getElementById('confirmation-code');
                     codeInput.value = '';
                     codeInput.required = false;
-                    // Change form submit behavior to verification
+
+                    // Change form submit behavior to verification and trigger cleanup
                     confirmationForm.dataset.confirmationExpired = 'true';
 
-                    //Show message about expired code
+                    // Show message about expired code (cleanup will happen in showInputMessage)
                     showInputMessage(
                         'Час верифікації минув',
                         confirmationForm,
-                        'error'
+                        true
                     );
 
                     return;
@@ -636,19 +670,10 @@
                     error.code === -4 &&
                     error.message.reason === 'wrong_session_or_confirm_code'
                 ) {
-                    const messageElement = document.createElement('div');
-                    messageElement.classList.add('input-msg', 'error');
-                    messageElement.setAttribute('data-code-error', 'true');
-                    messageElement.textContent =
-                        'Неправильний код підтвердження';
-
-                    const inputElement =
-                        confirmationForm.querySelector('input');
-                    const buttonElement =
-                        confirmationForm.querySelector('button');
-                    inputElement.parentNode.insertBefore(
-                        messageElement,
-                        buttonElement
+                    showInputMessage(
+                        'Неправильний код підтвердження',
+                        confirmationForm,
+                        true
                     );
                 }
             } finally {

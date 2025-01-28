@@ -66,12 +66,13 @@ include ../mixins.pug
                                 form#confirmation__form.confirmation__form.hidden(data-confirmation-expired="false")
                                     label(htmlFor="confirmation-code" data-translate="provideCode") Введи код підтвердження
                                     input(
-                                        type="number"
+                                        type="text"
                                         id="confirmation-code"
                                         name="confirmation-code"
                                         placeholder="_ _ _ _ _"
-                                        pattern="[0-9]{6}"
-                                        maxlength="6"
+                                        pattern="[0-9]{5}"
+                                        maxlength="5"
+                                        inputmode="numeric"
                                         required
                                     )
                                     button(
