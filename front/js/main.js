@@ -1,4 +1,35 @@
 (function () {
+    const ERROR_MESSAGES = {
+        INVALID_PHONE_FORMAT: {
+            message: 'Формат телефону вказано неправильно',
+            translateKey: 'errorInvalidPhoneFormat',
+        },
+        PHONE_ALREADY_USED: {
+            message: 'Цей номер телефону вже використовується',
+            translateKey: 'errorPhoneAlreadyUsed',
+        },
+        PHONE_CONFIRMED_BY_ANOTHER: {
+            message: 'Цей номер телефону було підтверджено іншим користувачем',
+            translateKey: 'errorPhoneConfirmedByAnother',
+        },
+        VERIFICATION_EXPIRED: {
+            message: 'Час верифікації минув',
+            translateKey: 'errorVerificationExpired',
+        },
+        INVALID_CONFIRMATION_CODE: {
+            message: 'Неправильний код підтвердження',
+            translateKey: 'errorInvalidConfirmationCode',
+        },
+        VERIFICATION_LOCKED: {
+            message: 'верифікацію заблоковано. Дочекайтесь оновлення таймера',
+            translateKey: 'errorVerificationLocked',
+        },
+        SMS_CODE_TIMER: {
+            message:
+                'час, який залишився, щоб ввести код з SMS-повідомлення. Після закінчення часу можна запросити код повторно',
+            translateKey: 'smsCodeTimer',
+        },
+    };
     const API = 'https://fav-prom.com';
     const phoneInput = document.getElementById('phone');
     const confirmationCodeInput = document.getElementById('confirmation-code');
@@ -164,6 +195,15 @@
             allMessages.forEach((msg) => msg.remove());
         }
 
+        // Find error message object if it exists
+        let errorObj = null;
+        for (const key in ERROR_MESSAGES) {
+            if (ERROR_MESSAGES[key].message === message) {
+                errorObj = ERROR_MESSAGES[key];
+                break;
+            }
+        }
+
         // Check for existing messages with the same content
         const existingMessages = targetElement.querySelectorAll('.input-msg');
         for (const msg of existingMessages) {
@@ -204,11 +244,32 @@
             secondSpan.textContent = message[1];
             secondSpan.classList.add(state ? 'error' : 'warning');
 
+            // Add translation key if message matches the verification locked or SMS timer message
+            if (message[1] === ERROR_MESSAGES.VERIFICATION_LOCKED.message) {
+                secondSpan.setAttribute(
+                    'data-translate',
+                    ERROR_MESSAGES.VERIFICATION_LOCKED.translateKey
+                );
+            } else if (message[1] === ERROR_MESSAGES.SMS_CODE_TIMER.message) {
+                secondSpan.setAttribute(
+                    'data-translate',
+                    ERROR_MESSAGES.SMS_CODE_TIMER.translateKey
+                );
+            }
+
             messageElement.appendChild(timerWrapper);
             messageElement.appendChild(document.createTextNode(' '));
             messageElement.appendChild(secondSpan);
         } else {
             messageElement.textContent = message;
+
+            // Add translation key if error message exists in our structure
+            if (errorObj) {
+                messageElement.setAttribute(
+                    'data-translate',
+                    errorObj.translateKey
+                );
+            }
         }
 
         messageElement.classList.add(state ? 'error' : 'warning');
@@ -340,6 +401,12 @@
             totalSeconds,
             { confirmation = false, verification = false }
         ) => {
+            confirmButton.textContent = 'НАДІСЛАТИ';
+            confirmButton.setAttribute(
+                'data-translate',
+                'sendConfirmationCode'
+            );
+
             if (verificationTimer) {
                 clearInterval(verificationTimer);
             }
@@ -352,6 +419,10 @@
 
                     confirmButton.disabled = false;
                     confirmButton.textContent = 'НАДІСЛАТИ ПОВТОРНО';
+                    confirmButton.setAttribute(
+                        'data-translate',
+                        'resendConfirmationCode'
+                    );
 
                     removeExistingMessages(verificationForm);
 
@@ -366,7 +437,7 @@
 
                     // Show message about expired code (cleanup will happen in showInputMessage)
                     showInputMessage(
-                        'Час верифікації минув',
+                        ERROR_MESSAGES.VERIFICATION_EXPIRED.message,
                         confirmationForm,
                         'error'
                     );
@@ -374,7 +445,6 @@
                     return;
                 }
 
-                confirmButton.textContent = 'НАДІСЛАТИ';
                 const minutes = Math.floor(timeLeft / 60);
                 const seconds = timeLeft % 60;
 
@@ -390,7 +460,7 @@
                                 .padStart(2, '0')}:${(timeLeft % 60)
                                 .toString()
                                 .padStart(2, '0')}`,
-                            'верифікацію заблоковано. Дочекайтесь оновлення таймера',
+                            ERROR_MESSAGES.VERIFICATION_LOCKED.message,
                         ],
                         verificationForm,
                         'error'
@@ -401,7 +471,7 @@
                     showInputMessage(
                         [
                             `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`,
-                            'час, який залишився, щоб ввести код з SMS-повідомлення. Після закінчення часу можна запросити код повторно',
+                            ERROR_MESSAGES.SMS_CODE_TIMER.message,
                         ],
                         confirmationForm,
                         false
@@ -450,7 +520,7 @@
             ) {
                 submitButton.disabled = false;
                 showInputMessage(
-                    'Цей номер телефону було підтверджено іншим користувачем',
+                    ERROR_MESSAGES.PHONE_CONFIRMED_BY_ANOTHER.message,
                     verificationForm,
                     'error'
                 );
@@ -470,8 +540,10 @@
             }
             if (e.target.value.slice(1) === userPhoneNumber) {
                 submitButton.innerHTML = 'ПІДТВЕРДИТИ';
+                submitButton.setAttribute('data-translate', 'confirm');
             } else {
                 submitButton.innerHTML = 'ЗБЕРЕГТИ';
+                submitButton.setAttribute('data-translate', 'save');
             }
         });
 
@@ -497,38 +569,25 @@
             );
             submitButton.disabled = true;
             submittedPhone = e.target[0].value;
-            console.log('isPhoneValid', isPhoneValid(submittedPhone));
 
             if (!isPhoneValid(submittedPhone)) {
-                const message = 'Формат телефону вказано неправильно';
-                showInputMessage(message, verificationForm, 'error');
+                showInputMessage(ERROR_MESSAGES.INVALID_PHONE_FORMAT.message, verificationForm, 'error');
                 submitButton.disabled = false;
 
                 return;
             } else {
-                console.log('inside else of isPhoneValid');
                 removeExistingMessages(verificationForm);
             }
 
             try {
-                console.log('ENTER TRY BLOCK ON verificationForm submit');
                 const userId = user.data.account.id;
                 const userData = new FormData();
 
                 userData.append('phone', submittedPhone);
                 userData.append('userid', userId);
 
-                console.log('submittedPhone:', submittedPhone);
-                console.log(
-                    'phone comparison',
-                    submittedPhone !== `+${userPhoneNumber}`
-                );
                 //Change user phone number
                 if (submittedPhone !== `+${userPhoneNumber}`) {
-                    console.log(
-                        'INSIDE IF submittedPhone !== `+${userPhoneNumber}`'
-                    );
-                    console.log('MAKING changeUserPhone()');
                     const response = await changeUserPhone(userData);
 
                     if (response.error === 'no' && !response.error_code) {
@@ -543,7 +602,7 @@
                     ) {
                         submitButton.disabled = false;
                         showInputMessage(
-                            'Цей номер телефону вже використовується',
+                            ERROR_MESSAGES.PHONE_ALREADY_USED.message,
                             verificationForm,
                             'error'
                         );
@@ -555,10 +614,8 @@
                 const response = await verifyUserPhone(cid);
 
                 if (response) {
-                    console.log('inside if');
                     handleVerificationResponse(response);
                 } else {
-                    console.log('inside else');
                     throw response;
                 }
             } catch (error) {
@@ -673,13 +730,6 @@
                         userid: userId,
                         phone: submittedPhone,
                     });
-                } else {
-                    //TODO
-                    //need to check other possible errors
-                    // showInputMessage(
-                    //     'Невірний код підтвердження',
-                    //     confirmationForm
-                    // );
                 }
             } catch (error) {
                 console.error('Error confirming code:', error);
@@ -688,7 +738,7 @@
                     error.message.reason === 'wrong_session_or_confirm_code'
                 ) {
                     showInputMessage(
-                        'Неправильний код підтвердження',
+                        ERROR_MESSAGES.INVALID_CONFIRMATION_CODE.message,
                         confirmationForm,
                         'error'
                     );
