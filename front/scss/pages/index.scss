@@ -4,10 +4,11 @@
     font-size: 16px;
 }
 
-body{
+body {
     -webkit-tap-highlight-color: transparent;
     overscroll-behavior: none;
-    img{
+
+    img {
         width: 100%;
         height: auto;
     }
@@ -15,25 +16,14 @@ body{
 
 .fav__page {
     position: relative;
-    //height: 1215px;
     width: 100%;
     overflow: hidden;
-    //background-color: $dark-blue;
-    //@include background-cover('https://fav-prom.com/html/verification/img/Union.svg');
-    //@include background-cover('../img/Union.png');
     background: $dark-blue url("../img/Union.png") repeat 50% 0/cover;
     background-size: 2000px 860px;
     z-index: 0;
 
 
     .background {
-        // &__grid {
-        //     @include fixed-full;
-        //     z-index: -2;
-        //     background-color: $dark-blue;
-        //     @include background-cover('https://fav-prom.com/html/verification/img/Union.svg');
-        // }
-
         &__ellipse {
             position: absolute;
             width: 850px;
@@ -74,7 +64,8 @@ body{
 
         &__takeBonus {
             @include colored-section($pink, 'https://fav-prom.com/html/verification/img/pink_rect_vector.svg', 'desktop');
-            width: 456px;
+            padding-left: 57px;
+            padding-right: 57px;
 
             &-content {
                 @include banner-text;
@@ -177,12 +168,9 @@ body{
     .main {
         padding: 130px 15px;
         @include flex-center;
-        //margin-top: $banner-height;
-        //height: calc(1215px - $banner-height * 2);
 
         &__contentWrapper {
             height: 100%;
-            // width: max-content;
             @include flex-center;
             overflow: hidden;
 
@@ -283,6 +271,7 @@ body{
                         display: flex;
                         flex-direction: column;
                         color: $white;
+                        text-transform: uppercase;
                         font-family: font('unbounded', 'semibold');
                     }
                 }
@@ -321,10 +310,13 @@ body{
 
                             &-insurance {
                                 align-self: flex-start;
+                                font-family: font('unbounded', 'semibold');
+
                             }
 
                             &-value {
                                 align-self: flex-end;
+                                font-family: font('unbounded', 'semibold');
                             }
                         }
                     }
@@ -398,7 +390,6 @@ body{
                     flex-direction: column;
                     gap: 20px;
                     width: 864px;
-                    //height: 600px;
                     padding: 43px 32px 30px 32px;
                     border-radius: 20px;
                     border: 1px solid $pink;
@@ -454,7 +445,6 @@ body{
                             content: '';
                             position: absolute;
                             top: -4px;
-                            //left: 45.9%;
                             left: 50%;
                             transform: translate(-50%, 0);
                             width: 66px;
@@ -510,7 +500,6 @@ body{
                     display: flex;
                     justify-content: space-between;
                     align-items: flex-start;
-                    //height: 400px;
                     padding: 0 10px 10px;
                     flex-shrink: 1;
                     border-radius: 0 0 14px 14px;
@@ -557,7 +546,6 @@ body{
                     width: 340px;
                     flex: 0 0 auto;
                     padding: 30px 0 0 0;
-                    // margin: 40px 0 44px;
                 }
 
                 &__header {
@@ -569,6 +557,7 @@ body{
                     text-align: center;
                     font-family: font('unbounded', 'semibold');
                     font-size: 34px;
+                    text-transform: uppercase;
                     letter-spacing: 0.68px;
                 }
 
@@ -577,7 +566,6 @@ body{
                     height: 51px;
                     margin-top: 14px;
                     color: $dark-blue;
-                    // white-space: pre-wrap;
                     word-wrap: break-word;
                     max-width: 100%;
                     text-align: center;
@@ -630,9 +618,24 @@ body{
                 }
             }
 
-            // .rules {
-            //     margin-bottom: 30px;
-            // }
+            .rule {
+                max-width: 800px;
+                width: 100%;
+                padding: 20px;
+                background-color: $basic-blue;
+                border-radius: 14px;
+                color: $basic-green;
+                font-family: font('unbounded', 'semibold');
+                font-size: 12px;
+                letter-spacing: 0.28px;
+                line-height: 1.5;
+
+                br {
+                    margin: 10px 0;
+                    display: block;
+                    content: "";
+                }
+            }
 
             .drop {
                 max-width: 800px;
@@ -839,12 +842,11 @@ body{
 
 .successBeforeHeader {
     // width: 512px !important;
-    font-size: 30px ;
-    letter-spacing: 0.6px ;
+    font-size: 30px;
+    letter-spacing: 0.6px;
 }
-.beforeImage {
 
-}
+.beforeImage {}
 
 .link__button-wrapper {
     display: none;

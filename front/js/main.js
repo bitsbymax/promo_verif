@@ -41,8 +41,7 @@
     // #region Translation
     const ukLeng = document.querySelector('#ukLeng');
     const enLeng = document.querySelector('#enLeng');
-    let locale = 'en';
-    let debug = false;
+    let locale = 'ua';
 
     if (ukLeng) locale = 'uk';
     if (enLeng) locale = 'en';
@@ -342,15 +341,14 @@
         let submittedPhone = null;
 
         try {
-                user = await getUser();
-                cid = user.cid;
-                userPhoneNumber = user.data.account.phone_number;
-                console.log('userPhoneNumber:', userPhoneNumber);
-                userPhoneVerified = user.data.account.account_status.find(
-                    (status) => status.alias === 'IS_PHONE_VERIFIED'
-                ).value;
-                console.log('userPhoneVerified:', userPhoneVerified);
-
+            user = await getUser();
+            cid = user.cid;
+            userPhoneNumber = user.data.account.phone_number;
+            console.log('userPhoneNumber:', userPhoneNumber);
+            userPhoneVerified = user.data.account.account_status.find(
+                (status) => status.alias === 'IS_PHONE_VERIFIED'
+            ).value;
+            console.log('userPhoneVerified:', userPhoneVerified);
 
             // Check if user has a number and is already verified
             if (userPhoneNumber && userPhoneVerified) {
