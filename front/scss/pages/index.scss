@@ -4,13 +4,25 @@
     font-size: 16px;
 }
 
+body{
+    -webkit-tap-highlight-color: transparent;
+    overscroll-behavior: none;
+    img{
+        width: 100%;
+        height: auto;
+    }
+}
+
 .fav__page {
     position: relative;
-    height: 1215px;
+    //height: 1215px;
     width: 100%;
     overflow: hidden;
-    background-color: $dark-blue;
-    @include background-cover('https://fav-prom.com/html/verification/img/Union.svg');
+    //background-color: $dark-blue;
+    //@include background-cover('https://fav-prom.com/html/verification/img/Union.svg');
+    //@include background-cover('../img/Union.png');
+    background: $dark-blue url("../img/Union.png") repeat 50% 0/cover;
+    background-size: 2000px 860px;
     z-index: 0;
 
 
@@ -27,9 +39,9 @@
             width: 850px;
             height: 120px;
             z-index: -1;
-            top: 50%;
+            top: 350px;
             left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translate(-50%, 0%);
             border-radius: 100%;
             box-shadow: 0px 0px 290px 280px rgba(255, 38, 126, 0.35);
             background: rgba(255, 38, 126, 0.4);
@@ -163,9 +175,10 @@
     }
 
     .main {
+        padding: 130px 15px;
         @include flex-center;
-        margin-top: $banner-height;
-        height: calc(1215px - $banner-height * 2);
+        //margin-top: $banner-height;
+        //height: calc(1215px - $banner-height * 2);
 
         &__contentWrapper {
             height: 100%;
@@ -175,6 +188,8 @@
 
 
             .sideContent {
+                align-self: flex-start;
+                margin: 103px 0 auto 0;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
@@ -383,11 +398,12 @@
                     flex-direction: column;
                     gap: 20px;
                     width: 864px;
-                    height: 600px;
+                    //height: 600px;
                     padding: 43px 32px 30px 32px;
                     border-radius: 20px;
                     border: 1px solid $pink;
                     background: $dark-blue;
+                    transform-origin: top;
                 }
 
                 &__innerWrapper {
@@ -438,7 +454,9 @@
                             content: '';
                             position: absolute;
                             top: -4px;
-                            left: 45.9%;
+                            //left: 45.9%;
+                            left: 50%;
+                            transform: translate(-50%, 0);
                             width: 66px;
                             height: 3px;
                             @include background-cover('https://fav-prom.com/html/verification/img/small_bar.svg');
@@ -492,7 +510,8 @@
                     display: flex;
                     justify-content: space-between;
                     align-items: flex-start;
-                    height: 400px;
+                    //height: 400px;
+                    padding: 0 10px 10px;
                     flex-shrink: 1;
                     border-radius: 0 0 14px 14px;
                     border: 2px solid $pink;
@@ -606,7 +625,7 @@
                     }
 
                     .hidden {
-                        display: none;
+                        display: none !important;
                     }
                 }
             }
@@ -685,6 +704,7 @@
                         cursor: auto;
                         background-color: $basic-blue;
                         border-radius: 0 0 14px 14px;
+                        scrollbar-width: auto;
 
                         &-list {
                             height: 360px;
@@ -819,8 +839,8 @@
 
 .successBeforeHeader {
     // width: 512px !important;
-    font-size: 30px !important;
-    letter-spacing: 0.6px !important;
+    font-size: 30px ;
+    letter-spacing: 0.6px ;
 }
 .beforeImage {
 
