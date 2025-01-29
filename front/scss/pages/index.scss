@@ -778,6 +778,10 @@
     display: flex;
 }
 
+.overflow {
+    overflow: hidden !important;
+}
+
 .input-msg {
     width: 310px;
     margin-top: 8px;

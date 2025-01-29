@@ -31,82 +31,84 @@
         },
     };
     const API = 'https://fav-prom.com';
+    const ENDPOINT = 'api_verification';
     const phoneInput = document.getElementById('phone');
     const confirmationCodeInput = document.getElementById('confirmation-code');
     const verificationForm = document.getElementById('verification__form');
     const linkButtonWrapper = document.querySelector('.link__button-wrapper');
     const submitButton = document.getElementById('submit-button');
 
-    // const resultsTable = document.querySelector('.tableResults__body'),
-    // 	unauthMsgs = document.querySelectorAll('.unauth-msg'),
-    // 	youAreInBtns = document.querySelectorAll('.took-part');
-
     // #region Translation
-    // const ukLeng = document.querySelector('#ukLeng');
-    // const enLeng = document.querySelector('#enLeng');
+    const ukLeng = document.querySelector('#ukLeng');
+    const enLeng = document.querySelector('#enLeng');
+    let locale = 'en';
 
-    // let locale = 'en';
+    if (ukLeng) locale = 'uk';
+    if (enLeng) locale = 'en';
 
-    // if (ukLeng) locale = 'uk';
-    // if (enLeng) locale = 'en';
+    let i18nData = {};
 
-    // let i18nData = {};
-    // let userId;
+    function loadTranslations() {
+        return fetch(`${API}/${ENDPOINT}/translates/${locale}`)
+            .then((res) => res.json())
+            .then((json) => {
+                i18nData = json;
+                translate();
 
-    // function loadTranslations() {
-    // 	return fetch(`${apiURL}/translates/${locale}`)
-    // 		.then((res) => res.json())
-    // 		.then((json) => {
-    // 			i18nData = json;
-    // 			translate();
+                const mutationObserver = new MutationObserver(function (
+                    mutations
+                ) {
+                    translate();
+                });
+                mutationObserver.observe(
+                    document.getElementById('verification'),
+                    {
+                        childList: true,
+                        subtree: true,
+                    }
+                );
+            });
+    }
 
-    // 			var mutationObserver = new MutationObserver(function (mutations) {
-    // 				translate();
-    // 			});
-    // 			mutationObserver.observe(document.getElementById('predictor'), {
-    // 				childList: true,
-    // 				subtree: true,
-    // 			});
-    // 		});
-    // }
+    function translate() {
+        const elems = document.querySelectorAll('[data-translate]');
+        if (elems && elems.length) {
+            elems.forEach((elem) => {
+                const key = elem.getAttribute('data-translate');
+                elem.innerHTML = translateKey(key);
+                elem.removeAttribute('data-translate');
+            });
+        }
 
-    // function translate() {
-    // 	const elems = document.querySelectorAll('[data-translate]');
-    // 	if (elems && elems.length) {
-    // 		elems.forEach((elem) => {
-    // 			const key = elem.getAttribute('data-translate');
-    // 			elem.innerHTML = translateKey(key);
-    // 			elem.removeAttribute('data-translate');
-    // 		});
-    // 	}
+        if (locale === 'en') {
+            mainPage.classList.add('en');
+        }
 
-    // 	if (locale === 'en') {
-    // 		mainPage.classList.add('en');
-    // 	}
+        refreshLocalizedClass();
+    }
 
-    // 	refreshLocalizedClass();
-    // }
+    function translateKey(key) {
+        if (!key) {
+            return;
+        }
+        return (
+            i18nData[key] || '*----NEED TO BE TRANSLATED----*   key:  ' + key
+        );
+    }
 
-    // function translateKey(key) {
-    // 	if (!key) {
-    // 		return;
-    // 	}
-    // 	return i18nData[key] || '*----NEED TO BE TRANSLATED----*   key:  ' + key;
-    // }
-
-    // function refreshLocalizedClass(element, baseCssClass) {
-    // 	if (!element) {
-    // 		return;
-    // 	}
-    // 	for (const lang of ['uk', 'en']) {
-    // 		element.classList.remove(baseCssClass + lang);
-    // 	}
-    // 	element.classList.add(baseCssClass + locale);
-    // }
+    function refreshLocalizedClass(element, baseCssClass) {
+        if (!element) {
+            return;
+        }
+        for (const lang of ['uk', 'en']) {
+            element.classList.remove(baseCssClass + lang);
+        }
+        element.classList.add(baseCssClass + locale);
+    }
 
     // #endregion
 
-    const getUser = async () => {
+    async function getUser() {
         try {
             const res = await window.FE.socket_send({
                 cmd: 'get_user',
@@ -117,9 +119,9 @@
             console.error('Error fetching user:', error);
             throw error;
         }
-    };
+    }
 
-    const verifyUserPhone = async (cid) => {
+    async function verifyUserPhone(cid) {
         try {
             const res = await window.FE.socket_send({
                 cmd: 'accounting/user_phone_verify',
@@ -132,9 +134,9 @@
 
             return error;
         }
-    };
+    }
 
-    const changeUserPhone = async (userData) => {
+    async function changeUserPhone(userData) {
         try {
             const response = await fetch('/accounting/api/change_user', {
                 method: 'POST',
@@ -147,9 +149,9 @@
             console.error('Error changing user phone:', error);
             throw error;
         }
-    };
+    }
 
-    const confirmUserPhone = async (confirmCode, sessionId) => {
+    async function confirmUserPhone(confirmCode, sessionId) {
         try {
             const res = await window.FE.socket_send({
                 cmd: 'accounting/user_phone_confirm',
@@ -165,11 +167,11 @@
             console.error('Error confirming user phone:', error);
             throw error;
         }
-    };
+    }
 
-    const addVerification = async (data) => {
+    async function addVerification(data) {
         try {
-            await fetch(`${API}/api_verification`, {
+            await fetch(`${API}/${ENDPOINT}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -180,9 +182,9 @@
             console.error('Error adding verification:', error);
             throw error;
         }
-    };
+    }
 
-    const showInputMessage = (message, targetElement, state = false) => {
+    function showInputMessage(message, targetElement, state = false) {
         const inputElement = targetElement.querySelector('input');
         const buttonElement = targetElement.querySelector('button');
 
@@ -302,19 +304,19 @@
                 : buttonElement;
             inputElement.parentNode.insertBefore(messageElement, insertBefore);
         }
-    };
+    }
 
-    const isPhoneValid = (phone) => {
+    function isPhoneValid(phone) {
         const phoneRegex = /^\+380\d{9}$/;
         return phoneRegex.test(phone);
-    };
+    }
 
-    const removeExistingMessages = (targetElement) => {
+    function removeExistingMessages(targetElement) {
         const existingMessages = targetElement.querySelectorAll('.input-msg');
         existingMessages.forEach((msg) => msg.remove());
-    };
+    }
 
-    const init = async () => {
+    async function init() {
         console.log('%c init fired', 'color: #00ff00; font-weight: bold');
 
         if (window.FE?.user.role === 'guest') {
@@ -571,7 +573,11 @@
             submittedPhone = e.target[0].value;
 
             if (!isPhoneValid(submittedPhone)) {
-                showInputMessage(ERROR_MESSAGES.INVALID_PHONE_FORMAT.message, verificationForm, 'error');
+                showInputMessage(
+                    ERROR_MESSAGES.INVALID_PHONE_FORMAT.message,
+                    verificationForm,
+                    'error'
+                );
                 submitButton.disabled = false;
 
                 return;
@@ -747,7 +753,10 @@
                 confirmButton.disabled = false;
             }
         });
-    };
+    }
 
-    init();
+    loadTranslations().then(init);
+
+    const mainPage = document.querySelector('.fav__page');
+    setTimeout(() => mainPage.classList.add('overflow'), 1000);
 })();
