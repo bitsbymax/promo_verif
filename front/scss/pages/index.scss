@@ -17,20 +17,22 @@ body {
     background-size: 2000px 860px;
     z-index: 0;
 
-    //test buttons
-    .button-authorized,
-    .button-notAuthorized,
-    .button-successBefore,
-    .button-success,
-    .button-lang {
-        position: absolute;
-        display: inline-block;
-        top: 3%;
-        left: 3%;
-        width: auto;
-        height: auto;
-        z-index: 100;
-    }
+
+
+    ////test buttons
+    //.button-authorized,
+    //.button-notAuthorized,
+    //.button-successBefore,
+    //.button-success,
+    //.button-lang {
+    //    position: absolute;
+    //    display: inline-block;
+    //    top: 3%;
+    //    left: 3%;
+    //    width: auto;
+    //    height: auto;
+    //    z-index: 100;
+    //}
 
     .menu-test {
         display: flex;
@@ -1141,10 +1143,72 @@ body.dark {
         }
 
         .banner.banner--bottom {
-
-            &__bonusHere,
-            &__takeBonus {
+            .banner__currency,
+            .banner__fs {
+                @include colored-section($pink, "https://fav-prom.com/html/verification/img/pink_rect_vector_bottom.svg", 'desktop');
+            }
+            .banner__bonusHere,
+            .banner__takeBonus {
                 @include background-cover('../img/dark_rect_vector_bottom.svg');
+            }
+        }
+        .main{
+            &__contentWrapper{
+                .mobileSideContent{
+                    &--bottom{
+                        .pointers__item{
+                            transform: scale(-1, 1);
+                        }
+                    }
+                    .pointers__item{
+                        background: url("../img/thumb_pink_reverse-dark.svg") no-repeat 0 0/cover;
+                    }
+                    .prizeInfo{
+                        background: #040612;
+                    }
+                    .bonusSpark{
+                        &__content{
+                            background: url("../img/spark-dark.svg") no-repeat 0 0/contain;
+                        }
+                    }
+                }
+                .sideContent{
+                    .bonusSpark{
+                        &__content{
+                            @include background-cover('../img/spark-dark.svg');
+                        }
+                    }
+                }
+                .rule{
+                    background: #1F1F1F;
+                }
+                .drop{
+                    .dropdown{
+                        summary{
+                            background: #1F1F1F;
+                        }
+                    }
+                }
+                .form{
+                    &__container{
+                        &-success-mainContent{
+                            .successPrize{
+                                &__insurance{
+                                    background: url("../img/prize_stack-dark.png") no-repeat 0 0/contain;
+                                }
+                            }
+
+                        }
+                    }
+                    &__topBar{
+                        &::before{
+                            background: #1F1F1F;
+                        }
+                    }
+                    &__outerWrapper{
+                        background: #040612;
+                    }
+                }
             }
         }
     }

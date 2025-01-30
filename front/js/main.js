@@ -864,4 +864,8 @@
 
     const mainPage = document.querySelector('.fav__page');
     setTimeout(() => mainPage.classList.add('overflow'), 1000);
+
+    document.querySelector(".dark-btn").addEventListener("click", () =>{
+        document.body.classList.toggle("dark")
+    })
 })();
