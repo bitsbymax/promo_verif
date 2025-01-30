@@ -17,19 +17,28 @@ body {
     background-size: 2000px 860px;
     z-index: 0;
 
-    //test buttons
-    .button-authorized,
-    .button-notAuthorized,
-    .button-successBefore,
-    .button-success {
-        position: absolute;
-        display: inline-block;
-        top: 3%;
-        left: 3%;
-        width: auto;
-        height: auto;
+    ////test buttons
+    .menu-test{
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        left: 0;
+        top: 0;
         z-index: 100;
     }
+
+    //.button-authorized,
+    //.button-notAuthorized,
+    //.button-successBefore,
+    //.button-success {
+    //    position: absolute;
+    //    display: inline-block;
+    //    top: 3%;
+    //    left: 3%;
+    //    width: auto;
+    //    height: auto;
+    //    z-index: 100;
+    //}
 
     .button-notAuthorized {
         left: 20%;
@@ -972,4 +981,22 @@ body {
     font-size: 11px;
     line-height: 16px;
     letter-spacing: 0.22px;
+}
+
+
+/// DARK
+body.dark{
+    .fav__page{
+        background: #040612 url("../img/Union.png") repeat 50% 0/cover;
+        .banner{
+            &__currency, &__fs{
+                @include colored-section($pink, '../img/dark_rect_vector.svg', 'desktop');
+            }
+        }
+        .banner.banner--bottom{
+            &__bonusHere, &__takeBonus {
+                @include background-cover('../img/dark_rect_vector_bottom.svg');
+            }
+        }
+    }
 }
