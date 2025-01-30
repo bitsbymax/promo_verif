@@ -81,8 +81,6 @@ include ../mixins.pug
                                         id="confirm-button"
                                         data-translate="confirm"
                                     ) ПІДТВЕРДИТИ
-
-                            .successImageWrapper.hidden
                             .link__button-wrapper.hidden
                                 a(
                                     id="link-button"
@@ -109,6 +107,31 @@ include ../mixins.pug
                                 class="link__button"
                                 data-translate="confirmBefore"
                             ) До гри
+
+                    .form__container-success.hidden
+                        //- Left Image
+                        .form__container-success-image-container--left
+                            img(src="https://fav-prom.com/html/verification/img/pink_smile.svg" alt="smile").form__image
+                        .form__container-success-mainContent
+                            h1.form__container-success--header(data-translate="formHeaderSuccess") Твій номер верифіковано
+                            p.form__container-success--description(data-translate="formDescriptionSuccess") Ваш персональний бонус зараховано в розділ «Бонуси».
+                            .successPrize
+                                .successPrize__insurance
+                                    .successPrize__insurance-text
+                                        .successPrize__insurance-text--insurance(data-translate="prizeInfoInsurance") СТРАХОВКА ДО
+                                        .successPrize__insurance-text--value(data-translate="prizeInfoValue") СТАВКИ 100 ₴
+                                .successPrize__FS
+                            .link__button-wrapper
+                                a(
+                                    id="link-button"
+                                    href="/personal-office/bonuses/betinsurance"
+                                    type="button"
+                                    class="link__button"
+                                    data-translate="confirmSuccess"
+                                ) До Бонусу
+                        //- Right Image
+                        .form__container-success-image-container--right
+                            img(src="https://fav-prom.com/html/verification/img/pink_spark.svg" alt="spark").form__image
                 //-Rule
                 p.rule(data-translate="loyalty")
                     | Персональна бонусна пропозиція доступна в межах Програми лояльності.

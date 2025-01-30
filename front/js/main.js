@@ -352,6 +352,9 @@
             const formContainerSuccessBefore = document.querySelector(
                 '.form__container-successBefore'
             );
+            const formContainerSuccess = document.querySelector(
+                '.form__container-success'
+            );
 
             // Reset all states first
             // formWrapper?.classList.remove('hidden', 'visible');
@@ -374,6 +377,14 @@
                 console.log('successBefore');
                 formContainer?.classList.add('hidden');
                 formContainerSuccessBefore?.classList.remove('hidden');
+            } else if (success) {
+                console.log('success');
+                formContainer?.classList.add('hidden');
+                formContainer?.classList.remove('visible');
+                formContainerSuccessBefore?.classList.add('hidden');
+                formContainerSuccessBefore?.classList.remove('visible');
+
+                formContainerSuccess?.classList.remove('hidden');
             }
         };
 
@@ -398,11 +409,6 @@
             updateUIBasedOnState();
         });
 
-        // successButton.addEventListener('click', (e) => {
-        //     e.preventDefault();
-        //     updateUIBasedOnState();
-        // });
-
         successBeforeButton.addEventListener('click', (e) => {
             e.preventDefault();
             console.log('successBeforeButton clicked');
@@ -410,6 +416,16 @@
             notAuthorized = false;
             success = false;
             successBefore = true;
+            updateUIBasedOnState();
+        });
+
+        successButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            console.log('successButton clicked');
+            authorized = false;
+            notAuthorized = false;
+            success = true;
+            successBefore = false;
             updateUIBasedOnState();
         });
 
@@ -762,60 +778,60 @@
                     document.querySelector('.form__wrapper').style.display =
                         'none';
 
-                    // Update header text and data-translate
-                    const header = document.querySelector('.form__header');
-                    header.textContent = 'ТВІЙ НОМЕР ВЕРИФІКОВАНО';
-                    header.setAttribute('data-translate', 'formHeaderSuccess');
+                    // // Update header text and data-translate
+                    // const header = document.querySelector('.form__header');
+                    // header.textContent = 'ТВІЙ НОМЕР ВЕРИФІКОВАНО';
+                    // header.setAttribute('data-translate', 'formHeaderSuccess');
 
-                    // Update description text and data-translate
-                    const description =
-                        document.querySelector('.form__description');
-                    description.textContent =
-                        'Ваш персональний бонус зараховано в розділ "Бонуси"';
-                    description.setAttribute(
-                        'data-translate',
-                        'formDescriptionSuccess'
-                    );
-                    const successImageWrapper = document.querySelector(
-                        '.successImageWrapper'
-                    );
-                    successImageWrapper.classList.add('visible');
-                    successImageWrapper.classList.remove('hidden');
+                    // // Update description text and data-translate
+                    // const description =
+                    //     document.querySelector('.form__description');
+                    // description.textContent =
+                    //     'Ваш персональний бонус зараховано в розділ "Бонуси"';
+                    // description.setAttribute(
+                    //     'data-translate',
+                    //     'formDescriptionSuccess'
+                    // );
+                    // const successImageWrapper = document.querySelector(
+                    //     '.successImageWrapper'
+                    // );
+                    // successImageWrapper.classList.add('visible');
+                    // successImageWrapper.classList.remove('hidden');
 
-                    // Create first div
-                    const firstDiv = document.createElement('div');
-                    firstDiv.className = 'successImageWrapper-prizeInfo';
+                    // // Create first div
+                    // const firstDiv = document.createElement('div');
+                    // firstDiv.className = 'successImageWrapper-prizeInfo';
 
-                    const firstSpan = document.createElement('span');
-                    firstSpan.textContent = 'СТРАХОВКА ДО';
-                    firstSpan.setAttribute(
-                        'data-translate',
-                        'prizeInfoInsurance'
-                    );
+                    // const firstSpan = document.createElement('span');
+                    // firstSpan.textContent = 'СТРАХОВКА ДО';
+                    // firstSpan.setAttribute(
+                    //     'data-translate',
+                    //     'prizeInfoInsurance'
+                    // );
 
-                    const secondSpan = document.createElement('span');
-                    secondSpan.textContent = 'СТАВКИ 100 ₴';
-                    secondSpan.setAttribute('data-translate', 'prizeInfoValue');
+                    // const secondSpan = document.createElement('span');
+                    // secondSpan.textContent = 'СТАВКИ 100 ₴';
+                    // secondSpan.setAttribute('data-translate', 'prizeInfoValue');
 
-                    // Append spans to first div
-                    firstDiv.appendChild(firstSpan);
-                    firstDiv.appendChild(secondSpan);
+                    // // Append spans to first div
+                    // firstDiv.appendChild(firstSpan);
+                    // firstDiv.appendChild(secondSpan);
 
-                    // Create second div
-                    const secondDiv = document.createElement('div');
-                    secondDiv.className = 'successImageWrapper-bonusSpark';
+                    // // Create second div
+                    // const secondDiv = document.createElement('div');
+                    // secondDiv.className = 'successImageWrapper-bonusSpark';
 
-                    // Append divs to container
-                    successImageWrapper.appendChild(firstDiv);
-                    successImageWrapper.appendChild(secondDiv);
+                    // // Append divs to container
+                    // successImageWrapper.appendChild(firstDiv);
+                    // successImageWrapper.appendChild(secondDiv);
 
-                    linkButtonWrapper.style.display = 'flex';
-                    const linkButton = document.querySelector(
-                        '.link__button-wrapper a'
-                    );
-                    linkButton.href = '/personal-office/bonuses/betinsurance';
-                    linkButton.textContent = 'ДО БОНУСУ';
-                    linkButton.setAttribute('data-translate', 'confirmSuccess');
+                    // linkButtonWrapper.style.display = 'flex';
+                    // const linkButton = document.querySelector(
+                    //     '.link__button-wrapper a'
+                    // );
+                    // linkButton.href = '/personal-office/bonuses/betinsurance';
+                    // linkButton.textContent = 'ДО БОНУСУ';
+                    // linkButton.setAttribute('data-translate', 'confirmSuccess');
 
                     //! Add verification record
                     const userId = user.data.account.id;
