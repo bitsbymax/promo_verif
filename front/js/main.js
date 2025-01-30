@@ -326,7 +326,7 @@
     const notAuthorizedButton = document.querySelector('.button-notAuthorized');
     const successButton = document.querySelector('.button-success');
     const successBeforeButton = document.querySelector('.button-successBefore');
-    const darkTheme = document.querySelector('.button-dark');
+    const lang = document.querySelector('.button-lang');
 
     //States
     let authorized = false;
@@ -413,7 +413,7 @@
             updateUIBasedOnState();
         });
 
-        darkTheme.addEventListener('click', (e) => {
+        lang.addEventListener('click', (e) => {
             e.preventDefault();
             if (locale === 'uk') {
                 sessionStorage.setItem('locale', 'en');
