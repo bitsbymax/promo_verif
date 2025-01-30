@@ -21,7 +21,8 @@ body {
     .button-authorized,
     .button-notAuthorized,
     .button-successBefore,
-    .button-success {
+    .button-success,
+    .button-dark {
         position: absolute;
         display: inline-block;
         top: 3%;
@@ -41,6 +42,10 @@ body {
 
     .button-success {
         left: 50%;
+    }
+
+    .button-dark {
+        left: 65%;
     }
 
     .background {

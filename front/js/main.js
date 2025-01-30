@@ -36,8 +36,12 @@
     // #region Translation
     const ukLeng = document.querySelector('#ukLeng');
     const enLeng = document.querySelector('#enLeng');
-    let locale = 'uk';
+    // let locale = 'uk';
 
+    //locale test
+    let locale = sessionStorage.getItem('locale')
+        ? sessionStorage.getItem('locale')
+        : 'uk';
     if (ukLeng) locale = 'uk';
     if (enLeng) locale = 'en';
 
@@ -322,6 +326,7 @@
     const notAuthorizedButton = document.querySelector('.button-notAuthorized');
     const successButton = document.querySelector('.button-success');
     const successBeforeButton = document.querySelector('.button-successBefore');
+    const darkTheme = document.querySelector('.button-dark');
 
     //States
     let authorized = false;
@@ -365,7 +370,6 @@
                 formWrapper?.classList.remove('hidden');
                 verificationForm?.classList.add('visible');
                 verificationForm?.classList.remove('hidden');
-
             } else if (successBefore) {
                 console.log('successBefore');
                 formContainer?.classList.add('hidden');
@@ -407,6 +411,20 @@
             success = false;
             successBefore = true;
             updateUIBasedOnState();
+        });
+
+        darkTheme.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (locale === 'uk') {
+                sessionStorage.setItem('locale', 'en');
+                window.location.reload();
+                return;
+            }
+            if (locale === 'en') {
+                sessionStorage.setItem('locale', 'uk');
+                window.location.reload();
+                return;
+            }
         });
 
         // Initial UI update
@@ -452,10 +470,8 @@
             //     document
             //         .querySelector('.form__container-successBefore')
             //         .classList.remove('hidden');
-
             //     return;
             // }
-
             // verificationForm.classList.remove('hidden');
             // verificationForm.classList.add('visible');
             // phoneInput.value = `+${userPhoneNumber}`;
@@ -827,9 +843,9 @@
         });
     }
 
-    // loadTranslations().then(init);
-    init();
+    loadTranslations().then(init);
+    // init();
 
-    // const mainPage = document.querySelector('.fav__page');
-    // setTimeout(() => mainPage.classList.add('overflow'), 1000);
+    const mainPage = document.querySelector('.fav__page');
+    setTimeout(() => mainPage.classList.add('overflow'), 1000);
 })();
