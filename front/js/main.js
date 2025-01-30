@@ -317,28 +317,111 @@
     const linkButtonWrapper = document.querySelector('.link__button-wrapper');
     const submitButton = document.getElementById('submit-button');
 
+    //Test buttons
+    const authorizedButton = document.querySelector('.button-authorized');
+    const notAuthorizedButton = document.querySelector('.button-notAuthorized');
+    const successButton = document.querySelector('.button-success');
+    const successBeforeButton = document.querySelector('.button-successBefore');
+
+    //States
+    let authorized = false;
+    let notAuthorized = true;
+    let success = false;
+    let successBefore = false;
+
     async function init() {
         console.log('%c init fired', 'color: #00ff00; font-weight: bold');
+        console.log('%c init fired', 'color: #00ff00; font-weight: bold');
+        // let userPhoneNumber = null;
+        // let userPhoneVerified = false;
 
-        // if (true) {
-        //     linkButtonWrapper.style.display = 'flex';
+        const updateUIBasedOnState = () => {
+            console.log('Updating UI, states:', {
+                authorized,
+                notAuthorized,
+                successBefore,
+                success,
+            });
+            const formWrapper = document.querySelector('.form__wrapper');
+            const formContainer = document.querySelector('.form__container');
+            const formContainerSuccessBefore = document.querySelector(
+                '.form__container-successBefore'
+            );
+
+            // Reset all states first
+            // formWrapper?.classList.remove('hidden', 'visible');
+            // formContainer?.classList.remove('hidden', 'visible');
+            // verificationForm?.classList.remove('hidden', 'visible');
+
+            if (notAuthorized) {
+                console.log('not authorized');
+                formWrapper?.classList.add('hidden');
+                linkButtonWrapper?.classList.add('visible');
+            } else if (authorized) {
+                console.log('authorized');
+                linkButtonWrapper?.classList.add('hidden');
+                linkButtonWrapper?.classList.remove('visible');
+
+                formWrapper?.classList.remove('hidden');
+                verificationForm?.classList.add('visible');
+                verificationForm?.classList.remove('hidden');
+
+            } else if (successBefore) {
+                console.log('successBefore');
+                formContainer?.classList.add('hidden');
+                formContainerSuccessBefore?.classList.remove('hidden');
+            }
+        };
+
+        authorizedButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            console.log('authorizedButton clicked');
+
+            authorized = true;
+            notAuthorized = false;
+            success = false;
+            successBefore = false;
+            updateUIBasedOnState();
+        });
+
+        notAuthorizedButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            console.log('notAuthorizedButton clicked');
+            authorized = false;
+            notAuthorized = true;
+            success = false;
+            successBefore = false;
+            updateUIBasedOnState();
+        });
+
+        // successButton.addEventListener('click', (e) => {
+        //     e.preventDefault();
+        //     updateUIBasedOnState();
+        // });
+
+        successBeforeButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            console.log('successBeforeButton clicked');
+            authorized = false;
+            notAuthorized = false;
+            success = false;
+            successBefore = true;
+            updateUIBasedOnState();
+        });
+
+        // Initial UI update
+        updateUIBasedOnState();
+
+        // if (window.FE?.user.role === 'guest') {
+        //     document.querySelector('.form__wrapper').classList.add('hidden');
+        //     linkButtonWrapper.classList.add('visible');
+        //     linkButtonWrapper.classList.remove('hidden');
 
         //     return;
         // } else {
         //     verificationForm.classList.add('visible');
         //     verificationForm.classList.remove('hidden');
         // }
-
-        if (window.FE?.user.role === 'guest') {
-            document.querySelector('.form__wrapper').classList.add('hidden');
-            linkButtonWrapper.classList.add('visible');
-            linkButtonWrapper.classList.remove('hidden');
-
-            return;
-        } else {
-            verificationForm.classList.add('visible');
-            verificationForm.classList.remove('hidden');
-        }
 
         const confirmationForm = document.getElementById('confirmation__form');
         const confirmButton = document.getElementById('confirm-button');
@@ -347,36 +430,35 @@
         let verificationTimer = null;
         let user = null;
         let cid = null;
-        let userPhoneNumber = null;
-        let userPhoneVerified = false;
+
         let submittedPhone = null;
 
         try {
-            user = await getUser();
-            cid = user.cid;
-            userPhoneNumber = user.data.account.phone_number;
-            console.log('userPhoneNumber:', userPhoneNumber);
-            userPhoneVerified = user.data.account.account_status.find(
-                (status) => status.alias === 'IS_PHONE_VERIFIED'
-            ).value;
-            console.log('userPhoneVerified:', userPhoneVerified);
+            // user = await getUser();
+            // cid = user.cid;
+            // userPhoneNumber = user.data.account.phone_number;
+            // console.log('userPhoneNumber:', userPhoneNumber);
+            // userPhoneVerified = user.data.account.account_status.find(
+            //     (status) => status.alias === 'IS_PHONE_VERIFIED'
+            // ).value;
+            // console.log('userPhoneVerified:', userPhoneVerified);
             // userPhoneNumber = true;
             // userPhoneVerified = true;
             // Check if user has a number and is already verified
-            if (userPhoneNumber && userPhoneVerified) {
-                document
-                    .querySelector('.form__container')
-                    .classList.add('hidden');
-                document
-                    .querySelector('.form__container-successBefore')
-                    .classList.remove('hidden');
+            // if (userPhoneNumber && userPhoneVerified) {
+            //     document
+            //         .querySelector('.form__container')
+            //         .classList.add('hidden');
+            //     document
+            //         .querySelector('.form__container-successBefore')
+            //         .classList.remove('hidden');
 
-                return;
-            }
+            //     return;
+            // }
 
-            verificationForm.classList.remove('hidden');
-            verificationForm.classList.add('visible');
-            phoneInput.value = `+${userPhoneNumber}`;
+            // verificationForm.classList.remove('hidden');
+            // verificationForm.classList.add('visible');
+            // phoneInput.value = `+${userPhoneNumber}`;
         } catch (error) {
             console.error('Failed to get user:', error);
         }
@@ -745,9 +827,9 @@
         });
     }
 
-    loadTranslations().then(init);
-    // init();
+    // loadTranslations().then(init);
+    init();
 
-    const mainPage = document.querySelector('.fav__page');
-    setTimeout(() => mainPage.classList.add('overflow'), 1000);
+    // const mainPage = document.querySelector('.fav__page');
+    // setTimeout(() => mainPage.classList.add('overflow'), 1000);
 })();

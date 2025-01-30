@@ -12,10 +12,36 @@ body {
 .fav__page {
     position: relative;
     width: 100%;
-    // overflow: hidden;
+    overflow: hidden;
     background: $dark-blue url("https://fav-prom.com/html/verification/img/Union.png") repeat 50% 0/cover;
     background-size: 2000px 860px;
     z-index: 0;
+
+    //test buttons
+    .button-authorized,
+    .button-notAuthorized,
+    .button-successBefore,
+    .button-success {
+        position: absolute;
+        display: inline-block;
+        top: 3%;
+        left: 3%;
+        width: auto;
+        height: auto;
+        z-index: 100;
+    }
+
+    .button-notAuthorized {
+        left: 20%;
+    }
+
+    .button-successBefore {
+        left: 37%;
+    }
+
+    .button-success {
+        left: 50%;
+    }
 
     .background {
         &__ellipse {
@@ -579,6 +605,7 @@ body {
 
                 &__wrapper {
                     margin-top: 30px;
+                    margin-bottom: 34px;
                     margin-left: 8px;
 
                     .verification__form {
