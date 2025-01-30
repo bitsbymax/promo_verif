@@ -36,10 +36,7 @@ include ../mixins.pug
                             h1.form__header(data-translate="formHeader")
                                 | ВЕРИФІКУЙСЯ
                                 | ДО БОНУСІВ
-                            p.form__description(data-translate="formDescription")
-                                | Отримай винагороду за кілька кроків.
-                                | Верифікуй номер та забирай
-                                | персональний бонус.
+                            p.form__description(data-translate="formDescription") Отримай винагороду за кілька кроків. Верифікуй номер та забирай персональний бонус.
 
                             .form__wrapper
                                 //- Verification form
@@ -78,8 +75,7 @@ include ../mixins.pug
                                     ) ПІДТВЕРДИТИ
 
                             .successImageWrapper.hidden
-                            .beforeImageWrapper.hidden
-                            .link__button-wrapper
+                            .link__button-wrapper.hidden
                                 a(
                                     id="link-button"
                                     href="/login"
@@ -91,8 +87,22 @@ include ../mixins.pug
                         .form__image-container--right
                             img(src="https://fav-prom.com/html/verification/img/pink_spark.svg" alt="spark").form__image
 
+                    .form__container-successBefore.hidden
+                        h1.form__container-successBefore--header(data-translate="formHeaderBefore")
+                            | Ти верифікував номер
+                            | телефону раніше
+                        p.form__container-successBefore--description(data-translate="formDescriptionBefore") Тепер ти не пропустиш головні події FAVBET
+
+                        .link__button-wrapper
+                            a(
+                                id="link-button"
+                                href="/sports"
+                                type="button"
+                                class="link__button"
+                                data-translate="confirmBefore"
+                            ) До гри
                 //-Rule
-                p.rule
+                p.rule(data-translate="loyalty")
                     | Персональна бонусна пропозиція доступна в межах Програми лояльності.
                     br
                     | Розмір, вид та формат бонусної пропозиції визначається та пропонується гравцям виключно на розсуд Організатора. З детальними умовами персональної бонусної пропозиції можна ознайомитись в особистому кабінеті у розділі "Бонуси".

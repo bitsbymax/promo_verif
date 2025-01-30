@@ -7,21 +7,15 @@
 body {
     -webkit-tap-highlight-color: transparent;
     overscroll-behavior: none;
-
-    img {
-        width: 100%;
-        height: auto;
-    }
 }
 
 .fav__page {
     position: relative;
     width: 100%;
-    overflow: hidden;
-    background: $dark-blue url("../img/Union.png") repeat 50% 0/cover;
+    // overflow: hidden;
+    background: $dark-blue url("https://fav-prom.com/html/verification/img/Union.png") repeat 50% 0/cover;
     background-size: 2000px 860px;
     z-index: 0;
-
 
     .background {
         &__ellipse {
@@ -546,6 +540,15 @@ body {
                     width: 340px;
                     flex: 0 0 auto;
                     padding: 30px 0 0 0;
+
+                    .link__button-wrapper {
+                        margin-top: 117px;
+                        margin-bottom: 34px;
+
+                        .link__button {
+                            @include link-button;
+                        }
+                    }
                 }
 
                 &__header {
@@ -616,6 +619,105 @@ body {
                         display: none !important;
                     }
                 }
+
+                &__container-successBefore {
+                    position: relative;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    padding: 0 10px 10px;
+                    flex-shrink: 1;
+                    border-radius: 0 0 14px 14px;
+                    border: 2px solid $pink;
+                    border-top: none;
+                    background: $white;
+                    position: relative;
+                    z-index: 1;
+
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        top: 10%;
+                        left: 3%;
+                        width: 100px;
+                        height: 100px;
+                        @include background-cover('https://fav-prom.com/html/verification/img/pink_smile.svg');
+                        z-index: 1;
+                    }
+
+                    &::after {
+                        content: "";
+                        position: absolute;
+                        top: 60%;
+                        left: 5%;
+                        width: 157px;
+                        height: 101px;
+                        @include background-cover('https://fav-prom.com/html/verification/img/pink_spark.svg');
+                        z-index: 1;
+                    }
+
+                    &--header {
+                        @include flex-center;
+                        width: 100%;
+                        padding: 140px 130px 0;
+                        color: $dark-blue;
+                        text-align: center;
+                        font-family: font('unbounded', 'semibold');
+                        font-size: 30px;
+                        text-transform: uppercase;
+                        letter-spacing: 0.6px;
+                    }
+
+                    &--description {
+                        position: relative;
+                        margin-top: 20px;
+                        color: $dark-blue;
+                        word-wrap: break-word;
+                        width: 306px;
+                        max-width: 100%;
+                        text-align: center;
+                        font-family: font('unbounded', 'regular');
+                        font-size: 14px;
+                        letter-spacing: 0.28px;
+
+                        &::before {
+                            content: "";
+                            position: absolute;
+                            top: 72px;
+                            left: 251px;
+                            width: 28px;
+                            height: 23px;
+                            transform: rotate(15deg);
+                            @include background-cover('https://fav-prom.com/html/verification/img/logo.svg');
+                            z-index: 2;
+                        }
+                        &::after {
+                            content: "";
+                            position: absolute;
+                            top: 60%;
+                            left: 80%;
+                            width: 300px;
+                            height: 187px;
+                            @include background-cover('https://fav-prom.com/html/verification/img/before_snake.png');
+                            z-index: 1;
+                        }
+                    }
+
+                    .link__button-wrapper {
+                        position: relative;
+                        z-index: 2;
+                        margin-top: 106px;
+                        margin-bottom: 34px;
+
+                        .link__button {
+                            @include link-button;
+                            margin-top: 0;
+                        }
+                    }
+
+
+                }
             }
 
             .rule {
@@ -628,7 +730,7 @@ body {
                 font-family: font('unbounded', 'semibold');
                 font-size: 12px;
                 letter-spacing: 0.28px;
-                line-height: 1.5;
+                line-height: normal;
 
                 br {
                     margin: 10px 0;
@@ -707,12 +809,12 @@ body {
                         cursor: auto;
                         background-color: $basic-blue;
                         border-radius: 0 0 14px 14px;
-                        scrollbar-width: auto;
 
                         &-list {
                             height: 360px;
                             overflow-y: scroll;
                             padding-right: 18px;
+                            scrollbar-width: auto;
 
                             &::-webkit-scrollbar {
                                 background: rgba($white, .3);
@@ -730,6 +832,10 @@ body {
                         p {
                             display: block;
                             margin-bottom: 10px;
+                            font-family: font('unbounded', 'regular');
+                            font-size: 12px;
+                            line-height: 20px;
+                            letter-spacing: 0.24px;
                             white-space: pre-wrap;
 
                             &:last-child {
@@ -780,25 +886,26 @@ body {
                             display: inline-block;
                             margin: 0 5px 2px 0;
                         }
-
-                        &:last-child {
-                            // margin-bottom: 10px;
-                        }
                     }
                 }
             }
         }
+    }
+
+    img {
+        width: 100%;
+        height: auto;
     }
 }
 
 //dynamic styles
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 .visible {
-    display: flex;
+    display: flex !important;
 }
 
 .overflow {
@@ -838,39 +945,4 @@ body {
     font-size: 11px;
     line-height: 16px;
     letter-spacing: 0.22px;
-}
-
-.successBeforeHeader {
-    // width: 512px !important;
-    font-size: 30px;
-    letter-spacing: 0.6px;
-}
-
-.beforeImage {}
-
-.link__button-wrapper {
-    display: none;
-    margin-top: 20px;
-
-    .link__button {
-        @include flex-center;
-        width: 320px;
-        height: 50px;
-        margin-top: 10px;
-        padding: 10px 16px;
-        border: none;
-        outline: none;
-        border-radius: 2px;
-        background: $button-green;
-        color: $dark-blue;
-        text-align: center;
-        font-family: font('unbounded', 'bold');
-        font-size: 14px;
-        letter-spacing: 0.28px;
-
-        &:focus-visible {
-            outline: 2px solid $button-green;
-            outline-offset: 2px;
-        }
-    }
 }

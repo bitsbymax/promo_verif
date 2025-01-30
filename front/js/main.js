@@ -32,16 +32,11 @@
     };
     const API = 'https://fav-prom.com';
     const ENDPOINT = 'api_verification';
-    const phoneInput = document.getElementById('phone');
-    const confirmationCodeInput = document.getElementById('confirmation-code');
-    const verificationForm = document.getElementById('verification__form');
-    const linkButtonWrapper = document.querySelector('.link__button-wrapper');
-    const submitButton = document.getElementById('submit-button');
 
     // #region Translation
     const ukLeng = document.querySelector('#ukLeng');
     const enLeng = document.querySelector('#enLeng');
-    let locale = 'ua';
+    let locale = 'uk';
 
     if (ukLeng) locale = 'uk';
     if (enLeng) locale = 'en';
@@ -316,12 +311,28 @@
         existingMessages.forEach((msg) => msg.remove());
     }
 
+    const phoneInput = document.getElementById('phone');
+    const confirmationCodeInput = document.getElementById('confirmation-code');
+    const verificationForm = document.getElementById('verification__form');
+    const linkButtonWrapper = document.querySelector('.link__button-wrapper');
+    const submitButton = document.getElementById('submit-button');
+
     async function init() {
         console.log('%c init fired', 'color: #00ff00; font-weight: bold');
 
+        // if (true) {
+        //     linkButtonWrapper.style.display = 'flex';
+
+        //     return;
+        // } else {
+        //     verificationForm.classList.add('visible');
+        //     verificationForm.classList.remove('hidden');
+        // }
+
         if (window.FE?.user.role === 'guest') {
-            // verificationForm.style.display = 'none';
-            linkButtonWrapper.style.display = 'flex';
+            document.querySelector('.form__wrapper').classList.add('hidden');
+            linkButtonWrapper.classList.add('visible');
+            linkButtonWrapper.classList.remove('hidden');
 
             return;
         } else {
@@ -349,45 +360,16 @@
                 (status) => status.alias === 'IS_PHONE_VERIFIED'
             ).value;
             console.log('userPhoneVerified:', userPhoneVerified);
-
+            // userPhoneNumber = true;
+            // userPhoneVerified = true;
             // Check if user has a number and is already verified
             if (userPhoneNumber && userPhoneVerified) {
-                // Update header text and data-translate
-                const header = document.querySelector('.form__header');
-                header.classList.add('successBeforeHeader');
-                header.textContent = 'ТИ ВЕРИФІКУВАВ НОМЕР ТЕЛЕФОНУ РАНІШЕ';
-                header.setAttribute('data-translate', 'formHeaderBefore');
-
-                // Update description text and data-translate
-                const description =
-                    document.querySelector('.form__description');
-                description.textContent =
-                    'Тепер ти не пропустиш головні події FAVBET';
-                description.setAttribute(
-                    'data-translate',
-                    'formDescriptionBefore'
-                );
-
-                document.querySelector('.form__wrapper').style.display = 'none';
-
-                const beforeImageWrapper = document.querySelector(
-                    '.beforeImageWrapper'
-                );
-                beforeImageWrapper.classList.add('visible');
-                beforeImageWrapper.classList.remove('hidden');
-                const beforeImage = document.createElement('img');
-                beforeImage.className = 'beforeImage';
-
-                // Add container to form wrapper
-                beforeImageWrapper.appendChild(beforeImage);
-
-                linkButtonWrapper.style.display = 'flex';
-                const linkButton = document.querySelector(
-                    '.link__button-wrapper a'
-                );
-                linkButton.href = '/sports';
-                linkButton.textContent = 'ДО ГРИ';
-                linkButton.setAttribute('data-translate', 'confirmBefore');
+                document
+                    .querySelector('.form__container')
+                    .classList.add('hidden');
+                document
+                    .querySelector('.form__container-successBefore')
+                    .classList.remove('hidden');
 
                 return;
             }
@@ -594,6 +576,7 @@
 
                 //Change user phone number
                 if (submittedPhone !== `+${userPhoneNumber}`) {
+                    console.log('TRY CHANGE USER PHONE---VERIF FORM');
                     const response = await changeUserPhone(userData);
 
                     if (response.error === 'no' && !response.error_code) {
@@ -617,6 +600,7 @@
                     return;
                 }
                 //Verify user phone number
+                console.log('TRY VERIFY USER PHONE---VERIF FORM');
                 const response = await verifyUserPhone(cid);
 
                 if (response) {
@@ -634,6 +618,7 @@
         confirmationForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             confirmButton.disabled = true;
+            console.log('submitter phone', submittedPhone);
 
             // Check if verification has expired
             if (confirmationForm.dataset.confirmationExpired === 'true') {
@@ -644,6 +629,7 @@
 
                 // Trigger new verification
                 try {
+                    console.log('TRY VERIFY USER PHONE---CONF FORM');
                     const response = await verifyUserPhone(cid);
                     if (response) {
                         handleVerificationResponse(response);
@@ -652,6 +638,7 @@
                     console.error('Error resending verification code:', error);
                 }
                 confirmButton.disabled = false;
+
                 return;
             }
 
@@ -659,12 +646,15 @@
 
             // Validate length and numeric
             if (!/^\d{5}$/.test(code)) {
+                console.log('inside validate fn() ---code is invalid');
                 confirmationCodeInput.classList.add('is-invalid');
-                e.preventDefault();
+                confirmButton.disabled = false;
+
                 return;
             }
 
             try {
+                console.log('TRY CONFIRM USER PHONE---CONF FORM');
                 const response = await confirmUserPhone(
                     code,
                     verificationSession
@@ -756,6 +746,7 @@
     }
 
     loadTranslations().then(init);
+    // init();
 
     const mainPage = document.querySelector('.fav__page');
     setTimeout(() => mainPage.classList.add('overflow'), 1000);

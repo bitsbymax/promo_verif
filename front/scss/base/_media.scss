@@ -2626,6 +2626,40 @@
                     &__mainContent {
                         padding: 46px 0 0 0;
                     }
+
+                    &__container-successBefore {
+                        &::after {
+                            top: 57%;
+                            left: 3%;
+                        }
+
+                        &--header {
+                            padding: 100px 100px 0;
+                        }
+
+                        &--description {
+                            &::after {
+                                top: 60%;
+                                left: 56%;
+                                width: 300px;
+                                height: 187px;
+                                @include background-cover('https://fav-prom.com/html/verification/img/before_snake.png');
+                                z-index: 1;
+                            }
+                        }
+
+                        .link__button-wrapper {
+                            position: relative;
+                            z-index: 2;
+                            margin-top: 106px;
+                            margin-bottom: 34px;
+
+                            .link__button {
+                                @include link-button;
+                                margin-top: 0;
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -3085,8 +3119,55 @@
 
                     &__mainContent {
                         width: 344px;
-                        padding: 28px 0 22px 0;
+                        padding: 28px 0 12px 0;
                         justify-content: center;
+                    }
+
+                    &__container-successBefore {
+
+                        &::before {
+                            width: 0px;
+                            height: 0px;
+                            background: none;
+                        }
+
+                        &::after {
+                            width: 0px;
+                            height: 0px;
+                            background: none;
+                        }
+
+                        &--header {
+                            padding: 32px 30px 0;
+                            font-size: 18px;
+                            letter-spacing: 0.36px;
+                        }
+
+                        &--description {
+                            margin-top: 12px;
+                            width: 255px;
+                            font-size: 12px;
+                            letter-spacing: 0.24px;
+
+                            &::before {
+                                width: 0;
+                                height: 0;
+                                background: none;
+                            }
+
+                            &::after {
+                                top: 54px;
+                                left: 65px;
+                                width: 232px;
+                                height: 145px;
+                                @include background-cover('https://fav-prom.com/html/verification/img/mobile_snake.svg');
+                                z-index: 1;
+                            }
+                        }
+
+                        .link__button-wrapper {
+                            margin-bottom: 12px;
+                        }
                     }
 
                     &__header {
@@ -3438,7 +3519,7 @@
 
                     &__mainContent {
                         width: 344px;
-                        padding: 28px 0 22px 0;
+                        padding: 28px 0 12px 0;
                         justify-content: center;
                     }
 
@@ -3788,7 +3869,7 @@
 
                     &__mainContent {
                         width: 344px;
-                        padding: 28px 0 22px 0;
+                        padding: 28px 0 12px 0;
                         justify-content: center;
                     }
 
@@ -4420,7 +4501,7 @@
 
                     &__mainContent {
                         width: 344px;
-                        padding: 28px 0 22px 0;
+                        padding: 28px 0 12px 0;
                         justify-content: center;
                     }
 
@@ -4685,7 +4766,7 @@
         }
 
         .main {
-            padding: 55px 15px;
+            padding: 55px 10px;
 
             &__contentWrapper {
                 flex-direction: column;
@@ -4880,8 +4961,19 @@
 
                     &__mainContent {
                         width: 344px;
-                        padding: 28px 0 22px 0;
+                        padding-top: 28px;
                         justify-content: center;
+
+                        .link__button-wrapper {
+                            margin-top: 110px;
+                            margin-bottom: 12px;
+
+                            .link__button {
+                                @include link-button;
+                                width: 300px;
+                                height: 44px;
+                            }
+                        }
                     }
 
                     &__header {
@@ -4939,103 +5031,124 @@
                             @include forms-shared;
                         }
                     }
-                }
 
-                .drop {
-                    max-width: 344px;
+                    &__container-successBefore {
 
-                    .dropdown {
-                        summary {
-                            height: 44px;
-                            padding: 15px 20px 14px 20px;
-                            font-family: font('unbounded', 'medium');
+                        &::before {
+                            width: 0px;
+                            height: 0px;
+                            background: none;
+                        }
+
+                        &::after {
+                            width: 0px;
+                            height: 0px;
+                            background: none;
+                        }
+
+                        &--header {
+                            padding: 32px 30px 0;
+                            font-size: 18px;
+                            letter-spacing: 0.36px;
+                        }
+
+                        &--description {
+                            margin-top: 12px;
+                            width: 255px;
                             font-size: 12px;
                             letter-spacing: 0.24px;
 
-                            &:after {
-                                width: 16px;
-                                height: 7px;
-                                right: 20px;
-                                top: 42%;
+                            &::before {
+                                width: 0;
+                                height: 0;
+                                background: none;
+                            }
+
+                            &::after {
+                                top: 54px;
+                                left: 65px;
+                                width: 232px;
+                                height: 145px;
+                                @include background-cover('https://fav-prom.com/html/verification/img/mobile_snake.svg');
+                                z-index: 1;
                             }
                         }
 
-                        &[open] {
-                            summary {
-                                border-radius: 8px 8px 0 0;
-                            }
+                        .link__button-wrapper {
+                            margin-bottom: 12px;
                         }
 
-                        .drop-txt {
-                            padding: 0 20px 22px 20px;
+
+                    }
+                }
+
+                .rule {
+                    max-width: 344px;
+                    padding: 15px;
+                    font-size: 10px;
+                    letter-spacing: 0.24px;
+
+                    br {
+                        margin: 6px 0;
+                    }
+                }
+            }
+
+            .drop {
+                max-width: 344px;
+
+                .dropdown {
+                    summary {
+                        height: 44px;
+                        padding: 15px 20px 14px 20px;
+                        font-family: font('unbounded', 'medium');
+                        font-size: 12px;
+                        letter-spacing: 0.24px;
+
+                        &:after {
+                            width: 16px;
+                            height: 7px;
+                            right: 20px;
+                            top: 42%;
+                        }
+                    }
+
+                    &[open] {
+                        summary {
+                            border-radius: 8px 8px 0 0;
+                        }
+                    }
+
+                    .drop-txt {
+                        padding: 0 20px 22px 20px;
+                        font-size: 10px;
+                        line-height: 18px;
+                        letter-spacing: 0.2px;
+                        border-radius: 0 0 8px 8px;
+
+                        &-list {
+                            height: 540px;
+                            padding-right: 8px;
+                        }
+
+                        p {
                             font-size: 10px;
                             line-height: 18px;
                             letter-spacing: 0.2px;
-                            border-radius: 0 0 8px 8px;
 
-                            &-list {
-                                height: 540px;
-                                padding-right: 8px;
-                            }
-
-                            p {
-                                display: block;
-                                margin-bottom: 10px;
-                                white-space: pre-wrap;
-
-                                &:last-child {
-                                    margin-bottom: 0;
-                                }
-
-                                a {
-                                    color: $basic-green;
-                                    text-decoration: underline;
-                                    font-family: font('unbounded', 'semibold');
-                                    position: relative;
-                                    font-size: 10px;
-
-                                    &:hover {
-                                        text-decoration: none;
-                                    }
-                                }
-                            }
-                        }
-
-                        strong {
-                            margin-bottom: 10px;
-                            font-family: font('unbounded', 'bold');
-                            font-size: 10px;
-                            color: $white;
-                            display: block;
-                        }
-
-                        .retreat1 {
-                            margin: 10px 0 0;
-                            padding-left: 20px;
-                        }
-
-                        .retreat2 {
-                            padding-left: 30px;
-                        }
-
-                        .circle {
-                            margin-bottom: 0;
-                            padding-left: 35px;
-
-                            &:before {
-                                content: '';
-                                width: 4px;
-                                height: 4px;
-                                background: $white;
-                                border-radius: 50%;
-                                display: inline-block;
-                                margin: 0 5px 2px 0;
-                            }
 
                             &:last-child {
-                                // margin-bottom: 10px;
+                                margin-bottom: 0;
+                            }
+
+                            a {
+                                font-size: 10px;
                             }
                         }
+                    }
+
+                    strong {
+                        font-size: 10px;
                     }
                 }
             }
