@@ -838,8 +838,8 @@ body {
                         border-radius: 0 0 14px 14px;
 
                         &-list {
-                            height: 360px;
-                            overflow-y: scroll;
+                            max-height: 360px;
+                            overflow-y: auto;
                             padding-right: 18px;
                             scrollbar-width: auto;
 

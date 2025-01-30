@@ -5129,8 +5129,8 @@
                         border-radius: 0 0 8px 8px;
 
                         &-list {
-                            height: 540px;
                             padding-right: 8px;
+                            overflow-y: auto;
                         }
 
                         p {
