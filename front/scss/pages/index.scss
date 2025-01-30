@@ -32,6 +32,15 @@ body {
         z-index: 100;
     }
 
+    .menu-test{
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        left: 0;
+        top: 0;
+        z-index: 100;
+    }
+
     .button-notAuthorized {
         left: 20%;
     }
@@ -977,4 +986,22 @@ body {
     font-size: 11px;
     line-height: 16px;
     letter-spacing: 0.22px;
+}
+
+
+/// DARK
+body.dark{
+    .fav__page{
+        background: #040612 url("../img/Union.png") repeat 50% 0/cover;
+        .banner{
+            &__currency, &__fs{
+                @include colored-section($pink, '../img/dark_rect_vector.svg', 'desktop');
+            }
+        }
+        .banner.banner--bottom{
+            &__bonusHere, &__takeBonus {
+                @include background-cover('../img/dark_rect_vector_bottom.svg');
+            }
+        }
+    }
 }
