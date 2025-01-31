@@ -36,16 +36,10 @@
     // #region Translation
     const ukLeng = document.querySelector('#ukLeng');
     const enLeng = document.querySelector('#enLeng');
-    // let locale = 'uk';
-
-    //locale test
-    let locale = sessionStorage.getItem('locale')
-        ? sessionStorage.getItem('locale')
-        : 'uk';
+    let i18nData = {};
+    let locale = 'uk';
     if (ukLeng) locale = 'uk';
     if (enLeng) locale = 'en';
-
-    let i18nData = {};
 
     function loadTranslations() {
         return fetch(`${API}/${ENDPOINT}/translates/${locale}`)
@@ -207,6 +201,7 @@
 
         // Check for existing messages with the same content
         const existingMessages = targetElement.querySelectorAll('.input-msg');
+        console.log('existingMessages:', existingMessages);
         for (const msg of existingMessages) {
             if (msg.hasAttribute('data-code-error')) continue;
 
@@ -222,7 +217,7 @@
             } else if (msg.textContent === message) {
                 return;
             }
-
+            console.log('message of existingMessages', msg)
             msg.remove();
         }
 
@@ -276,7 +271,8 @@
         messageElement.classList.add(state ? 'error' : 'warning');
 
         // Handle message positioning
-        if (message === 'Неправильний код підтвердження') {
+        if (message === ERROR_MESSAGES.INVALID_CONFIRMATION_CODE.message) {
+            console.log('message is INVALID_CONFIRMATION_CODE')
             messageElement.setAttribute('data-code-error', 'true');
             // Always insert error messages at the top
             inputElement.parentNode.insertBefore(
@@ -295,9 +291,12 @@
                 );
             });
         } else {
+            console.log('message is ANY OTHER')
+
             // For non-error messages, insert after any existing error message, or before the button
             const existingErrorMsg =
                 targetElement.querySelector('[data-code-error]');
+            console.log('ANY OTHER existing', existingErrorMsg)
             const insertBefore = existingErrorMsg
                 ? existingErrorMsg.nextSibling
                 : buttonElement;
@@ -320,177 +319,60 @@
     const verificationForm = document.getElementById('verification__form');
     const linkButtonWrapper = document.querySelector('.link__button-wrapper');
     const submitButton = document.getElementById('submit-button');
-
-    //Test buttons
-    const authorizedButton = document.querySelector('.button-authorized');
-    const notAuthorizedButton = document.querySelector('.button-notAuthorized');
-    const successButton = document.querySelector('.button-success');
-    const successBeforeButton = document.querySelector('.button-successBefore');
-    const lang = document.querySelector('.button-lang');
-
-    //States
-    let authorized = false;
-    let notAuthorized = true;
-    let success = false;
-    let successBefore = false;
+    const formWrapper = document.querySelector('.form__wrapper');
+    const defaultFormContainer = document.querySelector('.form__container');
+    const formContainerSuccessBefore = document.querySelector(
+        '.form__container-successBefore'
+    );
+    const formContainerSuccess = document.querySelector(
+        '.form__container-success'
+    );
 
     async function init() {
         console.log('%c init fired', 'color: #00ff00; font-weight: bold');
-        console.log('%c init fired', 'color: #00ff00; font-weight: bold');
-        // let userPhoneNumber = null;
-        // let userPhoneVerified = false;
 
-        const updateUIBasedOnState = () => {
-            console.log('Updating UI, states:', {
-                authorized,
-                notAuthorized,
-                successBefore,
-                success,
-            });
-            const formWrapper = document.querySelector('.form__wrapper');
-            const formContainer = document.querySelector('.form__container');
-            const formContainerSuccessBefore = document.querySelector(
-                '.form__container-successBefore'
-            );
-            const formContainerSuccess = document.querySelector(
-                '.form__container-success'
-            );
+        if (window.FE?.user.role === 'guest') {
+            formWrapper.classList.add('hidden');
+            linkButtonWrapper.classList.add('visible');
+            linkButtonWrapper.classList.remove('hidden');
 
-            // Reset all states first
-            // formWrapper?.classList.remove('hidden', 'visible');
-            // formContainer?.classList.remove('hidden', 'visible');
-            // verificationForm?.classList.remove('hidden', 'visible');
+            return;
+        } else {
+            verificationForm.classList.add('visible');
+            verificationForm.classList.remove('hidden');
+        }
 
-            if (notAuthorized) {
-                console.log('not authorized');
-                formWrapper?.classList.add('hidden');
-                linkButtonWrapper?.classList.add('visible');
-            } else if (authorized) {
-                console.log('authorized');
-                linkButtonWrapper?.classList.add('hidden');
-                linkButtonWrapper?.classList.remove('visible');
-
-                formWrapper?.classList.remove('hidden');
-                verificationForm?.classList.add('visible');
-                verificationForm?.classList.remove('hidden');
-            } else if (successBefore) {
-                console.log('successBefore');
-                formContainer?.classList.add('hidden');
-                formContainerSuccessBefore?.classList.remove('hidden');
-            } else if (success) {
-                console.log('success');
-                formContainer?.classList.add('hidden');
-                formContainer?.classList.remove('visible');
-                formContainerSuccessBefore?.classList.add('hidden');
-                formContainerSuccessBefore?.classList.remove('visible');
-
-                formContainerSuccess?.classList.remove('hidden');
-            }
-        };
-
-        authorizedButton.addEventListener('click', (e) => {
-            e.preventDefault();
-            console.log('authorizedButton clicked');
-
-            authorized = true;
-            notAuthorized = false;
-            success = false;
-            successBefore = false;
-            updateUIBasedOnState();
-        });
-
-        notAuthorizedButton.addEventListener('click', (e) => {
-            e.preventDefault();
-            console.log('notAuthorizedButton clicked');
-            authorized = false;
-            notAuthorized = true;
-            success = false;
-            successBefore = false;
-            updateUIBasedOnState();
-        });
-
-        successBeforeButton.addEventListener('click', (e) => {
-            e.preventDefault();
-            console.log('successBeforeButton clicked');
-            authorized = false;
-            notAuthorized = false;
-            success = false;
-            successBefore = true;
-            updateUIBasedOnState();
-        });
-
-        successButton.addEventListener('click', (e) => {
-            e.preventDefault();
-            console.log('successButton clicked');
-            authorized = false;
-            notAuthorized = false;
-            success = true;
-            successBefore = false;
-            updateUIBasedOnState();
-        });
-
-        lang.addEventListener('click', (e) => {
-            e.preventDefault();
-            if (locale === 'uk') {
-                sessionStorage.setItem('locale', 'en');
-                window.location.reload();
-                return;
-            }
-            if (locale === 'en') {
-                sessionStorage.setItem('locale', 'uk');
-                window.location.reload();
-                return;
-            }
-        });
-
-        // Initial UI update
-        updateUIBasedOnState();
-
-        // if (window.FE?.user.role === 'guest') {
-        //     document.querySelector('.form__wrapper').classList.add('hidden');
-        //     linkButtonWrapper.classList.add('visible');
-        //     linkButtonWrapper.classList.remove('hidden');
-
-        //     return;
-        // } else {
-        //     verificationForm.classList.add('visible');
-        //     verificationForm.classList.remove('hidden');
-        // }
-
-        const confirmationForm = document.getElementById('confirmation__form');
-        const confirmButton = document.getElementById('confirm-button');
-
+        let userPhoneNumber = null;
+        let userPhoneVerified = false;
         let verificationSession = null;
         let verificationTimer = null;
         let user = null;
         let cid = null;
-
         let submittedPhone = null;
+        const confirmationForm = document.getElementById('confirmation__form');
+        const confirmButton = document.getElementById('confirm-button');
 
         try {
-            // user = await getUser();
-            // cid = user.cid;
-            // userPhoneNumber = user.data.account.phone_number;
-            // console.log('userPhoneNumber:', userPhoneNumber);
-            // userPhoneVerified = user.data.account.account_status.find(
-            //     (status) => status.alias === 'IS_PHONE_VERIFIED'
-            // ).value;
-            // console.log('userPhoneVerified:', userPhoneVerified);
-            // userPhoneNumber = true;
-            // userPhoneVerified = true;
-            // Check if user has a number and is already verified
-            // if (userPhoneNumber && userPhoneVerified) {
-            //     document
-            //         .querySelector('.form__container')
-            //         .classList.add('hidden');
-            //     document
-            //         .querySelector('.form__container-successBefore')
-            //         .classList.remove('hidden');
-            //     return;
-            // }
-            // verificationForm.classList.remove('hidden');
-            // verificationForm.classList.add('visible');
-            // phoneInput.value = `+${userPhoneNumber}`;
+            user = await getUser();
+            cid = user.cid;
+            userPhoneNumber = user.data.account.phone_number;
+            userPhoneVerified = user.data.account.account_status.find(
+                (status) => status.alias === 'IS_PHONE_VERIFIED'
+            ).value;
+
+            console.log('userPhoneNumber:', userPhoneNumber);
+            console.log('userPhoneVerified:', userPhoneVerified);
+            //Check if user has a number and is already verified
+            if (userPhoneNumber && userPhoneVerified) {
+                defaultFormContainer.classList.add('hidden');
+                formContainerSuccessBefore.classList.remove('hidden');
+
+                return;
+            }
+
+            verificationForm.classList.remove('hidden');
+            verificationForm.classList.add('visible');
+            phoneInput.value = `+${userPhoneNumber}`;
         } catch (error) {
             console.error('Failed to get user:', error);
         }
@@ -732,7 +614,6 @@
         confirmationForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             confirmButton.disabled = true;
-            console.log('submitter phone', submittedPhone);
 
             // Check if verification has expired
             if (confirmationForm.dataset.confirmationExpired === 'true') {
@@ -775,63 +656,8 @@
                 );
 
                 if (response.ok) {
-                    document.querySelector('.form__wrapper').style.display =
-                        'none';
-
-                    // // Update header text and data-translate
-                    // const header = document.querySelector('.form__header');
-                    // header.textContent = 'ТВІЙ НОМЕР ВЕРИФІКОВАНО';
-                    // header.setAttribute('data-translate', 'formHeaderSuccess');
-
-                    // // Update description text and data-translate
-                    // const description =
-                    //     document.querySelector('.form__description');
-                    // description.textContent =
-                    //     'Ваш персональний бонус зараховано в розділ "Бонуси"';
-                    // description.setAttribute(
-                    //     'data-translate',
-                    //     'formDescriptionSuccess'
-                    // );
-                    // const successImageWrapper = document.querySelector(
-                    //     '.successImageWrapper'
-                    // );
-                    // successImageWrapper.classList.add('visible');
-                    // successImageWrapper.classList.remove('hidden');
-
-                    // // Create first div
-                    // const firstDiv = document.createElement('div');
-                    // firstDiv.className = 'successImageWrapper-prizeInfo';
-
-                    // const firstSpan = document.createElement('span');
-                    // firstSpan.textContent = 'СТРАХОВКА ДО';
-                    // firstSpan.setAttribute(
-                    //     'data-translate',
-                    //     'prizeInfoInsurance'
-                    // );
-
-                    // const secondSpan = document.createElement('span');
-                    // secondSpan.textContent = 'СТАВКИ 100 ₴';
-                    // secondSpan.setAttribute('data-translate', 'prizeInfoValue');
-
-                    // // Append spans to first div
-                    // firstDiv.appendChild(firstSpan);
-                    // firstDiv.appendChild(secondSpan);
-
-                    // // Create second div
-                    // const secondDiv = document.createElement('div');
-                    // secondDiv.className = 'successImageWrapper-bonusSpark';
-
-                    // // Append divs to container
-                    // successImageWrapper.appendChild(firstDiv);
-                    // successImageWrapper.appendChild(secondDiv);
-
-                    // linkButtonWrapper.style.display = 'flex';
-                    // const linkButton = document.querySelector(
-                    //     '.link__button-wrapper a'
-                    // );
-                    // linkButton.href = '/personal-office/bonuses/betinsurance';
-                    // linkButton.textContent = 'ДО БОНУСУ';
-                    // linkButton.setAttribute('data-translate', 'confirmSuccess');
+                    defaultFormContainer.classList.add('hidden');
+                    formContainerSuccess.classList.remove('hidden');
 
                     //! Add verification record
                     const userId = user.data.account.id;
@@ -860,12 +686,7 @@
     }
 
     loadTranslations().then(init);
-    // init();
 
     const mainPage = document.querySelector('.fav__page');
     setTimeout(() => mainPage.classList.add('overflow'), 1000);
-
-    document.querySelector(".dark-btn").addEventListener("click", () =>{
-        document.body.classList.toggle("dark")
-    })
 })();
