@@ -1128,6 +1128,11 @@ body {
     letter-spacing: 0.22px;
 }
 
+.button-disabled {
+    cursor: not-allowed !important;
+    opacity: 0.6 !important;
+}
+
 
 /// DARK
 body.dark {

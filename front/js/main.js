@@ -30,6 +30,10 @@
             translateKey: 'smsCodeTimer',
         },
     };
+    const FORMS = {
+        CONFIRMATION: 'confirmation',
+        VERIFICATION: 'verification',
+    };
     const API = 'https://fav-prom.com';
     const ENDPOINT = 'api_verification';
 
@@ -177,19 +181,11 @@
         }
     }
 
+    let dayLock = false;
+
     function showInputMessage(message, targetElement, state = false) {
         const inputElement = targetElement.querySelector('input');
         const buttonElement = targetElement.querySelector('button');
-
-        // Remove all messages if called from timer expiration
-        if (
-            targetElement.id === 'confirmation__form' &&
-            targetElement.dataset.confirmationExpired === 'true'
-        ) {
-            const allMessages = targetElement.querySelectorAll('.input-msg');
-            allMessages.forEach((msg) => msg.remove());
-        }
-
         // Find error message object if it exists
         let errorObj = null;
         for (const key in ERROR_MESSAGES) {
@@ -198,67 +194,70 @@
                 break;
             }
         }
-
         // Check for existing messages with the same content
         const existingMessages = targetElement.querySelectorAll('.input-msg');
         console.log('existingMessages:', existingMessages);
+        const isTimerMessage = Array.isArray(message) && message.length === 2;
         for (const msg of existingMessages) {
-            if (msg.hasAttribute('data-code-error')) continue;
-
-            if (Array.isArray(message) && message.length === 2) {
+            // Handle timer message replacement
+            if (isTimerMessage) {
                 const timerWrapper = msg.querySelector('.timerWrapper');
                 if (timerWrapper) {
+                    // If this is a new timer message and we found an existing timer
                     const timer = timerWrapper.querySelector('.timer');
                     if (timer) {
                         timer.textContent = message[0];
-                        return;
+                        return; // Exit after updating existing timer
                     }
                 }
+                // Don't remove timer message if it exists and we're showing a different message
+                continue;
             } else if (msg.textContent === message) {
-                return;
+                return; // Exit if non-timer message already exists
             }
-            console.log('message of existingMessages', msg)
-            msg.remove();
+            // Remove non-timer messages or old timer messages if we're showing a new timer
+            if (!msg.querySelector('.timerWrapper') || isTimerMessage) {
+                msg.remove();
+            }
         }
 
         // Create new message element
         const messageElement = document.createElement('div');
         messageElement.classList.add('input-msg');
 
-        if (Array.isArray(message) && message.length === 2) {
+        if (isTimerMessage) {
+            // Create timer wrapper structure
             const timerWrapper = document.createElement('div');
             timerWrapper.classList.add('timerWrapper');
-            timerWrapper.style.minWidth = state ? '65px' : '45px';
-
-            const firstSpan = document.createElement('span');
-            firstSpan.textContent = message[0];
-            firstSpan.classList.add('timer');
-
-            timerWrapper.appendChild(firstSpan);
-
-            const secondSpan = document.createElement('span');
-            secondSpan.textContent = message[1];
-            secondSpan.classList.add(state ? 'error' : 'warning');
-
-            // Add translation key if message matches the verification locked or SMS timer message
+            // Set min-width based on lock type
+            timerWrapper.style.minWidth = dayLock ? '63px' : '45px';
+            // Create and setup timer element
+            const timerElement = document.createElement('span');
+            timerElement.textContent = message[0];
+            timerElement.classList.add('timer');
+            timerWrapper.appendChild(timerElement);
+            // Create and setup message element
+            const messageText = document.createElement('span');
+            messageText.textContent = message[1];
+            messageText.classList.add(state ? 'error' : 'warning');
+            // Handle translation keys
             if (message[1] === ERROR_MESSAGES.VERIFICATION_LOCKED.message) {
-                secondSpan.setAttribute(
+                messageText.setAttribute(
                     'data-translate',
                     ERROR_MESSAGES.VERIFICATION_LOCKED.translateKey
                 );
             } else if (message[1] === ERROR_MESSAGES.SMS_CODE_TIMER.message) {
-                secondSpan.setAttribute(
+                messageText.setAttribute(
                     'data-translate',
                     ERROR_MESSAGES.SMS_CODE_TIMER.translateKey
                 );
             }
-
+            // Assemble the message structure
             messageElement.appendChild(timerWrapper);
             messageElement.appendChild(document.createTextNode(' '));
-            messageElement.appendChild(secondSpan);
+            messageElement.appendChild(messageText);
         } else {
             messageElement.textContent = message;
-
             // Add translation key if error message exists in our structure
             if (errorObj) {
                 messageElement.setAttribute(
@@ -272,14 +271,12 @@
 
         // Handle message positioning
         if (message === ERROR_MESSAGES.INVALID_CONFIRMATION_CODE.message) {
-            console.log('message is INVALID_CONFIRMATION_CODE')
             messageElement.setAttribute('data-code-error', 'true');
             // Always insert error messages at the top
             inputElement.parentNode.insertBefore(
                 messageElement,
                 inputElement.nextSibling
             );
-
             // Move any existing non-error messages below this one
             const otherMessages = targetElement.querySelectorAll(
                 '.input-msg:not([data-code-error])'
@@ -291,27 +288,14 @@
                 );
             });
         } else {
-            console.log('message is ANY OTHER')
-
             // For non-error messages, insert after any existing error message, or before the button
             const existingErrorMsg =
                 targetElement.querySelector('[data-code-error]');
-            console.log('ANY OTHER existing', existingErrorMsg)
             const insertBefore = existingErrorMsg
                 ? existingErrorMsg.nextSibling
                 : buttonElement;
             inputElement.parentNode.insertBefore(messageElement, insertBefore);
         }
-    }
-
-    function isPhoneValid(phone) {
-        const phoneRegex = /^\+380\d{9}$/;
-        return phoneRegex.test(phone);
-    }
-
-    function removeExistingMessages(targetElement) {
-        const existingMessages = targetElement.querySelectorAll('.input-msg');
-        existingMessages.forEach((msg) => msg.remove());
     }
 
     const phoneInput = document.getElementById('phone');
@@ -329,7 +313,7 @@
     );
 
     async function init() {
-        console.log('%c init fired', 'color: #00ff00; font-weight: bold');
+        console.log('%c init() fired', 'color: #00ff00; font-weight: bold');
 
         if (window.FE?.user.role === 'guest') {
             formWrapper.classList.add('hidden');
@@ -345,12 +329,16 @@
         let userPhoneNumber = null;
         let userPhoneVerified = false;
         let verificationSession = null;
-        let verificationTimer = null;
         let user = null;
         let cid = null;
+        let verificationTimer = null;
         let submittedPhone = null;
         const confirmationForm = document.getElementById('confirmation__form');
         const confirmButton = document.getElementById('confirm-button');
+        const step = {
+            confirmation: false,
+            verification: false,
+        };
 
         try {
             user = await getUser();
@@ -377,45 +365,72 @@
             console.error('Failed to get user:', error);
         }
 
-        const startVerificationTimer = (
-            totalSeconds,
-            { confirmation = false, verification = false }
-        ) => {
-            confirmButton.textContent = 'НАДІСЛАТИ';
-            confirmButton.setAttribute(
-                'data-translate',
-                'sendConfirmationCode'
-            );
+        const startVerificationTimer = (totalSeconds, form) => {
+
+            if (form === FORMS.CONFIRMATION) {
+                confirmButton.textContent = 'НАДІСЛАТИ';
+                confirmButton.setAttribute(
+                    'data-translate',
+                    'sendConfirmationCode'
+                );
+            }
 
             if (verificationTimer) {
                 clearInterval(verificationTimer);
             }
 
             let timeLeft = totalSeconds;
+            dayLock = totalSeconds > 300;
+            console.log('dayLock:', dayLock);
+
+            const message = dayLock
+                ? [
+                      `${Math.floor(timeLeft / 3600)
+                          .toString()
+                          .padStart(2, '0')}:${Math.floor(
+                          (timeLeft % 3600) / 60
+                      )
+                          .toString()
+                          .padStart(2, '0')}:${(timeLeft % 60)
+                          .toString()
+                          .padStart(2, '0')}`,
+                      ERROR_MESSAGES.VERIFICATION_LOCKED.message,
+                  ]
+                : [
+                      `${Math.floor(timeLeft / 60)
+                          .toString()
+                          .padStart(2, '0')}:${(timeLeft % 60)
+                          .toString()
+                          .padStart(2, '0')}`,
+                      ERROR_MESSAGES.SMS_CODE_TIMER.message,
+                  ];
+            const targetForm =
+                form === FORMS.VERIFICATION
+                    ? verificationForm
+                    : confirmationForm;
+
+            showInputMessage(message, targetForm, dayLock);
+
+            const timerElement = targetForm.querySelector('.timer');
 
             verificationTimer = setInterval(() => {
                 if (timeLeft <= 0) {
                     clearInterval(verificationTimer);
 
                     confirmButton.disabled = false;
+                    confirmButton.classList.remove('button-disabled');
                     confirmButton.textContent = 'НАДІСЛАТИ ПОВТОРНО';
                     confirmButton.setAttribute(
                         'data-translate',
                         'resendConfirmationCode'
                     );
 
-                    removeExistingMessages(verificationForm);
+                    removeExistingMessages(confirmationForm);
+                    confirmationCodeInput.value = '';
+                    confirmationCodeInput.disabled = true;
 
-                    // Reset the form and remove required attribute
-                    const codeInput =
-                        document.getElementById('confirmation-code');
-                    codeInput.value = '';
-                    codeInput.required = false;
-
-                    // Change form submit behavior to verification and trigger cleanup
                     confirmationForm.dataset.confirmationExpired = 'true';
 
-                    // Show message about expired code (cleanup will happen in showInputMessage)
                     showInputMessage(
                         ERROR_MESSAGES.VERIFICATION_EXPIRED.message,
                         confirmationForm,
@@ -425,51 +440,43 @@
                     return;
                 }
 
-                const minutes = Math.floor(timeLeft / 60);
-                const seconds = timeLeft % 60;
-
-                if (verification) {
-                    showInputMessage(
-                        [
-                            `${Math.floor(timeLeft / 3600)
-                                .toString()
-                                .padStart(2, '0')}:${Math.floor(
-                                (timeLeft % 3600) / 60
-                            )
-                                .toString()
-                                .padStart(2, '0')}:${(timeLeft % 60)
-                                .toString()
-                                .padStart(2, '0')}`,
-                            ERROR_MESSAGES.VERIFICATION_LOCKED.message,
-                        ],
-                        verificationForm,
-                        'error'
-                    );
+                //Updating timer values for every second
+                if (timerElement) {
+                    if (dayLock) {
+                        timerElement.textContent = `${Math.floor(
+                            timeLeft / 3600
+                        )
+                            .toString()
+                            .padStart(2, '0')}:${Math.floor(
+                            (timeLeft % 3600) / 60
+                        )
+                            .toString()
+                            .padStart(2, '0')}:${(timeLeft % 60)
+                            .toString()
+                            .padStart(2, '0')}`;
+                    } else {
+                        timerElement.textContent = `${Math.floor(timeLeft / 60)
+                            .toString()
+                            .padStart(2, '0')}:${(timeLeft % 60)
+                            .toString()
+                            .padStart(2, '0')}`;
+                    }
                 }
 
-                if (confirmation) {
-                    showInputMessage(
-                        [
-                            `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`,
-                            ERROR_MESSAGES.SMS_CODE_TIMER.message,
-                        ],
-                        confirmationForm,
-                        false
-                    );
-                }
                 timeLeft--;
             }, 1000);
         };
 
         const handleVerificationResponse = (response) => {
-            console.log(
-                'response from verifyUserPhone inside handleVerificationResponse',
-                response
-            );
-            const step = {
-                confirmation: false,
-                verification: false,
-            };
+            // Clean up expired state if we're starting a new verification
+            if (confirmationForm.dataset.confirmationExpired === 'true') {
+                const allMessages =
+                    confirmationForm.querySelectorAll('.input-msg');
+                allMessages.forEach((msg) => msg.remove());
+                confirmationForm.dataset.confirmationExpired = 'false';
+            }
+
+            //For successful verification attempt
             if (response.ok) {
                 verificationSession = response.data.session_id;
                 // Only handle form visibility if it's hidden
@@ -479,44 +486,89 @@
                     confirmationForm.classList.add('visible');
                     confirmationForm.classList.remove('hidden');
                 }
-
+                step.verification = false;
                 step.confirmation = true;
                 // Start timer for code verification
                 const ttl = response.data.phone_verification_ttl;
-                startVerificationTimer(ttl, step);
+                startVerificationTimer(ttl, FORMS.CONFIRMATION);
             } else if (
                 response.code === -24 &&
                 response.message.reason === 'verification_locked'
             ) {
                 const { rest_time } = response.message;
-                submitButton.disabled = true;
-                phoneInput.disabled = true;
-                step.verification = true;
-                startVerificationTimer(rest_time, step);
+                const button = step.verification ? submitButton : confirmButton;
+                const input = step.verification
+                    ? phoneInput
+                    : confirmationCodeInput;
+                const form = step.verification
+                    ? FORMS.VERIFICATION
+                    : FORMS.CONFIRMATION;
+                // Clean up existing messages before showing locked state
+                removeExistingMessages(
+                    form === FORMS.VERIFICATION
+                        ? verificationForm
+                        : confirmationForm
+                );
+                button.disabled = true;
+                button.classList.add('button-disabled');
+
+                input.disabled = true;
+                startVerificationTimer(rest_time, form);
             } else if (
                 response.code === -24 &&
                 response.message.reason ===
                     'phone_number_has_been_confirmed_by_another_user'
             ) {
-                submitButton.disabled = false;
                 showInputMessage(
                     ERROR_MESSAGES.PHONE_CONFIRMED_BY_ANOTHER.message,
                     verificationForm,
                     'error'
                 );
+            } else if (
+                response.code === -4 &&
+                response.message.reason === 'wrong_session_or_confirm_code'
+            ) {
+                confirmButton.disabled = true;
+                confirmButton.classList.add('button-disabled');
+                showInputMessage(
+                    ERROR_MESSAGES.INVALID_CONFIRMATION_CODE.message,
+                    confirmationForm,
+                    'error'
+                );
+            } else if (
+                response.code === -24 &&
+                response.message.reason === 'confirm_code_locked'
+            ) {
+                // Clean up all existing messages before showing locked state
+                removeExistingMessages(confirmationForm);
+
+                const { rest_time } = response.message;
+                confirmButton.disabled = true;
+                confirmationCodeInput.disabled = true;
+                confirmationCodeInput.value = '';
+                confirmButton.classList.add('button-disabled');
+                startVerificationTimer(rest_time, FORMS.CONFIRMATION);
             }
         };
 
         //User starts to change phone number
         phoneInput.addEventListener('input', (e) => {
+            submitButton.disabled = true;
             const value = e.target.value;
             // Remove is-invalid class initially
             phoneInput.classList.remove('is-invalid');
             // Validate phone number
             if (!isPhoneValid(value)) {
+                showInputMessage(
+                    ERROR_MESSAGES.INVALID_PHONE_FORMAT.message,
+                    verificationForm,
+                    'error'
+                );
                 phoneInput.classList.add('is-invalid');
             } else {
                 removeExistingMessages(verificationForm);
+                submitButton.disabled = false;
+                submitButton.classList.remove('button-disabled');
             }
             if (e.target.value.slice(1) === userPhoneNumber) {
                 submitButton.innerHTML = 'ПІДТВЕРДИТИ';
@@ -528,14 +580,18 @@
         });
 
         confirmationCodeInput.addEventListener('input', (e) => {
-            // Remove non-numeric characters
-            e.target.value = e.target.value.replace(/[^0-9]/g, '');
+            confirmButton.disabled = true;
+            let code = e.target.value;
+            confirmationCodeInput.classList.remove('is-invalid');
 
-            // Add/remove .is-invalid class based on validation
-            if (e.target.value.length !== 5) {
-                e.target.classList.add('is-invalid');
+            // Remove non-numeric characters
+            code = e.target.value.replace(/[^0-9]/g, '');
+
+            if (!/^\d{5}$/.test(code)) {
+                confirmationCodeInput.classList.add('is-invalid');
             } else {
-                e.target.classList.remove('is-invalid');
+                confirmButton.disabled = false;
+                confirmButton.classList.remove('button-disabled');
             }
         });
 
@@ -547,21 +603,10 @@
                 'color: #ff00ff; font-weight: bold',
                 e
             );
+            step.verification = true;
             submitButton.disabled = true;
+            submitButton.classList.add('button-disabled');
             submittedPhone = e.target[0].value;
-
-            if (!isPhoneValid(submittedPhone)) {
-                showInputMessage(
-                    ERROR_MESSAGES.INVALID_PHONE_FORMAT.message,
-                    verificationForm,
-                    'error'
-                );
-                submitButton.disabled = false;
-
-                return;
-            } else {
-                removeExistingMessages(verificationForm);
-            }
 
             try {
                 const userId = user.data.account.id;
@@ -581,11 +626,13 @@
                         userPhoneNumber = response.phone.slice(1);
                         submitButton.innerHTML = 'ПІДТВЕРДИТИ';
                         submitButton.disabled = false;
+                        submitButton.classList.remove('button-disabled');
                     } else if (
                         response.error === 'yes' &&
                         response.error_code === 'accounting_error_02'
                     ) {
                         submitButton.disabled = false;
+                        submitButton.classList.remove('button-disabled');
                         showInputMessage(
                             ERROR_MESSAGES.PHONE_ALREADY_USED.message,
                             verificationForm,
@@ -614,13 +661,12 @@
         confirmationForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             confirmButton.disabled = true;
+            submitButton.classList.add('button-disabled');
 
             // Check if verification has expired
             if (confirmationForm.dataset.confirmationExpired === 'true') {
                 // Reset the form state
-                confirmationForm.dataset.confirmationExpired = 'false';
-                const codeInput = document.getElementById('confirmation-code');
-                codeInput.required = true;
+                confirmationCodeInput.disabled = false;
 
                 // Trigger new verification
                 try {
@@ -638,15 +684,6 @@
             }
 
             const code = confirmationCodeInput.value;
-
-            // Validate length and numeric
-            if (!/^\d{5}$/.test(code)) {
-                console.log('inside validate fn() ---code is invalid');
-                confirmationCodeInput.classList.add('is-invalid');
-                confirmButton.disabled = false;
-
-                return;
-            }
 
             try {
                 console.log('TRY CONFIRM USER PHONE---CONF FORM');
@@ -669,20 +706,19 @@
                 }
             } catch (error) {
                 console.error('Error confirming code:', error);
-                if (
-                    error.code === -4 &&
-                    error.message.reason === 'wrong_session_or_confirm_code'
-                ) {
-                    showInputMessage(
-                        ERROR_MESSAGES.INVALID_CONFIRMATION_CODE.message,
-                        confirmationForm,
-                        'error'
-                    );
-                }
-            } finally {
-                confirmButton.disabled = false;
+                handleVerificationResponse(error);
             }
         });
+    }
+
+    function isPhoneValid(phone) {
+        const phoneRegex = /^\+380\d{9}$/;
+        return phoneRegex.test(phone);
+    }
+
+    function removeExistingMessages(targetElement) {
+        const existingMessages = targetElement.querySelectorAll('.input-msg');
+        existingMessages.forEach((msg) => msg.remove());
     }
 
     loadTranslations().then(init);
