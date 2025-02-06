@@ -186,7 +186,9 @@
     function showInputMessage(message, targetElement, state = false) {
         const inputElement = targetElement.querySelector('input');
         const buttonElement = targetElement.querySelector('button');
-        // const inputWrapper = inputElement.parentElement;
+        document
+            .getElementById('confirmation__form')
+            .setAttribute('data-placeholder', '');
         // Find error message object if it exists
         let errorObj = null;
         for (const key in ERROR_MESSAGES) {
@@ -197,11 +199,6 @@
         }
         const existingMessages = targetElement.querySelectorAll('.input-msg');
         const isTimerMessage = Array.isArray(message) && message.length === 2;
-        // Add has-message class to the wrapper when showing a message
-        // if (!isTimerMessage) {
-        //     inputWrapper.classList.add('has-message');
-        // }
-
         // Check for existing messages with the same content
         for (const msg of existingMessages) {
             // Handle timer message replacement
@@ -327,9 +324,6 @@
             linkButtonWrapper.classList.remove('hidden');
 
             return;
-        } else {
-            verificationForm.classList.add('visible');
-            verificationForm.classList.remove('hidden');
         }
 
         let userPhoneNumber = null;
@@ -364,8 +358,8 @@
                 return;
             }
 
-            verificationForm.classList.remove('hidden');
             verificationForm.classList.add('visible');
+            verificationForm.classList.remove('hidden');
             phoneInput.value = `+${userPhoneNumber}`;
         } catch (error) {
             console.error('Failed to get user:', error);
@@ -422,17 +416,13 @@
                     clearInterval(verificationTimer);
 
                     confirmButton.disabled = false;
-                    confirmButton.classList.remove('button-disabled');
                     confirmButton.textContent = 'НАДІСЛАТИ ПОВТОРНО';
                     confirmButton.setAttribute(
                         'data-translate',
                         'resendConfirmationCode'
                     );
-
                     removeExistingMessages(confirmationForm);
                     confirmationCodeInput.value = '';
-                    confirmationCodeInput.disabled = true;
-
                     confirmationForm.dataset.confirmationExpired = 'true';
 
                     showInputMessage(
@@ -491,10 +481,8 @@
                     confirmationForm.classList.remove('hidden');
 
                     // Initialize confirmation code placeholder
-                    const confirmationInputWrapper =
-                        confirmationCodeInput.parentElement;
-                    confirmationInputWrapper.classList.add('code-placeholder');
-                    confirmationInputWrapper.setAttribute(
+                    confirmationForm.classList.add('code-placeholder');
+                    confirmationForm.setAttribute(
                         'data-placeholder',
                         '_ _ _ _ _'
                     );
@@ -523,9 +511,8 @@
                         : confirmationForm
                 );
                 button.disabled = true;
-                button.classList.add('button-disabled');
-
                 input.disabled = true;
+                step.confirmation ? (input.value = '') : null;
                 startVerificationTimer(rest_time, form);
             } else if (
                 response.code === -24 &&
@@ -542,7 +529,7 @@
                 response.message.reason === 'wrong_session_or_confirm_code'
             ) {
                 confirmButton.disabled = true;
-                confirmButton.classList.add('button-disabled');
+                confirmationCodeInput.value = '';
                 showInputMessage(
                     ERROR_MESSAGES.INVALID_CONFIRMATION_CODE.message,
                     confirmationForm,
@@ -559,7 +546,6 @@
                 confirmButton.disabled = true;
                 confirmationCodeInput.disabled = true;
                 confirmationCodeInput.value = '';
-                confirmButton.classList.add('button-disabled');
                 startVerificationTimer(rest_time, FORMS.CONFIRMATION);
             }
         };
@@ -567,7 +553,6 @@
         //User starts to change phone number
         phoneInput.addEventListener('input', (e) => {
             submitButton.disabled = true;
-            submitButton.classList.add('button-disabled');
             // Remove is-invalid class initially
             phoneInput.classList.remove('is-invalid');
 
@@ -587,7 +572,6 @@
                 phoneInput.classList.add('is-invalid');
             } else {
                 submitButton.disabled = false;
-                submitButton.classList.remove('button-disabled');
             }
             if (e.target.value.slice(1) === userPhoneNumber) {
                 submitButton.innerHTML = 'ПІДТВЕРДИТИ';
@@ -602,32 +586,37 @@
             confirmButton.disabled = true;
             confirmationCodeInput.classList.remove('is-invalid');
             const code = e.target.value;
-            // console.log('code:', code);
             // Only allow numbers
             const newValue = code.replace(/[^0-9]/g, '');
-            console.log('newValue:', newValue);
 
             if (code !== newValue) {
                 e.target.value = newValue;
             }
+            // Update placeholder
+            const parentWrapper = confirmationCodeInput.parentElement;
 
-            // // Update placeholder
-            // const parentWrapper = confirmationCodeInput.parentElement;
-            // const label = parentWrapper.querySelector('label');
+            if (!parentWrapper.classList.contains('code-placeholder')) {
+                parentWrapper.classList.add('code-placeholder');
+            }
 
-            // if (!parentWrapper.classList.contains('code-placeholder')) {
-            //     parentWrapper.classList.add('code-placeholder');
-            // }
+            // Create dynamic placeholder and set it as a data attribute on the wrapper
+            const placeholderValue = Array(5)
+                .fill('_')
+                .map((char, index) => {
+                    // If we have a number at this index, return it without space
+                    if (index < newValue.length) {
+                        return newValue[index];
+                    }
+                    // For the first underscore after numbers, don't add space before it
+                    if (index === newValue.length) {
+                        return '_';
+                    }
+                    // For remaining underscores, add space before them
+                    return ' _';
+                })
+                .join('');
 
-            // // Create dynamic placeholder
-            // const placeholderValue = Array(5)
-            //     .fill('_')
-            //     .map((char, index) => newValue[index] || char)
-            //     .join(' ');
-            // console.log('placeholderValue:', placeholderValue);
-            // console.log('newValue slice(0, 5):', newValue.slice(0, 5));
-            // e.target.value = newValue.slice(0, 5);
-            // label.setAttribute('data-placeholder', placeholderValue);
+            parentWrapper.setAttribute('data-placeholder', placeholderValue);
 
             // Remove only the error message if it exists, keeping timer message
             const errorMessage = confirmationForm.querySelector(
@@ -641,7 +630,6 @@
                 confirmationCodeInput.classList.add('is-invalid');
             } else {
                 confirmButton.disabled = false;
-                confirmButton.classList.remove('button-disabled');
             }
         });
 
@@ -655,7 +643,6 @@
             );
             step.verification = true;
             submitButton.disabled = true;
-            submitButton.classList.add('button-disabled');
             submittedPhone = e.target[0].value;
 
             try {
@@ -676,13 +663,11 @@
                         userPhoneNumber = response.phone.slice(1);
                         submitButton.innerHTML = 'ПІДТВЕРДИТИ';
                         submitButton.disabled = false;
-                        submitButton.classList.remove('button-disabled');
                     } else if (
                         response.error === 'yes' &&
                         response.error_code === 'accounting_error_02'
                     ) {
                         submitButton.disabled = false;
-                        submitButton.classList.remove('button-disabled');
                         showInputMessage(
                             ERROR_MESSAGES.PHONE_ALREADY_USED.message,
                             verificationForm,
@@ -711,7 +696,6 @@
         confirmationForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             confirmButton.disabled = true;
-            submitButton.classList.add('button-disabled');
 
             // Check if verification has expired
             if (confirmationForm.dataset.confirmationExpired === 'true') {
@@ -767,8 +751,6 @@
     }
 
     function removeExistingMessages(targetElement) {
-        // const inputWrapper = targetElement.querySelector('input').parentElement;
-        // inputWrapper.classList.remove('has-message');
         const existingMessages = targetElement.querySelectorAll('.input-msg');
         existingMessages.forEach((msg) => msg.remove());
     }

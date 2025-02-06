@@ -624,6 +624,31 @@ body {
                     margin-bottom: 34px;
                     margin-left: 8px;
 
+                    .code-placeholder {
+                        position: relative;
+                        width: 100%;
+
+                        &::before {
+                            content: attr(data-placeholder);
+                            position: absolute;
+                            top: 26%;
+                            left: 22px;
+                            transform: translateY(-50%);
+                            color: $input-dark-blue;
+                            font-family: font('unbounded', 'regular');
+                            pointer-events: none;
+                            z-index: 1;
+                            font-size: 14px;
+                            letter-spacing: .28px;
+                            white-space: pre;
+                        }
+
+                        input {
+                            color: transparent !important;
+                        }
+                        
+                    }
+
                     .verification__form {
                         @include forms-shared;
 
@@ -646,16 +671,6 @@ body {
                         &:has(input.is-invalid) label[htmlFor="confirmation-code"] {
                             color: $error-red;
                         }
-
-                        // input[type="number"]::-webkit-inner-spin-button,
-                        // input[type="number"]::-webkit-outer-spin-button {
-                        //     -webkit-appearance: none;
-                        //     margin: 0;
-                        // }
-
-                        // input[type="number"] {
-                        //     -moz-appearance: textfield;
-                        // }
                     }
 
                     .hidden {
@@ -1127,52 +1142,6 @@ body {
     line-height: 16px;
     letter-spacing: 0.22px;
 }
-
-.button-disabled {
-    cursor: not-allowed !important;
-    opacity: 0.6 !important;
-}
-
-// .code-placeholder {
-//     position: relative;
-//     width: 100%;
-
-//     input {
-//         position: relative;
-//         z-index: 1;
-//         color: transparent !important;
-//         letter-spacing: 0 !important;
-//         padding-left: 20px !important;
-//         font-size: 0 !important;
-
-//         &::selection {
-//             background-color: rgba($dark-blue, 0.1);
-//         }
-//     }
-
-//     label {
-//         position: relative; // Add this
-
-//         &::after {
-//             content: attr(data-placeholder);
-//             position: absolute;
-//             top: calc(100% + 15px); // Position it below the label
-//             left: 20px;
-//             color: $input-dark-blue;
-//             font-family: font('unbounded', 'regular');
-//             pointer-events: none;
-//             z-index: 2;
-//             font-size: 14px;
-//             letter-spacing: normal;
-//             white-space: pre;
-//         }
-//     }
-
-//     &.has-message label::after {
-//         top: calc(100% + 7px);
-//     }
-// }
-
 
 /// DARK
 body.dark {

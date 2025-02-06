@@ -165,10 +165,22 @@
         font-size: 14px;
         text-transform: uppercase;
         letter-spacing: 0.28px;
+        transition: all 0.3s ease;
+        cursor: pointer;
 
         &:focus-visible {
             outline: 2px solid $button-green;
             outline-offset: 2px;
+        }
+
+        &:hover {
+            color: $dark-blue-hover;
+            background: $button-green-hover;
+        }
+
+        &:disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
         }
     }
 }
@@ -188,9 +200,17 @@
     font-family: font('unbounded', 'bold');
     font-size: 14px;
     letter-spacing: 0.28px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    cursor: pointer;
 
     &:focus-visible {
         outline: 2px solid $button-green;
         outline-offset: 2px;
+    }
+
+    &:hover {
+        color: $dark-blue-hover;
+        background: $button-green-hover;
     }
 }
