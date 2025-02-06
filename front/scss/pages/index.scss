@@ -647,15 +647,15 @@ body {
                             color: $error-red;
                         }
 
-                        input[type="number"]::-webkit-inner-spin-button,
-                        input[type="number"]::-webkit-outer-spin-button {
-                            -webkit-appearance: none;
-                            margin: 0;
-                        }
+                        // input[type="number"]::-webkit-inner-spin-button,
+                        // input[type="number"]::-webkit-outer-spin-button {
+                        //     -webkit-appearance: none;
+                        //     margin: 0;
+                        // }
 
-                        input[type="number"] {
-                            -moz-appearance: textfield;
-                        }
+                        // input[type="number"] {
+                        //     -moz-appearance: textfield;
+                        // }
                     }
 
                     .hidden {
@@ -1133,6 +1133,46 @@ body {
     opacity: 0.6 !important;
 }
 
+// .code-placeholder {
+//     position: relative;
+//     width: 100%;
+
+//     input {
+//         position: relative;
+//         z-index: 1;
+//         color: transparent !important;
+//         letter-spacing: 0 !important;
+//         padding-left: 20px !important;
+//         font-size: 0 !important;
+
+//         &::selection {
+//             background-color: rgba($dark-blue, 0.1);
+//         }
+//     }
+
+//     label {
+//         position: relative; // Add this
+
+//         &::after {
+//             content: attr(data-placeholder);
+//             position: absolute;
+//             top: calc(100% + 15px); // Position it below the label
+//             left: 20px;
+//             color: $input-dark-blue;
+//             font-family: font('unbounded', 'regular');
+//             pointer-events: none;
+//             z-index: 2;
+//             font-size: 14px;
+//             letter-spacing: normal;
+//             white-space: pre;
+//         }
+//     }
+
+//     &.has-message label::after {
+//         top: calc(100% + 7px);
+//     }
+// }
+
 
 /// DARK
 body.dark {
@@ -1148,69 +1188,81 @@ body.dark {
         }
 
         .banner.banner--bottom {
+
             .banner__currency,
             .banner__fs {
                 @include colored-section($pink, "https://fav-prom.com/html/verification/img/pink_rect_vector_bottom.svg", 'desktop');
             }
+
             .banner__bonusHere,
             .banner__takeBonus {
                 @include background-cover('../img/dark_rect_vector_bottom.svg');
             }
         }
-        .main{
-            &__contentWrapper{
-                .mobileSideContent{
-                    &--bottom{
-                        .pointers__item{
+
+        .main {
+            &__contentWrapper {
+                .mobileSideContent {
+                    &--bottom {
+                        .pointers__item {
                             transform: scale(-1, 1);
                         }
                     }
-                    .pointers__item{
+
+                    .pointers__item {
                         background: url("../img/thumb_pink_reverse-dark.svg") no-repeat 0 0/cover;
                     }
-                    .prizeInfo{
+
+                    .prizeInfo {
                         background: #040612;
                     }
-                    .bonusSpark{
-                        &__content{
+
+                    .bonusSpark {
+                        &__content {
                             background: url("../img/spark-dark.svg") no-repeat 0 0/contain;
                         }
                     }
                 }
-                .sideContent{
-                    .bonusSpark{
-                        &__content{
+
+                .sideContent {
+                    .bonusSpark {
+                        &__content {
                             @include background-cover('../img/spark-dark.svg');
                         }
                     }
                 }
-                .rule{
+
+                .rule {
                     background: #1F1F1F;
                 }
-                .drop{
-                    .dropdown{
-                        summary{
+
+                .drop {
+                    .dropdown {
+                        summary {
                             background: #1F1F1F;
                         }
                     }
                 }
-                .form{
-                    &__container{
-                        &-success-mainContent{
-                            .successPrize{
-                                &__insurance{
+
+                .form {
+                    &__container {
+                        &-success-mainContent {
+                            .successPrize {
+                                &__insurance {
                                     background: url("../img/prize_stack-dark.png") no-repeat 0 0/contain;
                                 }
                             }
 
                         }
                     }
-                    &__topBar{
-                        &::before{
+
+                    &__topBar {
+                        &::before {
                             background: #1F1F1F;
                         }
                     }
-                    &__outerWrapper{
+
+                    &__outerWrapper {
                         background: #040612;
                     }
                 }

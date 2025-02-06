@@ -186,6 +186,7 @@
     function showInputMessage(message, targetElement, state = false) {
         const inputElement = targetElement.querySelector('input');
         const buttonElement = targetElement.querySelector('button');
+        // const inputWrapper = inputElement.parentElement;
         // Find error message object if it exists
         let errorObj = null;
         for (const key in ERROR_MESSAGES) {
@@ -194,10 +195,14 @@
                 break;
             }
         }
-        // Check for existing messages with the same content
         const existingMessages = targetElement.querySelectorAll('.input-msg');
-        console.log('existingMessages:', existingMessages);
         const isTimerMessage = Array.isArray(message) && message.length === 2;
+        // Add has-message class to the wrapper when showing a message
+        // if (!isTimerMessage) {
+        //     inputWrapper.classList.add('has-message');
+        // }
+
+        // Check for existing messages with the same content
         for (const msg of existingMessages) {
             // Handle timer message replacement
             if (isTimerMessage) {
@@ -301,6 +306,7 @@
     const phoneInput = document.getElementById('phone');
     const confirmationCodeInput = document.getElementById('confirmation-code');
     const verificationForm = document.getElementById('verification__form');
+    const confirmationForm = document.getElementById('confirmation__form');
     const linkButtonWrapper = document.querySelector('.link__button-wrapper');
     const submitButton = document.getElementById('submit-button');
     const formWrapper = document.querySelector('.form__wrapper');
@@ -333,7 +339,7 @@
         let cid = null;
         let verificationTimer = null;
         let submittedPhone = null;
-        const confirmationForm = document.getElementById('confirmation__form');
+
         const confirmButton = document.getElementById('confirm-button');
         const step = {
             confirmation: false,
@@ -366,7 +372,6 @@
         }
 
         const startVerificationTimer = (totalSeconds, form) => {
-
             if (form === FORMS.CONFIRMATION) {
                 confirmButton.textContent = 'НАДІСЛАТИ';
                 confirmButton.setAttribute(
@@ -381,7 +386,6 @@
 
             let timeLeft = totalSeconds;
             dayLock = totalSeconds > 300;
-            console.log('dayLock:', dayLock);
 
             const message = dayLock
                 ? [
@@ -485,6 +489,15 @@
                     verificationForm.classList.remove('visible');
                     confirmationForm.classList.add('visible');
                     confirmationForm.classList.remove('hidden');
+
+                    // Initialize confirmation code placeholder
+                    const confirmationInputWrapper =
+                        confirmationCodeInput.parentElement;
+                    confirmationInputWrapper.classList.add('code-placeholder');
+                    confirmationInputWrapper.setAttribute(
+                        'data-placeholder',
+                        '_ _ _ _ _'
+                    );
                 }
                 step.verification = false;
                 step.confirmation = true;
@@ -554,19 +567,25 @@
         //User starts to change phone number
         phoneInput.addEventListener('input', (e) => {
             submitButton.disabled = true;
-            const value = e.target.value;
+            submitButton.classList.add('button-disabled');
             // Remove is-invalid class initially
             phoneInput.classList.remove('is-invalid');
+
+            const value = e.target.value;
+            // Only allow + and numbers
+            const newValue = value.replace(/[^+0-9]/g, '');
+
+            if (!newValue) {
+                e.target.value = '+380';
+                e.target.setSelectionRange(4, 4);
+            } else {
+                e.target.value = newValue;
+            }
+
             // Validate phone number
             if (!isPhoneValid(value)) {
-                showInputMessage(
-                    ERROR_MESSAGES.INVALID_PHONE_FORMAT.message,
-                    verificationForm,
-                    'error'
-                );
                 phoneInput.classList.add('is-invalid');
             } else {
-                removeExistingMessages(verificationForm);
                 submitButton.disabled = false;
                 submitButton.classList.remove('button-disabled');
             }
@@ -581,11 +600,42 @@
 
         confirmationCodeInput.addEventListener('input', (e) => {
             confirmButton.disabled = true;
-            let code = e.target.value;
             confirmationCodeInput.classList.remove('is-invalid');
+            const code = e.target.value;
+            // console.log('code:', code);
+            // Only allow numbers
+            const newValue = code.replace(/[^0-9]/g, '');
+            console.log('newValue:', newValue);
 
-            // Remove non-numeric characters
-            code = e.target.value.replace(/[^0-9]/g, '');
+            if (code !== newValue) {
+                e.target.value = newValue;
+            }
+
+            // // Update placeholder
+            // const parentWrapper = confirmationCodeInput.parentElement;
+            // const label = parentWrapper.querySelector('label');
+
+            // if (!parentWrapper.classList.contains('code-placeholder')) {
+            //     parentWrapper.classList.add('code-placeholder');
+            // }
+
+            // // Create dynamic placeholder
+            // const placeholderValue = Array(5)
+            //     .fill('_')
+            //     .map((char, index) => newValue[index] || char)
+            //     .join(' ');
+            // console.log('placeholderValue:', placeholderValue);
+            // console.log('newValue slice(0, 5):', newValue.slice(0, 5));
+            // e.target.value = newValue.slice(0, 5);
+            // label.setAttribute('data-placeholder', placeholderValue);
+
+            // Remove only the error message if it exists, keeping timer message
+            const errorMessage = confirmationForm.querySelector(
+                '[data-code-error="true"]'
+            );
+            if (errorMessage) {
+                errorMessage.remove();
+            }
 
             if (!/^\d{5}$/.test(code)) {
                 confirmationCodeInput.classList.add('is-invalid');
@@ -717,6 +767,8 @@
     }
 
     function removeExistingMessages(targetElement) {
+        // const inputWrapper = targetElement.querySelector('input').parentElement;
+        // inputWrapper.classList.remove('has-message');
         const existingMessages = targetElement.querySelectorAll('.input-msg');
         existingMessages.forEach((msg) => msg.remove());
     }

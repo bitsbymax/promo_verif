@@ -49,6 +49,7 @@ include ../mixins.pug
                                         placeholder="+380 (XX) XXX XX XX"
                                         autocomplete="tel"
                                         maxlength="13"
+                                        pattern="[+0-9]+"
                                         required
                                     )
                                     button(
@@ -65,7 +66,9 @@ include ../mixins.pug
                                         id="confirmation-code"
                                         name="confirmation-code"
                                         maxlength="5"
+                                        pattern="[0-9]*"
                                         inputmode="numeric"
+                                        autocomplete="off"
                                         required
                                     )
                                     button(
