@@ -50,7 +50,11 @@ include ../mixins.pug
                             .form__wrapper
                                 //- Verification form
                                 form#verification__form.verification__form.hidden
-                                    label(htmlFor="phone" data-translate="confirmPhone") Підтвердити свій номер телефону
+                                    label(
+                                        htmlFor="phone"
+                                        data-translate="confirmPhone"
+                                        class="success-change"    
+                                    ) Підтвердити свій номер телефону
                                     input(
                                         type="tel"
                                         id="phone"
@@ -60,7 +64,6 @@ include ../mixins.pug
                                         maxlength="13"
                                         pattern="[+0-9]+"
                                         required
-                                        class="success-change"
                                     )
                                     button(
                                         type="submit"
