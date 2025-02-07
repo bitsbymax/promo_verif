@@ -41,7 +41,11 @@
     const ukLeng = document.querySelector('#ukLeng');
     const enLeng = document.querySelector('#enLeng');
     let i18nData = {};
-    let locale = 'uk';
+    // let locale = 'uk';
+    //locale test
+    let locale = sessionStorage.getItem('locale')
+        ? sessionStorage.getItem('locale')
+        : 'uk';
     if (ukLeng) locale = 'uk';
     if (enLeng) locale = 'en';
 
@@ -316,54 +320,165 @@
         '.form__container-success'
     );
 
+    //Test buttons
+    const authorizedButton = document.querySelector('.button-authorized');
+    const notAuthorizedButton = document.querySelector('.button-notAuthorized');
+    const successButton = document.querySelector('.button-success');
+    const successBeforeButton = document.querySelector('.button-successBefore');
+    const lang = document.querySelector('.button-lang');
+
+    //States
+    let authorized = false;
+    let notAuthorized = true;
+    let success = false;
+    let successBefore = false;
+
     async function init() {
         console.log('%c init() fired', 'color: #00ff00; font-weight: bold');
 
-        if (window.FE?.user.role === 'guest') {
-            formWrapper.classList.add('hidden');
-            linkButtonWrapper.classList.add('visible');
-            linkButtonWrapper.classList.remove('hidden');
+        // if (window.FE?.user.role === 'guest') {
+        //     formWrapper.classList.add('hidden');
+        //     linkButtonWrapper.classList.add('visible');
+        //     linkButtonWrapper.classList.remove('hidden');
 
-            return;
-        }
+        //     return;
+        // }
 
-        let userPhoneNumber = null;
-        let userPhoneVerified = false;
-        let verificationSession = null;
-        let user = null;
-        let cid = null;
-        let verificationTimer = null;
-        let submittedPhone = null;
+        // let userPhoneNumber = null;
+        // let userPhoneVerified = false;
+        // let verificationSession = null;
+        // let user = null;
+        // let cid = null;
+        // let verificationTimer = null;
+        // let submittedPhone = null;
 
-        const step = {
-            confirmation: false,
-            verification: false,
+        // const step = {
+        //     confirmation: false,
+        //     verification: false,
+        // };
+
+        // try {
+        //     user = await getUser();
+        //     cid = user.cid;
+        //     userPhoneNumber = user.data.account.phone_number;
+        //     userPhoneVerified = user.data.account.account_status.find(
+        //         (status) => status.alias === 'IS_PHONE_VERIFIED'
+        //     ).value;
+
+        //     console.log('userPhoneNumber:', userPhoneNumber);
+        //     console.log('userPhoneVerified:', userPhoneVerified);
+        //     //Check if user has a number and is already verified
+        //     if (userPhoneNumber && userPhoneVerified) {
+        //         defaultFormContainer.classList.add('hidden');
+        //         formContainerSuccessBefore.classList.remove('hidden');
+
+        //         return;
+        //     }
+
+        //     verificationForm.classList.add('visible');
+        //     verificationForm.classList.remove('hidden');
+        //     phoneInput.value = `+${userPhoneNumber}`;
+        // } catch (error) {
+        //     console.error('Failed to get user:', error);
+        // }
+
+        const updateUIBasedOnState = () => {
+            console.log('Updating UI, states:', {
+                authorized,
+                notAuthorized,
+                successBefore,
+                success,
+            });
+            const formContainer = document.querySelector('.form__container');
+            // Reset all states first
+            // formWrapper?.classList.remove('hidden', 'visible');
+            // formContainer?.classList.remove('hidden', 'visible');
+            // verificationForm?.classList.remove('hidden', 'visible');
+
+            if (notAuthorized) {
+                console.log('not authorized');
+                formWrapper?.classList.add('hidden');
+                linkButtonWrapper?.classList.add('visible');
+            } else if (authorized) {
+                console.log('authorized');
+                linkButtonWrapper?.classList.add('hidden');
+                linkButtonWrapper?.classList.remove('visible');
+
+                formWrapper?.classList.remove('hidden');
+                verificationForm?.classList.add('visible');
+                verificationForm?.classList.remove('hidden');
+            } else if (successBefore) {
+                console.log('successBefore');
+                formContainer?.classList.add('hidden');
+                formContainerSuccessBefore?.classList.remove('hidden');
+            } else if (success) {
+                console.log('success');
+                formContainer?.classList.add('hidden');
+                formContainer?.classList.remove('visible');
+                formContainerSuccessBefore?.classList.add('hidden');
+                formContainerSuccessBefore?.classList.remove('visible');
+
+                formContainerSuccess?.classList.remove('hidden');
+            }
         };
 
-        try {
-            user = await getUser();
-            cid = user.cid;
-            userPhoneNumber = user.data.account.phone_number;
-            userPhoneVerified = user.data.account.account_status.find(
-                (status) => status.alias === 'IS_PHONE_VERIFIED'
-            ).value;
+        authorizedButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            console.log('authorizedButton clicked');
 
-            console.log('userPhoneNumber:', userPhoneNumber);
-            console.log('userPhoneVerified:', userPhoneVerified);
-            //Check if user has a number and is already verified
-            if (userPhoneNumber && userPhoneVerified) {
-                defaultFormContainer.classList.add('hidden');
-                formContainerSuccessBefore.classList.remove('hidden');
+            authorized = true;
+            notAuthorized = false;
+            success = false;
+            successBefore = false;
+            updateUIBasedOnState();
+        });
 
+        notAuthorizedButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            console.log('notAuthorizedButton clicked');
+            authorized = false;
+            notAuthorized = true;
+            success = false;
+            successBefore = false;
+            updateUIBasedOnState();
+        });
+
+        successBeforeButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            console.log('successBeforeButton clicked');
+            authorized = false;
+            notAuthorized = false;
+            success = false;
+            successBefore = true;
+            updateUIBasedOnState();
+        });
+
+        successButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            console.log('successButton clicked');
+            authorized = false;
+            notAuthorized = false;
+            success = true;
+            successBefore = false;
+            updateUIBasedOnState();
+        });
+
+        lang.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (locale === 'uk') {
+                sessionStorage.setItem('locale', 'en');
+                window.location.reload();
                 return;
             }
+            if (locale === 'en') {
+                sessionStorage.setItem('locale', 'uk');
+                window.location.reload();
+                return;
+            }
+        });
 
-            verificationForm.classList.add('visible');
-            verificationForm.classList.remove('hidden');
-            phoneInput.value = `+${userPhoneNumber}`;
-        } catch (error) {
-            console.error('Failed to get user:', error);
-        }
+        // Initial UI update
+        updateUIBasedOnState();
 
         const startVerificationTimer = (totalSeconds, form) => {
             if (form === FORMS.CONFIRMATION) {

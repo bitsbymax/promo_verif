@@ -17,23 +17,6 @@ body {
     background-size: 2000px 860px;
     z-index: 0;
 
-
-
-    ////test buttons
-    //.button-authorized,
-    //.button-notAuthorized,
-    //.button-successBefore,
-    //.button-success,
-    //.button-lang {
-    //    position: absolute;
-    //    display: inline-block;
-    //    top: 3%;
-    //    left: 3%;
-    //    width: auto;
-    //    height: auto;
-    //    z-index: 100;
-    //}
-
     .menu-test {
         display: flex;
         flex-direction: column;
@@ -41,22 +24,6 @@ body {
         left: 0;
         top: 0;
         z-index: 100;
-    }
-
-    .button-notAuthorized {
-        left: 20%;
-    }
-
-    .button-successBefore {
-        left: 37%;
-    }
-
-    .button-success {
-        left: 50%;
-    }
-
-    .button-lang {
-        left: 65%;
     }
 
     .background {
