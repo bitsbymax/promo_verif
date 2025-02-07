@@ -8,8 +8,9 @@ include ../mixins.pug
         button.button-notAuthorized Неавторизований
         button.button-successBefore Авт. раніше
         button.button-success Авт. успішно
+        button.button-loading Завантаження
         button.button-lang Мова
-        button.dark-btn dark
+        button.button-theme Тема
     //- Background elements
     .background
         .background__ellipse
@@ -59,6 +60,7 @@ include ../mixins.pug
                                         maxlength="13"
                                         pattern="[+0-9]+"
                                         required
+                                        class="success-change"
                                     )
                                     button(
                                         type="submit"
@@ -85,6 +87,11 @@ include ../mixins.pug
                                         id="confirm-button"
                                         data-translate="confirm"
                                     ) ПІДТВЕРДИТИ
+                            //- Loading
+                            .loading__wrapper.hidden
+                                .square-1
+                                .square-2
+                                .square-3
                             .link__button-wrapper.hidden
                                 a(
                                     id="link-button"

@@ -312,6 +312,7 @@
     const submitButton = document.getElementById('submit-button');
     const confirmButton = document.getElementById('confirm-button');
     const formWrapper = document.querySelector('.form__wrapper');
+    const loadingWrapper = document.querySelector('.loading__wrapper');
     const defaultFormContainer = document.querySelector('.form__container');
     const formContainerSuccessBefore = document.querySelector(
         '.form__container-successBefore'
@@ -325,13 +326,17 @@
     const notAuthorizedButton = document.querySelector('.button-notAuthorized');
     const successButton = document.querySelector('.button-success');
     const successBeforeButton = document.querySelector('.button-successBefore');
-    const lang = document.querySelector('.button-lang');
+    const langButton = document.querySelector('.button-lang');
+    const themeButton = document.querySelector('.button-theme');
+    const loadingButton = document.querySelector('.button-loading');
 
     //States
     let authorized = false;
     let notAuthorized = true;
     let success = false;
     let successBefore = false;
+    let loading = false;
+    let theme = false;
 
     async function init() {
         console.log('%c init() fired', 'color: #00ff00; font-weight: bold');
@@ -388,48 +393,55 @@
                 notAuthorized,
                 successBefore,
                 success,
+                loading,
+                theme,
             });
             const formContainer = document.querySelector('.form__container');
-            // Reset all states first
-            // formWrapper?.classList.remove('hidden', 'visible');
-            // formContainer?.classList.remove('hidden', 'visible');
-            // verificationForm?.classList.remove('hidden', 'visible');
 
             if (notAuthorized) {
                 console.log('not authorized');
                 formWrapper?.classList.add('hidden');
-                linkButtonWrapper?.classList.add('visible');
+                formContainer?.classList.remove('hidden');
+                linkButtonWrapper?.classList.remove('hidden');
+                formContainerSuccessBefore?.classList.add('hidden');
+                formContainerSuccess?.classList.add('hidden');
             } else if (authorized) {
                 console.log('authorized');
+                formContainerSuccessBefore?.classList.add('hidden');
+                formContainerSuccess?.classList.add('hidden');
+                formContainer?.classList.remove('hidden');
                 linkButtonWrapper?.classList.add('hidden');
-                linkButtonWrapper?.classList.remove('visible');
-
                 formWrapper?.classList.remove('hidden');
-                verificationForm?.classList.add('visible');
                 verificationForm?.classList.remove('hidden');
             } else if (successBefore) {
                 console.log('successBefore');
                 formContainer?.classList.add('hidden');
                 formContainerSuccessBefore?.classList.remove('hidden');
+                formContainerSuccess?.classList.add('hidden');
             } else if (success) {
                 console.log('success');
                 formContainer?.classList.add('hidden');
-                formContainer?.classList.remove('visible');
                 formContainerSuccessBefore?.classList.add('hidden');
-                formContainerSuccessBefore?.classList.remove('visible');
-
                 formContainerSuccess?.classList.remove('hidden');
+            } else if (loading) {
+                formContainerSuccessBefore?.classList.add('hidden');
+                formContainerSuccess?.classList.add('hidden');
+                formContainer?.classList.remove('hidden');
+                formWrapper?.classList.add('hidden');
+                linkButtonWrapper?.classList.add('hidden');
+                loadingWrapper?.classList.remove('hidden');
             }
         };
 
         authorizedButton.addEventListener('click', (e) => {
             e.preventDefault();
             console.log('authorizedButton clicked');
-
             authorized = true;
             notAuthorized = false;
             success = false;
             successBefore = false;
+            loading = false;
+            theme = false;
             updateUIBasedOnState();
         });
 
@@ -440,6 +452,8 @@
             notAuthorized = true;
             success = false;
             successBefore = false;
+            loading = false;
+            theme = false;
             updateUIBasedOnState();
         });
 
@@ -450,6 +464,8 @@
             notAuthorized = false;
             success = false;
             successBefore = true;
+            loading = false;
+            theme = false;
             updateUIBasedOnState();
         });
 
@@ -460,11 +476,26 @@
             notAuthorized = false;
             success = true;
             successBefore = false;
+            loading = false;
+            theme = false;
             updateUIBasedOnState();
         });
 
-        lang.addEventListener('click', (e) => {
+        loadingButton.addEventListener('click', (e) => {
             e.preventDefault();
+            console.log('loadingButton clicked');
+            authorized = false;
+            notAuthorized = false;
+            success = false;
+            successBefore = false;
+            loading = true;
+            theme = false;
+            updateUIBasedOnState();
+        });
+
+        langButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            console.log('langButton clicked');
             if (locale === 'uk') {
                 sessionStorage.setItem('locale', 'en');
                 window.location.reload();
@@ -475,6 +506,11 @@
                 window.location.reload();
                 return;
             }
+        });
+
+        themeButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            document.body.classList.toggle('dark');
         });
 
         // Initial UI update
