@@ -380,34 +380,49 @@
 
             let timeLeft = totalSeconds;
             dayLock = totalSeconds > 300;
+            let message = '';
 
-            const message = dayLock
-                ? [
-                      `${Math.floor(timeLeft / 3600)
-                          .toString()
-                          .padStart(2, '0')}:${Math.floor(
-                          (timeLeft % 3600) / 60
-                      )
-                          .toString()
-                          .padStart(2, '0')}:${(timeLeft % 60)
-                          .toString()
-                          .padStart(2, '0')}`,
-                      ERROR_MESSAGES.VERIFICATION_LOCKED.message,
-                  ]
-                : [
-                      `${Math.floor(timeLeft / 60)
-                          .toString()
-                          .padStart(2, '0')}:${(timeLeft % 60)
-                          .toString()
-                          .padStart(2, '0')}`,
-                      ERROR_MESSAGES.SMS_CODE_TIMER.message,
-                  ];
+            if (dayLock) {
+                message = [
+                    `${Math.floor(timeLeft / 3600)
+                        .toString()
+                        .padStart(2, '0')}:${Math.floor((timeLeft % 3600) / 60)
+                        .toString()
+                        .padStart(2, '0')}:${(timeLeft % 60)
+                        .toString()
+                        .padStart(2, '0')}`,
+                    ERROR_MESSAGES.VERIFICATION_LOCKED.message,
+                ];
+            } else if (!dayLock && step.verification) {
+                message = [
+                    `${Math.floor(timeLeft / 60)
+                        .toString()
+                        .padStart(2, '0')}:${(timeLeft % 60)
+                        .toString()
+                        .padStart(2, '0')}`,
+                    ERROR_MESSAGES.VERIFICATION_LOCKED.message,
+                ];
+            } else if (!dayLock) {
+                message = [
+                    `${Math.floor(timeLeft / 60)
+                        .toString()
+                        .padStart(2, '0')}:${(timeLeft % 60)
+                        .toString()
+                        .padStart(2, '0')}`,
+                    ERROR_MESSAGES.SMS_CODE_TIMER.message,
+                ];
+            }
+
             const targetForm =
                 form === FORMS.VERIFICATION
                     ? verificationForm
                     : confirmationForm;
 
-            showInputMessage(message, targetForm, dayLock);
+            showInputMessage(
+                message,
+                targetForm,
+                dayLock || (!dayLock && step.verification) ? 'error' : false
+            );
 
             const timerElement = targetForm.querySelector('.timer');
 
@@ -415,21 +430,26 @@
                 if (timeLeft <= 0) {
                     clearInterval(verificationTimer);
 
-                    confirmButton.disabled = false;
-                    confirmButton.textContent = 'НАДІСЛАТИ ПОВТОРНО';
-                    confirmButton.setAttribute(
-                        'data-translate',
-                        'resendConfirmationCode'
-                    );
-                    removeExistingMessages(confirmationForm);
-                    confirmationCodeInput.value = '';
-                    confirmationForm.dataset.confirmationExpired = 'true';
-
-                    showInputMessage(
-                        ERROR_MESSAGES.VERIFICATION_EXPIRED.message,
-                        confirmationForm,
-                        'error'
-                    );
+                    if (step.verification) {
+                        submitButton.disabled = false;
+                        removeExistingMessages(verificationForm);
+                    } else {
+                        confirmButton.disabled = false;
+                        confirmButton.setAttribute('required', false);
+                        confirmButton.textContent = 'НАДІСЛАТИ ПОВТОРНО';
+                        confirmButton.setAttribute(
+                            'data-translate',
+                            'resendConfirmationCode'
+                        );
+                        confirmationCodeInput.value = '';
+                        confirmationForm.dataset.confirmationExpired = 'true';
+                        removeExistingMessages(confirmationForm);
+                        showInputMessage(
+                            ERROR_MESSAGES.VERIFICATION_EXPIRED.message,
+                            confirmationForm,
+                            'error'
+                        );
+                    }
 
                     return;
                 }
