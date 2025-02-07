@@ -306,6 +306,7 @@
     const confirmationForm = document.getElementById('confirmation__form');
     const linkButtonWrapper = document.querySelector('.link__button-wrapper');
     const submitButton = document.getElementById('submit-button');
+    const confirmButton = document.getElementById('confirm-button');
     const formWrapper = document.querySelector('.form__wrapper');
     const defaultFormContainer = document.querySelector('.form__container');
     const formContainerSuccessBefore = document.querySelector(
@@ -334,7 +335,6 @@
         let verificationTimer = null;
         let submittedPhone = null;
 
-        const confirmButton = document.getElementById('confirm-button');
         const step = {
             confirmation: false,
             verification: false,
@@ -367,6 +367,7 @@
 
         const startVerificationTimer = (totalSeconds, form) => {
             if (form === FORMS.CONFIRMATION) {
+                confirmButton.disabled = true;
                 confirmButton.textContent = 'НАДІСЛАТИ';
                 confirmButton.setAttribute(
                     'data-translate',
@@ -435,12 +436,12 @@
                         removeExistingMessages(verificationForm);
                     } else {
                         confirmButton.disabled = false;
-                        confirmButton.setAttribute('required', false);
                         confirmButton.textContent = 'НАДІСЛАТИ ПОВТОРНО';
                         confirmButton.setAttribute(
                             'data-translate',
                             'resendConfirmationCode'
                         );
+                        confirmationCodeInput.setAttribute('required', false);
                         confirmationCodeInput.value = '';
                         confirmationForm.dataset.confirmationExpired = 'true';
                         removeExistingMessages(confirmationForm);
@@ -715,6 +716,8 @@
         // Add confirmation form handler
         confirmationForm.addEventListener('submit', async (e) => {
             e.preventDefault();
+            step.verification = false;
+            step.confirmation = true;
             confirmButton.disabled = true;
 
             // Check if verification has expired
@@ -732,7 +735,6 @@
                 } catch (error) {
                     console.error('Error resending verification code:', error);
                 }
-                confirmButton.disabled = false;
 
                 return;
             }
