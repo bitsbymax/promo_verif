@@ -320,6 +320,7 @@
     const formContainerSuccess = document.querySelector(
         '.form__container-success'
     );
+    const loadingElement = document.querySelector('.loading__wrapper');
 
     //Test buttons
     const authorizedButton = document.querySelector('.button-authorized');
@@ -340,6 +341,30 @@
 
     async function init() {
         console.log('%c init() fired', 'color: #00ff00; font-weight: bold');
+
+        // const showLoading = (form) => {
+        //     switch (form) {
+        //         case FORMS.VERIFICATION:
+        //             verificationForm.classList.add('hidden');
+        //             break;
+        //         case FORMS.CONFIRMATION:
+        //             confirmationForm.classList.add('hidden');
+        //             break;
+        //     }
+        //     loadingElement.classList.remove('hidden');
+        // };
+
+        // const hideLoading = (form) => {
+        //     switch (form) {
+        //         case FORMS.VERIFICATION:
+        //             verificationForm.classList.remove('hidden');
+        //             break;
+        //         case FORMS.CONFIRMATION:
+        //             confirmationForm.classList.remove('hidden');
+        //             break;
+        //     }
+        //     loadingElement.classList.add('hidden');
+        // };
 
         // if (window.FE?.user.role === 'guest') {
         //     formWrapper.classList.add('hidden');
@@ -369,9 +394,6 @@
         //     userPhoneVerified = user.data.account.account_status.find(
         //         (status) => status.alias === 'IS_PHONE_VERIFIED'
         //     ).value;
-
-        //     console.log('userPhoneNumber:', userPhoneNumber);
-        //     console.log('userPhoneVerified:', userPhoneVerified);
         //     //Check if user has a number and is already verified
         //     if (userPhoneNumber && userPhoneVerified) {
         //         defaultFormContainer.classList.add('hidden');
@@ -524,6 +546,8 @@
                     'data-translate',
                     'sendConfirmationCode'
                 );
+                confirmationCodeInput.disabled = false;
+                confirmationCodeInput.setAttribute('required', true);
             }
 
             if (verificationTimer) {
@@ -593,6 +617,7 @@
                             'resendConfirmationCode'
                         );
                         confirmationCodeInput.setAttribute('required', false);
+                        confirmationCodeInput.disabled = true;
                         confirmationCodeInput.value = '';
                         confirmationForm.dataset.confirmationExpired = 'true';
                         removeExistingMessages(confirmationForm);
@@ -808,11 +833,6 @@
         // User submits verification form
         verificationForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            console.log(
-                '%c Form submitted',
-                'color: #ff00ff; font-weight: bold',
-                e
-            );
             step.verification = true;
             submitButton.disabled = true;
             submittedPhone = e.target[0].value;
@@ -826,7 +846,6 @@
 
                 //Change user phone number
                 if (submittedPhone !== `+${userPhoneNumber}`) {
-                    console.log('TRY CHANGE USER PHONE---VERIF FORM');
                     const response = await changeUserPhone(userData);
 
                     if (response.error === 'no' && !response.error_code) {
@@ -835,6 +854,14 @@
                         userPhoneNumber = response.phone.slice(1);
                         submitButton.innerHTML = 'ПІДТВЕРДИТИ';
                         submitButton.disabled = false;
+                        verificationForm
+                            .querySelector('label')
+                            .classList.add('success-change');
+                        setTimeout(() => {
+                            verificationForm
+                                .querySelector('label')
+                                .classList.remove('success-change');
+                        }, 4000);
                     } else if (
                         response.error === 'yes' &&
                         response.error_code === 'accounting_error_02'
@@ -850,10 +877,11 @@
                     return;
                 }
                 //Verify user phone number
-                console.log('TRY VERIFY USER PHONE---VERIF FORM');
+                showLoading(FORMS.VERIFICATION);
                 const response = await verifyUserPhone(cid);
 
                 if (response) {
+                    hideLoading(FORMS.VERIFICATION);
                     handleVerificationResponse(response);
                 } else {
                     throw response;
@@ -873,14 +901,12 @@
 
             // Check if verification has expired
             if (confirmationForm.dataset.confirmationExpired === 'true') {
-                // Reset the form state
-                confirmationCodeInput.disabled = false;
-
                 // Trigger new verification
                 try {
-                    console.log('TRY VERIFY USER PHONE---CONF FORM');
+                    showLoading(FORMS.CONFIRMATION);
                     const response = await verifyUserPhone(cid);
                     if (response) {
+                        hideLoading(FORMS.CONFIRMATION);
                         handleVerificationResponse(response);
                     }
                 } catch (error) {
@@ -893,7 +919,7 @@
             const code = confirmationCodeInput.value;
 
             try {
-                console.log('TRY CONFIRM USER PHONE---CONF FORM');
+                showLoading(FORMS.CONFIRMATION);
                 const response = await confirmUserPhone(
                     code,
                     verificationSession
@@ -913,6 +939,7 @@
                 }
             } catch (error) {
                 console.error('Error confirming code:', error);
+                hideLoading(FORMS.CONFIRMATION);
                 handleVerificationResponse(error);
             }
         });

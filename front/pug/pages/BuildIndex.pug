@@ -90,11 +90,9 @@ include ../mixins.pug
                                         id="confirm-button"
                                         data-translate="confirm"
                                     ) ПІДТВЕРДИТИ
-                            //- Loading
-                            .loading__wrapper.hidden
-                                .square-1
-                                .square-2
-                                .square-3
+
+                                //- Loading
+                                +loading()
                             .link__button-wrapper.hidden
                                 a(
                                     id="link-button"
