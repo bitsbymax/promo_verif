@@ -427,6 +427,7 @@
                 linkButtonWrapper?.classList.remove('hidden');
                 formContainerSuccessBefore?.classList.add('hidden');
                 formContainerSuccess?.classList.add('hidden');
+                loadingWrapper?.classList.add('hidden');
             } else if (authorized) {
                 console.log('authorized');
                 formContainerSuccessBefore?.classList.add('hidden');
@@ -435,6 +436,7 @@
                 linkButtonWrapper?.classList.add('hidden');
                 formWrapper?.classList.remove('hidden');
                 verificationForm?.classList.remove('hidden');
+                loadingWrapper?.classList.add('hidden');
             } else if (successBefore) {
                 console.log('successBefore');
                 formContainer?.classList.add('hidden');
@@ -449,7 +451,8 @@
                 formContainerSuccessBefore?.classList.add('hidden');
                 formContainerSuccess?.classList.add('hidden');
                 formContainer?.classList.remove('hidden');
-                formWrapper?.classList.add('hidden');
+                formWrapper?.classList.remove('hidden');
+                verificationForm?.classList.add('hidden');
                 linkButtonWrapper?.classList.add('hidden');
                 loadingWrapper?.classList.remove('hidden');
             }
