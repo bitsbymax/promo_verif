@@ -635,7 +635,7 @@ body {
                                 @include background-cover('https://fav-prom.com/html/verification/img/success_change.svg');
                                 position: absolute;
                                 top: 42px;
-                                right: -38px;
+                                right: -90px;
                                 width: 20px;
                                 height: 15px;
                                 pointer-events: none;
@@ -749,7 +749,7 @@ body {
 
                     &--header {
                         @include flex-center;
-                        width: 100%;
+                        max-width: 700px;
                         padding: 140px 130px 0;
                         color: $dark-blue;
                         text-align: center;
@@ -1240,6 +1240,10 @@ body {
                 .drop {
                     .dropdown {
                         summary {
+                            background: #1F1F1F;
+                        }
+
+                        .drop-txt {
                             background: #1F1F1F;
                         }
                     }
