@@ -627,7 +627,7 @@ body {
                             color: $error-red;
                         }
 
-                        label.success-change {
+                        &.success-change {
                             position: relative;
 
                             &::after {
@@ -635,7 +635,7 @@ body {
                                 @include background-cover('https://fav-prom.com/html/verification/img/success_change.svg');
                                 position: absolute;
                                 top: 42px;
-                                right: -90px;
+                                right: 18px;
                                 width: 20px;
                                 height: 15px;
                                 pointer-events: none;

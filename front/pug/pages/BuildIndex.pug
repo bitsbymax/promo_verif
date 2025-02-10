@@ -49,11 +49,10 @@ include ../mixins.pug
 
                             .form__wrapper
                                 //- Verification form
-                                form#verification__form.verification__form.hidden
+                                form#verification__form.verification__form.hidden.success-change
                                     label(
                                         htmlFor="phone"
-                                        data-translate="confirmPhone"
-                                        class="success-change"    
+                                        data-translate="confirmPhone"    
                                     ) Підтвердити свій номер телефону
                                     input(
                                         type="tel"

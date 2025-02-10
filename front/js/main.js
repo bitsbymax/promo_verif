@@ -857,13 +857,9 @@
                         userPhoneNumber = response.phone.slice(1);
                         submitButton.innerHTML = 'ПІДТВЕРДИТИ';
                         submitButton.disabled = false;
-                        verificationForm
-                            .querySelector('label')
-                            .classList.add('success-change');
+                        verificationForm.classList.add('success-change');
                         setTimeout(() => {
-                            verificationForm
-                                .querySelector('label')
-                                .classList.remove('success-change');
+                            verificationForm.classList.remove('success-change');
                         }, 4000);
                     } else if (
                         response.error === 'yes' &&
