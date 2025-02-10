@@ -3731,7 +3731,7 @@
                         .link__button-wrapper {
                             margin-top: 107px;
                             margin-bottom: 0;
-    
+
                             .link__button {
                                 @include link-button;
                                 margin-top: 0;
@@ -4236,7 +4236,7 @@
                         .link__button-wrapper {
                             margin-top: 107px;
                             margin-bottom: 0;
-    
+
                             .link__button {
                                 margin-top: 0;
                             }
@@ -4603,7 +4603,7 @@
                         .link__button-wrapper {
                             margin-top: 107px;
                             margin-bottom: 0;
-    
+
                             .link__button {
                                 margin-top: 0;
                             }
@@ -4947,6 +4947,7 @@
                         scale: 0.7;
                     }
                 }
+
                 .form {
                     &__outerWrapper {
                         transform-origin: center;
@@ -5360,7 +5361,7 @@
                         .link__button-wrapper {
                             margin-top: 107px;
                             margin-bottom: 0;
-    
+
                             .link__button {
                                 margin-top: 0;
                             }
@@ -5604,10 +5605,6 @@
                                 display: inline-block;
                                 margin: 0 5px 2px 0;
                             }
-
-                            &:last-child {
-                                // margin-bottom: 10px;
-                            }
                         }
                     }
                 }
@@ -5619,22 +5616,20 @@
 
 //--Foldable--//
 //surface duo portrait
-@media screen and (max-width: 550px) and (max-height: 720px) and (orientation: portrait) and (min-width: 500px) {}
+// @media screen and (max-width: 550px) and (max-height: 720px) and (orientation: portrait) and (min-width: 500px) {}
 
 //fold5 landscape unfold
-@media screen and (max-width: 840px) and (orientation: landscape) and (max-height: 690px) and (min-height: 550px) {}
+// @media screen and (max-width: 840px) and (orientation: landscape) and (max-height: 690px) and (min-height: 550px) {}
 
 //fold 5 unfold portrait
-@media screen and (max-width: 660px) and (max-height: 700px) and (orientation: portrait) and (min-width: 601px) {}
+// @media screen and (max-width: 660px) and (max-height: 700px) and (orientation: portrait) and (min-width: 601px) {}
 
 //--//
 
-//important!
-@media screen and (max-width: 750px) {}
+// @media screen and (max-width: 750px) {}
 
 //!MOBILE
-
-@media screen and (width <=700px) {
+@media screen and (max-width: 700px) {
     .fav__page {
         .background {
             &__ellipse {
@@ -6280,7 +6275,7 @@
     }
 }
 
-@media screen and (380px <=width <=700px) and (height < 700px) {
+@media screen and (min-width: 380px) and (max-width: 700px) and (max-height: 699px) {
     .fav__page {
         .main {
             padding: 60px 15px;
@@ -6305,7 +6300,7 @@
     }
 }
 
-@media screen and (width < 380px) and (height <=1000px) {
+@media screen and (max-width: 379px) and (max-height: 1000px) {
     .fav__page {
         .main {
             &__contentWrapper {
@@ -6327,7 +6322,7 @@
     }
 }
 
-@media screen and (width < 380px) and (height <=650px) {
+@media screen and (max-width: 379px) and (max-height: 650px) {
     .fav__page {
         .main {
             &__contentWrapper {
@@ -6349,7 +6344,7 @@
     }
 }
 
-@media screen and (width < 380px) and (height <=615px) {
+@media screen and (max-width: 379px) and (max-height: 615px) {
     .fav__page {
         .main {
             &__contentWrapper {
@@ -6371,7 +6366,7 @@
     }
 }
 
-@media screen and (width < 380px) and (height <=595px) {
+@media screen and (max-width: 379px) and (max-height: 595px) {
     .fav__page {
         .main {
             &__contentWrapper {
@@ -6393,7 +6388,7 @@
     }
 }
 
-@media screen and (width < 380px) and (height <=570px) {
+@media screen and (max-width: 379px) and (max-height: 570px) {
     .fav__page {
         .main {
             &__contentWrapper {
@@ -6415,7 +6410,7 @@
     }
 }
 
-@media screen and (width <=360px) {
+@media screen and (max-width: 360px) {
     .fav__page {
         .background {
             &__ellipse {
@@ -6443,7 +6438,7 @@
     }
 }
 
-@media screen and (width <=340px) {
+@media screen and (max-width: 340px) {
     .fav__page {
         .main {
             &__contentWrapper {
@@ -6463,7 +6458,7 @@
     }
 }
 
-@media screen and (width <=320px) {
+@media screen and (max-width: 320px) {
     .fav__page {
         .main {
             &__contentWrapper {
