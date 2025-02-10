@@ -3731,7 +3731,7 @@
                         .link__button-wrapper {
                             margin-top: 107px;
                             margin-bottom: 0;
-
+    
                             .link__button {
                                 @include link-button;
                                 margin-top: 0;
@@ -4044,7 +4044,7 @@
     }
 }
 
-@media screen and (min-width: 750px) and (max-width: 1000px) and (min-height: 491px) and (max-height: 550px) {
+@media screen and (min-width: 750px) and (max-width: 1000px) and (min-height: 446px) and (max-height: 490px) {
     .fav__page {
         .background {
             &__ellipse {
@@ -4236,7 +4236,7 @@
                         .link__button-wrapper {
                             margin-top: 107px;
                             margin-bottom: 0;
-
+    
                             .link__button {
                                 margin-top: 0;
                             }
@@ -6018,7 +6018,7 @@
                             justify-content: center;
                             align-items: center;
                             gap: 7.5px;
-                            height: 135.5px;
+                            height: 129px;
                             width: 320px;
 
                             .square-1,
