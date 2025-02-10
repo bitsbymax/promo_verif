@@ -327,6 +327,7 @@
     const notAuthorizedButton = document.querySelector('.button-notAuthorized');
     const successButton = document.querySelector('.button-success');
     const successBeforeButton = document.querySelector('.button-successBefore');
+    const codeFormButton = document.querySelector('.button-codeForm');
     const langButton = document.querySelector('.button-lang');
     const themeButton = document.querySelector('.button-theme');
     const loadingButton = document.querySelector('.button-loading');
@@ -338,6 +339,7 @@
     let successBefore = false;
     let loading = false;
     let theme = false;
+    let codeForm = false;
 
     async function init() {
         console.log('%c init() fired', 'color: #00ff00; font-weight: bold');
@@ -417,6 +419,7 @@
                 success,
                 loading,
                 theme,
+                codeForm
             });
             const formContainer = document.querySelector('.form__container');
 
@@ -428,6 +431,7 @@
                 formContainerSuccessBefore?.classList.add('hidden');
                 formContainerSuccess?.classList.add('hidden');
                 loadingWrapper?.classList.add('hidden');
+                confirmationForm?.classList.add('hidden');
             } else if (authorized) {
                 console.log('authorized');
                 formContainerSuccessBefore?.classList.add('hidden');
@@ -437,6 +441,7 @@
                 formWrapper?.classList.remove('hidden');
                 verificationForm?.classList.remove('hidden');
                 loadingWrapper?.classList.add('hidden');
+                confirmationForm?.classList.add('hidden');
             } else if (successBefore) {
                 console.log('successBefore');
                 formContainer?.classList.add('hidden');
@@ -455,6 +460,16 @@
                 verificationForm?.classList.add('hidden');
                 linkButtonWrapper?.classList.add('hidden');
                 loadingWrapper?.classList.remove('hidden');
+                confirmationForm?.classList.add('hidden');
+            } else if (codeForm) {
+                formContainerSuccessBefore?.classList.add('hidden');
+                formContainerSuccess?.classList.add('hidden');
+                formContainer?.classList.remove('hidden');
+                formWrapper?.classList.remove('hidden');
+                verificationForm?.classList.add('hidden');
+                linkButtonWrapper?.classList.add('hidden');
+                loadingWrapper?.classList.add('hidden');
+                confirmationForm?.classList.remove('hidden');
             }
         };
 
@@ -536,6 +551,19 @@
         themeButton.addEventListener('click', (e) => {
             e.preventDefault();
             document.body.classList.toggle('dark');
+        });
+
+        codeFormButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            console.log('codeFormButton clicked');
+            authorized = false;
+            notAuthorized = false;
+            success = false;
+            successBefore = false;
+            loading = false;
+            theme = false;
+            codeForm = true;
+            updateUIBasedOnState();
         });
 
         // Initial UI update

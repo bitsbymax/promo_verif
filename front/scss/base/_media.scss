@@ -3546,7 +3546,7 @@
         }
 
         .banner {
-            height: $mobile-banner-height ;
+            height: $mobile-banner-height;
 
             &__takeBonus {
                 @include colored-section($pink, 'https://fav-prom.com/html/verification/img/pink_rect_vector.svg', 'mobile');
@@ -3729,17 +3729,22 @@
                         justify-content: center;
 
                         .link__button-wrapper {
-                            margin-top: 107px;
+                            margin-top: 113px;
                             margin-bottom: 0;
-    
+
                             .link__button {
-                                @include link-button;
-                                margin-top: 0;
+                                width: 300px;
+                                height: 44px;
+                                font-size: 12px;
+                                letter-spacing: 0.24px;
                             }
                         }
                     }
 
                     &__container-successBefore {
+                        width: 344px;
+                        border: 1px solid $pink;
+                        border-radius: 0 0 8px 8px;
 
                         &::before {
                             width: 0px;
@@ -3782,10 +3787,10 @@
                         }
 
                         .link__button-wrapper {
+                            margin-top: 110px;
                             margin-bottom: 12px;
 
                             .link__button {
-
                                 width: 300px;
                                 height: 44px;
                                 font-size: 12px;
@@ -3795,6 +3800,10 @@
                     }
 
                     &__container-success {
+                        width: 344px;
+                        border: 1px solid $pink;
+                        border-radius: 0 0 8px 8px;
+
                         &-image-container {
 
                             &--left,
@@ -3852,7 +3861,6 @@
                                 margin-bottom: 12px;
 
                                 .link__button {
-                                    @include link-button;
                                     width: 300px;
                                     height: 44px;
                                     font-size: 12px;
@@ -3898,6 +3906,13 @@
                         margin-block-start: 28px;
                         margin-bottom: 0;
 
+                        .code-placeholder {
+                            &::before {
+                                top: 34.5%;
+                                left: 18px;
+                            }
+                        }
+
                         .verification__form {
                             @include forms-shared;
 
@@ -3919,12 +3934,25 @@
                                 padding: 14px 0 13px 18px;
                             }
 
-                            &:has(input:focus) label[htmlFor="phone"] {
-                                color: $dark-grey;
+                            button {
+                                width: 300px;
+                                height: 44px;
+                                margin-top: 18px;
+                                font-size: 12px;
+                                letter-spacing: 0.24px;
+                            }
+                        }
+
+                        .confirmation__form {
+                            label {
+                                font-size: 10px;
+                                letter-spacing: 0.2px;
                             }
 
-                            &:has(input.is-invalid) label[htmlFor="phone"] {
-                                color: $error-red;
+                            input {
+                                inline-size: 300px;
+                                margin-block-start: 8px;
+                                padding: 14px 0 13px 18px;
                             }
 
                             button {
@@ -3936,8 +3964,8 @@
                             }
                         }
 
-                        .confirmation__form {
-                            @include forms-shared;
+                        .loading__wrapper {
+                            height: 129px;
                         }
                     }
                 }
@@ -4234,11 +4262,14 @@
                         justify-content: center;
 
                         .link__button-wrapper {
-                            margin-top: 107px;
+                            margin-top: 113px;
                             margin-bottom: 0;
-    
+
                             .link__button {
-                                margin-top: 0;
+                                width: 300px;
+                                height: 44px;
+                                font-size: 12px;
+                                letter-spacing: 0.24px;
                             }
                         }
                     }
@@ -4264,6 +4295,13 @@
                         margin-block-start: 28px;
                         margin-bottom: 0;
 
+                        .code-placeholder {
+                            &::before {
+                                top: 34.5%;
+                                left: 18px;
+                            }
+                        }
+
                         .verification__form {
                             @include forms-shared;
 
@@ -4285,12 +4323,25 @@
                                 padding: 14px 0 13px 18px;
                             }
 
-                            &:has(input:focus) label[htmlFor="phone"] {
-                                color: $dark-grey;
+                            button {
+                                width: 300px;
+                                height: 44px;
+                                margin-top: 18px;
+                                font-size: 12px;
+                                letter-spacing: 0.24px;
+                            }
+                        }
+
+                        .confirmation__form {
+                            label {
+                                font-size: 10px;
+                                letter-spacing: 0.2px;
                             }
 
-                            &:has(input.is-invalid) label[htmlFor="phone"] {
-                                color: $error-red;
+                            input {
+                                inline-size: 300px;
+                                margin-block-start: 8px;
+                                padding: 14px 0 13px 18px;
                             }
 
                             button {
@@ -4302,8 +4353,113 @@
                             }
                         }
 
-                        .confirmation__form {
-                            @include forms-shared;
+                        .loading__wrapper {
+                            height: 129px;
+                        }
+                    }
+
+                    &__container-successBefore {
+                        width: 344px;
+                        border: 1px solid $pink;
+                        border-radius: 0 0 8px 8px;
+
+                        .link__button-wrapper {
+                            margin-top: 110px;
+                            margin-bottom: 12px;
+
+                            .link__button {
+                                width: 300px;
+                                height: 44px;
+                                font-size: 12px;
+                                letter-spacing: 0.24px;
+                            }
+                        }
+                    }
+
+                    &__container-success {
+                        width: 344px;
+                        border: 1px solid $pink;
+                        border-radius: 0 0 8px 8px;
+
+                        &-image-container {
+
+                            &--left,
+                            &--right {
+                                display: none;
+                            }
+                        }
+
+                        &-mainContent {
+                            width: auto;
+                            padding: 28px 0 0 0;
+
+                            .successPrize {
+                                margin-top: 20px;
+                                height: 100px;
+
+                                &__insurance {
+                                    width: 230px;
+                                    height: 74px;
+                                    margin-top: 20px;
+
+                                    &-text {
+                                        top: 28px;
+                                        left: 20px;
+                                        width: 156px;
+                                        height: 34px;
+                                        font-size: 13px;
+
+                                        &--insurance {
+                                            font-family: font('unbounded', 'semibold');
+                                            font-size: 13px;
+                                            letter-spacing: 0.26px;
+                                            align-self: flex-start;
+                                        }
+
+                                        &--value {
+                                            font-family: font('unbounded', 'semibold');
+                                            align-self: flex-end;
+                                        }
+                                    }
+                                }
+
+                                &__FS {
+                                    position: relative;
+                                    width: 154px;
+                                    height: 100px;
+                                    margin-left: -68px;
+                                    @include background-cover('https://fav-prom.com/html/verification/img/filled_spark.png');
+                                    z-index: 2;
+                                }
+                            }
+
+                            .link__button-wrapper {
+                                margin-top: 45px;
+                                margin-bottom: 12px;
+
+                                .link__button {
+                                    @include link-button;
+                                    width: 300px;
+                                    height: 44px;
+                                    font-size: 12px;
+                                    letter-spacing: 0.24px;
+                                }
+                            }
+                        }
+
+                        &--header {
+                            width: 248px;
+                            font-size: 22px;
+                            letter-spacing: 0.44px;
+                            align-self: center;
+                        }
+
+                        &--description {
+                            width: 255px;
+                            height: 44px;
+                            margin-top: 19px;
+                            font-size: 12px;
+                            letter-spacing: 0.24px;
                         }
                     }
                 }
@@ -4601,11 +4757,14 @@
                         justify-content: center;
 
                         .link__button-wrapper {
-                            margin-top: 107px;
+                            margin-top: 113px;
                             margin-bottom: 0;
 
                             .link__button {
-                                margin-top: 0;
+                                width: 300px;
+                                height: 44px;
+                                font-size: 12px;
+                                letter-spacing: 0.24px;
                             }
                         }
                     }
@@ -4631,6 +4790,13 @@
                         margin-block-start: 28px;
                         margin-bottom: 0;
 
+                        .code-placeholder {
+                            &::before {
+                                top: 34.5%;
+                                left: 18px;
+                            }
+                        }
+
                         .verification__form {
                             @include forms-shared;
 
@@ -4652,12 +4818,25 @@
                                 padding: 14px 0 13px 18px;
                             }
 
-                            &:has(input:focus) label[htmlFor="phone"] {
-                                color: $dark-grey;
+                            button {
+                                width: 300px;
+                                height: 44px;
+                                margin-top: 18px;
+                                font-size: 12px;
+                                letter-spacing: 0.24px;
+                            }
+                        }
+
+                        .confirmation__form {
+                            label {
+                                font-size: 10px;
+                                letter-spacing: 0.2px;
                             }
 
-                            &:has(input.is-invalid) label[htmlFor="phone"] {
-                                color: $error-red;
+                            input {
+                                inline-size: 300px;
+                                margin-block-start: 8px;
+                                padding: 14px 0 13px 18px;
                             }
 
                             button {
@@ -4669,12 +4848,74 @@
                             }
                         }
 
-                        .confirmation__form {
-                            @include forms-shared;
+                        .loading__wrapper {
+                            height: 129px;
+                        }
+                    }
+
+                    &__container-successBefore {
+                        width: 344px;
+                        border: 1px solid $pink;
+                        border-radius: 0 0 8px 8px;
+
+                        &::before {
+                            width: 0px;
+                            height: 0px;
+                            background: none;
+                        }
+
+                        &::after {
+                            width: 0px;
+                            height: 0px;
+                            background: none;
+                        }
+
+                        &--header {
+                            padding: 32px 30px 0;
+                            font-size: 18px;
+                            letter-spacing: 0.36px;
+                        }
+
+                        &--description {
+                            margin-top: 12px;
+                            width: 255px;
+                            font-size: 12px;
+                            letter-spacing: 0.24px;
+
+                            &::before {
+                                width: 0;
+                                height: 0;
+                                background: none;
+                            }
+
+                            &::after {
+                                top: 54px;
+                                left: 52px;
+                                width: 232px;
+                                height: 145px;
+                                @include background-cover('https://fav-prom.com/html/verification/img/mobile_snake.svg');
+                                z-index: 1;
+                            }
+                        }
+
+                        .link__button-wrapper {
+                            margin-top: 110px;
+                            margin-bottom: 12px;
+
+                            .link__button {
+                                width: 300px;
+                                height: 44px;
+                                font-size: 12px;
+                                letter-spacing: 0.24px;
+                            }
                         }
                     }
 
                     &__container-success {
+                        width: 344px;
+                        border: 1px solid $pink;
+                        border-radius: 0 0 8px 8px;
+
                         &-image-container {
 
                             &--left,
@@ -4847,10 +5088,6 @@
                                 border-radius: 50%;
                                 display: inline-block;
                                 margin: 0 5px 2px 0;
-                            }
-
-                            &:last-child {
-                                // margin-bottom: 10px;
                             }
                         }
                     }
@@ -5359,11 +5596,14 @@
                         justify-content: center;
 
                         .link__button-wrapper {
-                            margin-top: 107px;
+                            margin-top: 113px;
                             margin-bottom: 0;
 
                             .link__button {
-                                margin-top: 0;
+                                width: 300px;
+                                height: 44px;
+                                font-size: 12px;
+                                letter-spacing: 0.24px;
                             }
                         }
                     }
@@ -5387,6 +5627,14 @@
 
                     &__wrapper {
                         margin-block-start: 28px;
+                        margin-bottom: 0;
+
+                        .code-placeholder {
+                            &::before {
+                                top: 34.5%;
+                                left: 18px;
+                            }
+                        }
 
                         .verification__form {
                             @include forms-shared;
@@ -5409,12 +5657,25 @@
                                 padding: 14px 0 13px 18px;
                             }
 
-                            &:has(input:focus) label[htmlFor="phone"] {
-                                color: $dark-grey;
+                            button {
+                                width: 300px;
+                                height: 44px;
+                                margin-top: 18px;
+                                font-size: 12px;
+                                letter-spacing: 0.24px;
+                            }
+                        }
+
+                        .confirmation__form {
+                            label {
+                                font-size: 10px;
+                                letter-spacing: 0.2px;
                             }
 
-                            &:has(input.is-invalid) label[htmlFor="phone"] {
-                                color: $error-red;
+                            input {
+                                inline-size: 300px;
+                                margin-block-start: 8px;
+                                padding: 14px 0 13px 18px;
                             }
 
                             button {
@@ -5426,12 +5687,74 @@
                             }
                         }
 
-                        .confirmation__form {
-                            @include forms-shared;
+                        .loading__wrapper {
+                            height: 129px;
+                        }
+                    }
+
+                    &__container-successBefore {
+                        width: 344px;
+                        border: 1px solid $pink;
+                        border-radius: 0 0 8px 8px;
+
+                        &::before {
+                            width: 0px;
+                            height: 0px;
+                            background: none;
+                        }
+
+                        &::after {
+                            width: 0px;
+                            height: 0px;
+                            background: none;
+                        }
+
+                        &--header {
+                            padding: 32px 30px 0;
+                            font-size: 18px;
+                            letter-spacing: 0.36px;
+                        }
+
+                        &--description {
+                            margin-top: 12px;
+                            width: 255px;
+                            font-size: 12px;
+                            letter-spacing: 0.24px;
+
+                            &::before {
+                                width: 0;
+                                height: 0;
+                                background: none;
+                            }
+
+                            &::after {
+                                top: 54px;
+                                left: 52px;
+                                width: 232px;
+                                height: 145px;
+                                @include background-cover('https://fav-prom.com/html/verification/img/mobile_snake.svg');
+                                z-index: 1;
+                            }
+                        }
+
+                        .link__button-wrapper {
+                            margin-top: 110px;
+                            margin-bottom: 12px;
+
+                            .link__button {
+                                width: 300px;
+                                height: 44px;
+                                font-size: 12px;
+                                letter-spacing: 0.24px;
+                            }
                         }
                     }
 
                     &__container-success {
+                        width: 344px;
+                        border: 1px solid $pink;
+                        border-radius: 0 0 8px 8px;
+
                         &-image-container {
 
                             &--left,
@@ -5624,11 +5947,9 @@
 //fold 5 unfold portrait
 // @media screen and (max-width: 660px) and (max-height: 700px) and (orientation: portrait) and (min-width: 601px) {}
 
-//--//
-
 // @media screen and (max-width: 750px) {}
-
 //!MOBILE
+
 @media screen and (max-width: 700px) {
     .fav__page {
         .background {
@@ -5912,13 +6233,14 @@
                         justify-content: center;
 
                         .link__button-wrapper {
-                            margin-top: 110px;
+                            margin-top: 113px;
                             margin-bottom: 12px;
 
                             .link__button {
-                                @include link-button;
                                 width: 300px;
                                 height: 44px;
+                                font-size: 12px;
+                                letter-spacing: 0.24px;
                             }
                         }
                     }
@@ -5945,28 +6267,10 @@
                         margin-bottom: 12px;
 
                         .code-placeholder {
-                            position: relative;
-                            width: 100%;
-
                             &::before {
-                                content: attr(data-placeholder);
-                                position: absolute;
-                                top: 32%;
-                                left: 22px;
-                                transform: translateY(-50%);
-                                color: $input-dark-blue;
-                                font-family: font('unbounded', 'regular');
-                                pointer-events: none;
-                                z-index: 1;
-                                font-size: 14px;
-                                letter-spacing: .28px;
-                                white-space: pre;
+                                top: 34.5%;
+                                left: 18px;
                             }
-
-                            input {
-                                color: transparent !important;
-                            }
-
                         }
 
                         .verification__form {
@@ -5990,12 +6294,25 @@
                                 padding: 14px 0 13px 18px;
                             }
 
-                            &:has(input:focus) label[htmlFor="phone"] {
-                                color: $dark-grey;
+                            button {
+                                width: 300px;
+                                height: 44px;
+                                margin-top: 18px;
+                                font-size: 12px;
+                                letter-spacing: 0.24px;
+                            }
+                        }
+
+                        .confirmation__form {
+                            label {
+                                font-size: 10px;
+                                letter-spacing: 0.2px;
                             }
 
-                            &:has(input.is-invalid) label[htmlFor="phone"] {
-                                color: $error-red;
+                            input {
+                                inline-size: 300px;
+                                margin-block-start: 8px;
+                                padding: 14px 0 13px 18px;
                             }
 
                             button {
@@ -6007,62 +6324,15 @@
                             }
                         }
 
-                        .confirmation__form {
-                            @include forms-shared;
-                        }
-
                         .loading__wrapper {
-                            position: relative;
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-                            gap: 7.5px;
                             height: 129px;
-                            width: 320px;
-
-                            .square-1,
-                            .square-2,
-                            .square-3 {
-                                display: flex;
-                                width: 13px;
-                                height: 13px;
-                                transition: background-color 0.2s ease-in-out;
-                                background-color: $loading-grey;
-
-                            }
-
-                            @keyframes animateColors {
-                                0% {
-                                    background-color: $loading-grey;
-                                }
-
-                                50% {
-                                    background-color: $pink;
-                                }
-
-                                100% {
-                                    background-color: $loading-grey;
-                                }
-                            }
-
-                            .square-1 {
-                                animation: animateColors 1s infinite;
-                                animation-delay: 0s;
-                            }
-
-                            .square-2 {
-                                animation: animateColors 1s infinite;
-                                animation-delay: 0.2s;
-                            }
-
-                            .square-3 {
-                                animation: animateColors 1s infinite;
-                                animation-delay: 0.4s;
-                            }
                         }
                     }
 
                     &__container-successBefore {
+                        width: 344px;
+                        border: 1px solid $pink;
+                        border-radius: 0 0 8px 8px;
 
                         &::before {
                             width: 0px;
@@ -6105,6 +6375,7 @@
                         }
 
                         .link__button-wrapper {
+                            margin-top: 110px;
                             margin-bottom: 12px;
 
                             .link__button {
@@ -6117,6 +6388,10 @@
                     }
 
                     &__container-success {
+                        width: 344px;
+                        border: 1px solid $pink;
+                        border-radius: 0 0 8px 8px;
+
                         &-image-container {
 
                             &--left,

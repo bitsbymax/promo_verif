@@ -589,7 +589,7 @@ body {
                 &__wrapper {
                     margin-top: 30px;
                     margin-bottom: 34px;
-                    margin-left: 8px;
+                    // margin-left: 8px;
 
                     .code-placeholder {
                         position: relative;
@@ -598,7 +598,7 @@ body {
                         &::before {
                             content: attr(data-placeholder);
                             position: absolute;
-                            top: 26%;
+                            top: 37%;
                             left: 22px;
                             transform: translateY(-50%);
                             color: $input-dark-blue;
