@@ -2934,7 +2934,7 @@
 }
 
 //!TABLET
-@media screen and (width <=1000px) {
+@media screen and (max-width: 1000px) {
     .fav__page {
         .background {
             &__ellipse {
@@ -4860,7 +4860,7 @@
     }
 }
 
-@media screen and (700px <width <750px) and (977px <height <=1200px) {
+@media screen and (min-width: 701px) and (max-width: 749px) and (min-height: 978px) and (max-height: 1200px) {
     .fav__page {
         .background {
             &__ellipse {
@@ -4893,7 +4893,7 @@
     }
 }
 
-@media screen and (700px <width <750px) and (954px <height <=977px) {
+@media screen and (min-width: 701px) and (max-width: 749px) and (min-height: 955px) and (max-height: 977px) {
     .fav__page {
         .background {
             &__ellipse {
@@ -4925,7 +4925,7 @@
     }
 }
 
-@media screen and (700px <width <750px) and (864px<height <=954px) {
+@media screen and (min-width: 701px) and (max-width: 749px) and (min-height: 865px) and (max-height: 954px) {
     .fav__page {
         .background {
             &__ellipse {
@@ -4961,7 +4961,7 @@
     }
 }
 
-@media screen and (700px <width <750px) and (770px<height <=864px) {
+@media screen and (min-width: 701px) and (max-width: 749px) and (min-height: 771px) and (max-height: 864px) {
     .fav__page {
         .background {
             &__ellipse {
@@ -4999,7 +4999,7 @@
     }
 }
 
-@media screen and (700px <width <750px) and (680px<height <=770px) {
+@media screen and (min-width: 701px) and (max-width: 749px) and (min-height: 681px) and (max-height: 770px) {
     .fav__page {
         .background {
             &__ellipse {
@@ -5035,7 +5035,7 @@
     }
 }
 
-@media screen and (700px <width <750px) and (649px <height <=680px) {
+@media screen and (min-width: 701px) and (max-width: 749px) and (min-height: 650px) and (max-height: 680px) {
     .fav__page {
         .background {
             &__ellipse {
@@ -5071,7 +5071,7 @@
     }
 }
 
-@media screen and (700px <width <750px) and (height <=649px) {
+@media screen and (min-width: 701px) and (max-width: 749px) and (max-height: 649px) {
     .fav__page {
         .background {
             &__ellipse {
