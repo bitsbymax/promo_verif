@@ -344,6 +344,26 @@
     async function init() {
         console.log('%c init() fired', 'color: #00ff00; font-weight: bold');
 
+        function formatPhoneNumber(phone) {
+            // Remove any non-digit characters and ensure we're working with a string
+            const digits = phone.toString().replace(/\D/g, '');
+
+            // If the number starts with 380, add the plus sign
+            if (digits.startsWith('380') && digits.length === 12) {
+                // Break the number into groups and format it
+                const countryCode = digits.slice(0, 3); // 380
+                const areaCode = digits.slice(3, 5); // 93
+                const firstGroup = digits.slice(5, 8); // 507
+                const secondGroup = digits.slice(8, 10); // 54
+                const lastGroup = digits.slice(10, 12); // 93
+
+                return `+${countryCode}(${areaCode})-${firstGroup}-${secondGroup}-${lastGroup}`;
+            }
+
+            // Return original value if it doesn't match expected format
+            return phone;
+        }
+
         // const showLoading = (form) => {
         //     switch (form) {
         //         case FORMS.VERIFICATION:
@@ -376,7 +396,7 @@
         //     return;
         // }
 
-        // let userPhoneNumber = null;
+        let userPhoneNumber = '380935075493';
         // let userPhoneVerified = false;
         // let verificationSession = null;
         // let user = null;
@@ -419,7 +439,7 @@
                 success,
                 loading,
                 theme,
-                codeForm
+                codeForm,
             });
             const formContainer = document.querySelector('.form__container');
 
@@ -440,6 +460,8 @@
                 linkButtonWrapper?.classList.add('hidden');
                 formWrapper?.classList.remove('hidden');
                 verificationForm?.classList.remove('hidden');
+                const formattedPhone = formatPhoneNumber('380935075493');
+                phoneInput.value = formattedPhone;
                 loadingWrapper?.classList.add('hidden');
                 confirmationForm?.classList.add('hidden');
             } else if (successBefore) {
@@ -782,32 +804,106 @@
         //User starts to change phone number
         phoneInput.addEventListener('input', (e) => {
             submitButton.disabled = true;
-            // Remove is-invalid class initially
             phoneInput.classList.remove('is-invalid');
-
-            const value = e.target.value;
-            // Only allow + and numbers
-            const newValue = value.replace(/[^+0-9]/g, '');
-
-            if (!newValue) {
-                e.target.value = '+380';
+        
+            // Format phone number
+            const formatPhoneDisplay = (digits) => {
+                if (!digits) return '+380';
+                if (digits.length <= 3) return `+${digits}`;
+                
+                const parts = {
+                    countryCode: digits.slice(0, 3),
+                    areaCode: digits.slice(3, 5),
+                    firstGroup: digits.slice(5, 8),
+                    secondGroup: digits.slice(8, 10),
+                    lastGroup: digits.slice(10, 12)
+                };
+        
+                let result = `+${parts.countryCode}`;
+                if (parts.areaCode) result += `(${parts.areaCode}`;
+                if (parts.firstGroup) result += `)-${parts.firstGroup}`;
+                if (parts.secondGroup) result += `-${parts.secondGroup}`;
+                if (parts.lastGroup) result += `-${parts.lastGroup}`;
+                
+                return result;
+            };
+        
+            // Format placeholder
+            const formatPlaceholder = (digits) => {
+                if (digits.length <= 3) return '+380(XX)-XXX-XX-XX';
+                
+                const parts = {
+                    countryCode: '+380',
+                    areaCode: digits.slice(3, 5).padEnd(2, 'X'),
+                    firstGroup: digits.length > 5 ? digits.slice(5, 8).padEnd(3, 'X') : 'XXX',
+                    secondGroup: digits.length > 8 ? digits.slice(8, 10).padEnd(2, 'X') : 'XX',
+                    lastGroup: digits.length > 10 ? digits.slice(10, 12).padEnd(2, 'X') : 'XX'
+                };
+        
+                return `${parts.countryCode}(${parts.areaCode})-${parts.firstGroup}-${parts.secondGroup}-${parts.lastGroup}`;
+            };
+        
+            // Process input value
+            const digits = e.target.value.replace(/\D/g, '');
+            
+            // Set input value
+            e.target.value = formatPhoneDisplay(digits);
+            if (!digits) e.target.setSelectionRange(4, 4);
+        
+            // Update placeholder
+            const parentWrapper = verificationForm;
+            parentWrapper.classList.add('phone-placeholder');
+            parentWrapper.setAttribute('data-placeholder', formatPlaceholder(digits));
+        
+            // Update button state
+            const isValid = isPhoneValid(e.target.value);
+            submitButton.disabled = !isValid;
+            if (isValid) phoneInput.classList.remove('is-invalid');
+            else phoneInput.classList.add('is-invalid');
+        
+            // Update button text
+            const isExistingNumber = e.target.value.slice(1) === userPhoneNumber;
+            submitButton.innerHTML = isExistingNumber ? 'ПІДТВЕРДИТИ' : 'ЗБЕРЕГТИ';
+            submitButton.setAttribute('data-translate', isExistingNumber ? 'confirm' : 'save');
+        });
+        
+        // Add click and mousedown events to prevent cursor positioning within +380
+        phoneInput.addEventListener('click', (e) => {
+            if (e.target.selectionStart <= 4) {
                 e.target.setSelectionRange(4, 4);
-            } else {
-                e.target.value = newValue;
             }
+        });
 
-            // Validate phone number
-            if (!isPhoneValid(value)) {
-                phoneInput.classList.add('is-invalid');
-            } else {
-                submitButton.disabled = false;
+        phoneInput.addEventListener('mousedown', (e) => {
+            if (e.target.selectionStart <= 4) {
+                e.preventDefault();
+                e.target.setSelectionRange(4, 4);
             }
-            if (e.target.value.slice(1) === userPhoneNumber) {
-                submitButton.innerHTML = 'ПІДТВЕРДИТИ';
-                submitButton.setAttribute('data-translate', 'confirm');
-            } else {
-                submitButton.innerHTML = 'ЗБЕРЕГТИ';
-                submitButton.setAttribute('data-translate', 'save');
+        });
+
+        // Modify existing keydown listener to also handle left arrow and selection
+        phoneInput.addEventListener('keydown', (e) => {
+            const cursorPosition = e.target.selectionStart;
+            
+            // Prevent moving cursor before position 4 (+380)
+            if (e.key === 'ArrowLeft' && cursorPosition <= 4) {
+                e.preventDefault();
+            }
+            
+            // Prevent backspace and delete when cursor is at or before position 4
+            if ((e.key === 'Backspace' || e.key === 'Delete') && cursorPosition <= 4) {
+                e.preventDefault();
+            }
+            
+            // Prevent selection of first 4 characters
+            if (e.shiftKey && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) {
+                const newPosition = e.key === 'ArrowLeft' ? 
+                    cursorPosition - 1 : 
+                    cursorPosition + 1;
+                    
+                if (newPosition <= 4) {
+                    e.preventDefault();
+                }
             }
         });
 

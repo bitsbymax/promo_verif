@@ -589,7 +589,6 @@ body {
                 &__wrapper {
                     margin-top: 30px;
                     margin-bottom: 34px;
-                    // margin-left: 8px;
 
                     .code-placeholder {
                         position: relative;
@@ -618,6 +617,7 @@ body {
 
                     .verification__form {
                         @include forms-shared;
+                        position: relative;
 
                         &:has(input:focus) label[htmlFor="phone"] {
                             color: $dark-grey;
@@ -639,6 +639,29 @@ body {
                                 width: 20px;
                                 height: 15px;
                                 pointer-events: none;
+                            }
+                        }
+
+                        &.phone-placeholder {
+                            width: 100%;
+
+                            input {
+                                color: transparent !important;
+                            }
+
+                            &::before {
+                                content: attr(data-placeholder);
+                                position: absolute;
+                                top: 49.5px;
+                                left: 22px;
+                                transform: translateY(-50%);
+                                color: $input-dark-blue;
+                                font-family: font('unbounded', 'regular');
+                                pointer-events: none;
+                                z-index: 1;
+                                font-size: 14px;
+                                letter-spacing: .28px;
+                                white-space: pre;
                             }
                         }
                     }

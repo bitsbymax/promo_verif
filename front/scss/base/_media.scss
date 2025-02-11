@@ -3928,6 +3928,13 @@
                                 }
                             }
 
+                            &.phone-placeholder {
+                                &::before {
+                                    top: 44px;
+                                    left: 19px;
+                                }
+                            }
+
                             input {
                                 inline-size: 300px;
                                 margin-block-start: 8px;
@@ -4314,6 +4321,13 @@
                                 &::after {
                                     top: 37px;
                                     right: 16px;
+                                }
+                            }
+
+                            &.phone-placeholder {
+                                &::before {
+                                    top: 44px;
+                                    left: 19px;
                                 }
                             }
 
@@ -4809,6 +4823,13 @@
                                 &::after {
                                     top: 37px;
                                     right: 16px;
+                                }
+                            }
+
+                            &.phone-placeholder {
+                                &::before {
+                                    top: 44px;
+                                    left: 19px;
                                 }
                             }
 
@@ -5651,6 +5672,13 @@
                                 }
                             }
 
+                            &.phone-placeholder {
+                                &::before {
+                                    top: 44px;
+                                    left: 19px;
+                                }
+                            }
+
                             input {
                                 inline-size: 300px;
                                 margin-block-start: 8px;
@@ -6287,6 +6315,13 @@
                                 &::after {
                                     top: 37px;
                                     right: 16px;
+                                }
+                            }
+
+                            &.phone-placeholder {
+                                &::before {
+                                    top: 44px;
+                                    left: 19px;
                                 }
                             }
 
