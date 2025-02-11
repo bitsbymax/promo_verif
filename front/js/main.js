@@ -570,7 +570,7 @@
         updateUIBasedOnState();
 
         const startVerificationTimer = (totalSeconds, form) => {
-            if (form === FORMS.CONFIRMATION) {
+            if (form === FORMS.CONFIRMATION && totalSeconds < 300) {
                 confirmButton.disabled = true;
                 confirmButton.textContent = 'НАДІСЛАТИ';
                 confirmButton.setAttribute(
@@ -639,6 +639,7 @@
 
                     if (step.verification) {
                         submitButton.disabled = false;
+                        phoneInput.disabled = false;
                         removeExistingMessages(verificationForm);
                     } else {
                         confirmButton.disabled = false;

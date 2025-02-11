@@ -1178,13 +1178,13 @@ body {
 /// DARK
 .dark {
     .fav__page {
-        background: #040612 url("../img/Union.png") repeat 50% 0/cover;
+        background: #040612 url("https://fav-prom.com/html/verification/img/Union.png") repeat 50% 0/cover;
 
         .banner {
 
             &__currency,
             &__fs {
-                @include colored-section($pink, '../img/dark_rect_vector.svg', 'desktop');
+                @include colored-section($pink, 'https://fav-prom.com/html/verification/img/dark_rect_vector.svg', 'desktop');
             }
         }
 
@@ -1197,7 +1197,7 @@ body {
 
             .banner__bonusHere,
             .banner__takeBonus {
-                @include background-cover('../img/dark_rect_vector_bottom.svg');
+                @include background-cover('https://fav-prom.com/html/verification/img/dark_rect_vector_bottom.svg');
             }
         }
 
@@ -1211,7 +1211,7 @@ body {
                     }
 
                     .pointers__item {
-                        background: url("../img/thumb_pink_reverse-dark.svg") no-repeat 0 0/cover;
+                        background: url("https://fav-prom.com/html/verification/img/thumb_pink_reverse-dark.svg") no-repeat 0 0/cover;
                     }
 
                     .prizeInfo {
@@ -1220,7 +1220,7 @@ body {
 
                     .bonusSpark {
                         &__content {
-                            background: url("../img/spark-dark.svg") no-repeat 0 0/contain;
+                            background: url("https://fav-prom.com/html/verification/img/spark-dark.svg") no-repeat 0 0/contain;
                         }
                     }
                 }
@@ -1228,7 +1228,7 @@ body {
                 .sideContent {
                     .bonusSpark {
                         &__content {
-                            @include background-cover('../img/spark-dark.svg');
+                            @include background-cover('https://fav-prom.com/html/verification/img/spark-dark.svg');
                         }
                     }
                 }
@@ -1254,7 +1254,7 @@ body {
                         &-success-mainContent {
                             .successPrize {
                                 &__insurance {
-                                    background: url("../img/prize_stack-dark.png") no-repeat 0 0/contain;
+                                    background: url("https://fav-prom.com/html/verification/img/prize_stack-dark.png") no-repeat 0 0/contain;
                                 }
                             }
 
