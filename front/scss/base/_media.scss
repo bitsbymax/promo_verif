@@ -1,7 +1,7 @@
 @use '../helpers' as *;
 
-//! DESKTOP
 //#region Desktop
+//! DESKTOP
 @media screen and (min-width: 2400px) {
     .fav__page {
         .background {
@@ -1096,8 +1096,7 @@
         }
     }
 }
-
-//#endregion
+//#endregion Desktop
 
 //!width: 1280-1001 and height: 834-550 --> TABLET LAYOUT
 @media screen and (max-width: 1280px) and (max-height: 940px) {
@@ -2933,6 +2932,7 @@
     }
 }
 
+//#region Tablet
 //!TABLET
 @media screen and (max-width: 1000px) {
     .fav__page {
@@ -5935,7 +5935,7 @@
         }
     }
 }
-
+//#endregion Tablet
 
 //--Foldable--//
 //surface duo portrait
@@ -5948,6 +5948,8 @@
 // @media screen and (max-width: 660px) and (max-height: 700px) and (orientation: portrait) and (min-width: 601px) {}
 
 // @media screen and (max-width: 750px) {}
+
+//#region Mobile
 //!MOBILE
 
 @media screen and (max-width: 700px) {
@@ -7050,3 +7052,4 @@
         }
     }
 }
+//#endregion Mobile
