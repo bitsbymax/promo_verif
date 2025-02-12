@@ -460,7 +460,7 @@
                 linkButtonWrapper?.classList.add('hidden');
                 formWrapper?.classList.remove('hidden');
                 verificationForm?.classList.remove('hidden');
-                const formattedPhone = formatPhoneNumber('380935075493');
+                const formattedPhone = formatPhoneNumber(userPhoneNumber);
                 phoneInput.value = formattedPhone;
                 loadingWrapper?.classList.add('hidden');
                 confirmationForm?.classList.add('hidden');
