@@ -5,16 +5,19 @@
 }
 
 body {
-    -webkit-tap-highlight-color: transparent;
+    width: 100%;
     overscroll-behavior: none;
+    background: $dark-blue url("https://fav-prom.com/html/verification/img/Union.png") repeat 50% 0/cover;
+    background-size: 2000px 860px;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .fav__page {
     position: relative;
     width: 100%;
     overflow: hidden;
-    background: $dark-blue url("https://fav-prom.com/html/verification/img/Union.png") repeat 50% 0/cover;
-    background-size: 2000px 860px;
+    // background: $dark-blue url("https://fav-prom.com/html/verification/img/Union.png") repeat 50% 0/cover;
+    // background-size: 2000px 860px;
     z-index: 0;
 
     .menu-test {
@@ -1200,9 +1203,12 @@ body {
 
 /// DARK
 .dark {
+    background: #040612 url("https://fav-prom.com/html/verification/img/Union.png") repeat 50% 0/cover;
+    background-size: 2000px 860px;
+
     .fav__page {
-        background: #040612 url("https://fav-prom.com/html/verification/img/Union.png") repeat 50% 0/cover;
-        background-size: 2000px 860px;
+        // background: #040612 url("https://fav-prom.com/html/verification/img/Union.png") repeat 50% 0/cover;
+        // background-size: 2000px 860px;
 
         .banner {
 
