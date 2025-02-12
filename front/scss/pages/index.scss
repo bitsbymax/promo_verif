@@ -6,14 +6,15 @@
 
 body {
     overscroll-behavior: none;
-    background: $dark-blue url("https://fav-prom.com/html/verification/img/Union.png") repeat 50% 0/cover;
-    background-size: 2000px 860px;
+    background-color: $dark-blue;
     -webkit-tap-highlight-color: transparent;
 }
 
 .fav__page {
     position: relative;
     width: 100%;
+    background: $dark-blue url("https://fav-prom.com/html/verification/img/Union.png") repeat 50% 0/cover;
+    background-size: 2000px 860px;
     overflow: hidden;
     z-index: 0;
 
@@ -1200,12 +1201,14 @@ body {
 
 /// DARK
 .dark {
-    background: #040612 url("https://fav-prom.com/html/verification/img/Union.png") repeat 50% 0/cover;
-    background-size: 2000px 860px;
+    background-color: $dark-theme-color;
 
     .fav__page {
-        .banner {
+        //remove later bg
+        background: $dark-theme-color url("https://fav-prom.com/html/verification/img/Union.png") repeat 50% 0/cover;
+        background-size: 2000px 860px;
 
+        .banner {
             &__currency,
             &__fs {
                 @include colored-section($pink, 'https://fav-prom.com/html/verification/img/dark_rect_vector.svg', 'desktop');
